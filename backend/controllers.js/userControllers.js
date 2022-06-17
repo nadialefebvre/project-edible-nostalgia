@@ -1,0 +1,229 @@
+import User from "../models/user"
+import bcrypt from "bcrypt"
+
+//--------------------------- USER REGISTRATION CONTROLLER ---------------------------//
+export const registerUser = async (req, res) => {
+  const { username, email, password } = req.body
+  try {
+    const salt = bcrypt.genSaltSync()
+    const userExists = await User.findOne({ $or: [{ username }, { email }] })
+    const passwordNotAccepted = password.length < 8
+
+    if (userExists) {
+      res.status(400).json({
+        success: false,
+        status_code: 400,
+        response: {
+          message: "Username/email already used."
+        }
+      })
+    } else if (passwordNotAccepted) {
+      res.status(400).json({
+        success: false,
+        status_code: 400,
+        response: {
+          message: "Password must be at least 8 characters long."
+        }
+      })
+    } else {
+      const newUser = await new User({
+        username: username,
+        email: email,
+        password: bcrypt.hashSync(password, salt)
+      }).save()
+
+      res.status(201).json({
+        success: true,
+        status_code: 201,
+        response: {
+          username: newUser.username,
+          email: newUser.email,
+          accessToken: newUser.accessToken,
+          userId: newUser._id
+        }
+      })
+    }
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Could not create user.",
+        errors: error.errors
+      }
+    })
+  }
+}
+
+//--------------------------- ALL USERS CONTROLLER FOR DEV PURPOSE - TO REMOVE EVENTUALLY ---------------------------//
+export const getUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find()
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: allUsers
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request.",
+        errors: error
+      }
+    })
+  }
+}
+
+//--------------------------- USER LOGIN ENDPOINT ---------------------------//
+export const loginUser = async (req, res) => {
+  const { username, email, password } = req.body
+
+  try {
+    const user = await User.findOne({ $or: [{ username }, { email }] })
+
+    if (user && bcrypt.compareSync(password, user.password)) {
+      res.status(200).json({
+        success: true,
+        status_code: 200,
+        response: {
+          username: user.username,
+          email: user.email,
+          accessToken: user.accessToken,
+          userId: user._id
+        }
+      })
+    } else {
+      res.status(400).json({
+        success: false,
+        status_code: 400,
+        response: {
+          message: "Username/email and password don't match."
+        },
+      })
+    }
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request.",
+        errors: error
+      }
+    })
+  }
+}
+
+//--------------------------- EDIT PROFILE CONTROLLER - PASSWORD ---------------------------//
+export const editProfilePassword = async (req, res) => {
+  const { userId } = req.params
+  const { password } = req.body
+
+  try {
+    const salt = bcrypt.genSaltSync()
+
+    await User.findByIdAndUpdate(userId, { password: bcrypt.hashSync(password, salt) })
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: {
+        message: "User has been updated."
+      }
+    })
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request, could not find and update this user.",
+        error: err.errors
+      }
+    })
+  }
+}
+
+//--------------------------- EDIT PROFILE CONTROLLER - OTHER FIELDS ---------------------------//
+export const editProfileOtherFields = async (req, res) => {
+  const { userId } = req.params
+
+  try {
+    const listOfProperties = Object.keys(req.body)
+    const fieldsToEdit = {}
+
+    listOfProperties.map(singleField => {
+      fieldsToEdit[singleField] = req.body[singleField]
+    })
+
+    await User.findByIdAndUpdate(userId, fieldsToEdit)
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: {
+        message: "User has been updated."
+      }
+    })
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request, could not find and update this user.",
+        error: err.errors
+      }
+    })
+  }
+}
+
+//--------------------------- GET PROFILE CONTROLLER ---------------------------//
+export const getProfile = async (req, res) => {
+  const { userId } = req.params
+
+  try {
+    const userProfile = await User.findById(userId)
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: userProfile
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request.",
+        errors: error
+      }
+    })
+  }
+}
+
+//--------------------------- DELETE PROFILE CONTROLLER ---------------------------//
+export const deleteProfile = async (req, res) => {
+  const { userId } = req.params
+
+  try {
+    await User.findByIdAndDelete(userId)
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: {
+        message: "User has been deleted."
+      }
+    })
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request, could not find and delete this user.",
+        error: err.errors
+      }
+    })
+  }
+}
