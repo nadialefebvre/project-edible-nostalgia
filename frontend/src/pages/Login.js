@@ -104,7 +104,7 @@ const Login = () => {
                 id="firstName"
                 label="First name"
                 name="firstName"
-                autoComplete="firstName"
+                autoComplete="given-name"
                 autoFocus
                 onChange={e => setFirstName(e.target.value)}
               />

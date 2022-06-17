@@ -2,7 +2,7 @@ import Recipe from "../models/recipe"
 
 //--------------------------- ADD RECIPE CONTROLLER ---------------------------//
 export const addRecipe = async (req, res) => {
-  const { title, description, image, category, servings, bakingTime, mainIngredient, source, ingredients, steps, addedBy } = req.body
+  const { title, description, image, category, servings, bakingTime, ingredients, steps, addedBy } = req.body
 
   try {
     const newRecipe = await new Recipe({
@@ -12,8 +12,6 @@ export const addRecipe = async (req, res) => {
       category,
       servings,
       bakingTime,
-      mainIngredient,
-      source,
       ingredients,
       steps,
       addedBy
