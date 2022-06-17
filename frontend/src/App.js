@@ -2,9 +2,19 @@ import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Provider } from "react-redux"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import CssBaseline from "@mui/material/CssBaseline"
-// import Grid from "@mui/material/Grid"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
+import CssBaseline from '@mui/material/CssBaseline'
+// import Grid from '@mui/material/Grid'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Header from './components/Header'
+// import FeaturedPost from './FeaturedPost'
+// import Main from './Main'
+// import Sidebar from './Sidebar'
+import Footer from './components/Footer'
+// import post1 from './blog-post.1.md'
+// import post2 from './blog-post.2.md'
+// import post3 from './blog-post.3.md'
+
 
 import loading from "reducers/loading"
 import user from "./reducers/user"
@@ -16,7 +26,7 @@ import Login from "./pages/Login"
 // import Home from "./pages/Home"
 // import NavigationBar from "./components/NavigationBar"
 // import RecipesPage from "./pages/RecipesPage"
-// import SingleRecipePage from "./pages/SingleRecipePage"
+import SingleRecipe from "./pages/SingleRecipe"
 // import TestPage from "pages/TestPage"
 import AddRecipe from "./pages/AddRecipe"
 import AllRecipes from "./pages/AllRecipes"
@@ -42,30 +52,40 @@ store.subscribe(() => {
 })
 
 
+
+
+
 const App = () => {
   return (
     <Provider store={store}>
-          <ThemeProvider theme={theme}>
-      <CssBaseline />
-
-          <BrowserRouter>
-          <Routes>
-            {/* <Route path="/profile" element={<Profile />} />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Container maxWidth="lg">
+          <Header title="Blog" />
+          <main>
+            <BrowserRouter>
+              <Routes>
+                {/* <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} /> */}
-            {/* <Route path="/recipes" element={<RecipesPage />} />
+                {/* <Route path="/recipes" element={<RecipesPage />} />
             <Route path="/recipes/:recipeId" element={<SingleRecipePage />} /> */}
-            {/* <Route path="/loggedin" element={<LoggedIn />} /> */}
-            <Route path="/allrecipes" element={<AllRecipes />} />
-
-            <Route path="/addrecipe" element={<AddRecipe />} />
-            <Route path="/login" element={<Login />} />
-            {/* <Route path="/testpage/:recipeId" element={<TestPage />} /> */}
-            {/* <Route path="/" element={<Home />} /> */}
-            {/* <Route path="*" element={<NotFound />} /> */}
-          </Routes>
-          </BrowserRouter>
-          </ThemeProvider>
-
+                {/* <Route path="/loggedin" element={<LoggedIn />} /> */}
+                <Route path="/allrecipes" element={<AllRecipes />} />
+                <Route path="/recipe" element={<SingleRecipe />} />
+                <Route path="/addrecipe" element={<AddRecipe />} />
+                <Route path="/login" element={<Login />} />
+                {/* <Route path="/testpage/:recipeId" element={<TestPage />} /> */}
+                {/* <Route path="/" element={<Home />} /> */}
+                {/* <Route path="*" element={<NotFound />} /> */}
+              </Routes>
+            </BrowserRouter>
+          </main>
+        </Container>
+        <Footer
+          title="Footer"
+          description="Something here to give the footer a purpose!"
+        />
+      </ThemeProvider>
     </Provider>
   )
 }
