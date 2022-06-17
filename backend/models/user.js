@@ -2,21 +2,17 @@ import mongoose from "mongoose"
 import crypto from "crypto"
 
 const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+  firstName: String,
   email: {
 		type: String,
 		lowercase: true,
 		unique: true,
 		required: true,
 	},
+  password: {
+    type: String,
+    required: true,
+  },
   // recipes: [
 	// 	{
 	// 		type: Schema.Types.ObjectId,

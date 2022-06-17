@@ -53,12 +53,12 @@ store.subscribe(() => {
 const App = () => {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Container maxWidth="lg">
-          <Header title="Blog" />
-          <main>
-            <BrowserRouter>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Container maxWidth="lg">
+            <Header />
+            <main>
               <Routes>
                 {/* <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} /> */}
@@ -73,14 +73,14 @@ const App = () => {
                 {/* <Route path="/" element={<Home />} /> */}
                 {/* <Route path="*" element={<NotFound />} /> */}
               </Routes>
-            </BrowserRouter>
-          </main>
-        </Container>
-        <Footer
-          title="Footer"
-          description="Something here to give the footer a purpose!"
-        />
-      </ThemeProvider>
+            </main>
+          </Container>
+          <Footer
+            title="Footer"
+            description="Something here to give the footer a purpose!"
+          />
+        </ThemeProvider>
+      </BrowserRouter>
     </Provider>
   )
 }

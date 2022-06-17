@@ -3,10 +3,10 @@ import bcrypt from "bcrypt"
 
 //--------------------------- USER REGISTRATION CONTROLLER ---------------------------//
 export const registerUser = async (req, res) => {
-  const { username, email, password } = req.body
+  const { firstName, email, password } = req.body
   try {
     const salt = bcrypt.genSaltSync()
-    const userExists = await User.findOne({ $or: [{ username }, { email }] })
+    const userExists = await User.findOne({ email })
     const passwordNotAccepted = password.length < 8
 
     if (userExists) {
@@ -14,7 +14,7 @@ export const registerUser = async (req, res) => {
         success: false,
         status_code: 400,
         response: {
-          message: "Username/email already used."
+          message: "Email already used."
         }
       })
     } else if (passwordNotAccepted) {
@@ -27,7 +27,7 @@ export const registerUser = async (req, res) => {
       })
     } else {
       const newUser = await new User({
-        username: username,
+        firstName: firstName,
         email: email,
         password: bcrypt.hashSync(password, salt)
       }).save()
@@ -36,7 +36,7 @@ export const registerUser = async (req, res) => {
         success: true,
         status_code: 201,
         response: {
-          username: newUser.username,
+          firstName: newUser.firstName,
           email: newUser.email,
           accessToken: newUser.accessToken,
           userId: newUser._id
@@ -79,17 +79,17 @@ export const getUsers = async (req, res) => {
 
 //--------------------------- USER LOGIN ENDPOINT ---------------------------//
 export const loginUser = async (req, res) => {
-  const { username, email, password } = req.body
+  const { firstName, email, password } = req.body
 
   try {
-    const user = await User.findOne({ $or: [{ username }, { email }] })
+    const user = await User.findOne({ email })
 
     if (user && bcrypt.compareSync(password, user.password)) {
       res.status(200).json({
         success: true,
         status_code: 200,
         response: {
-          username: user.username,
+          firstName: user.firstName,
           email: user.email,
           accessToken: user.accessToken,
           userId: user._id
@@ -100,7 +100,7 @@ export const loginUser = async (req, res) => {
         success: false,
         status_code: 400,
         response: {
-          message: "Username/email and password don't match."
+          message: "Email and password don't match."
         },
       })
     }

@@ -1,12 +1,11 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import * as React from 'react'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
 
 const Hero = (props) => {
-  const { recipe } = props;
+  const { recipe } = props
 
   return (
     <Paper
@@ -52,7 +51,7 @@ const Hero = (props) => {
         </Grid>
       </Grid>
     </Paper>
-  );
+  )
 }
 
-export default Hero;
+export default Hero
