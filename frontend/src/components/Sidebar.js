@@ -1,44 +1,33 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Grid from '@mui/material/Grid'
+import Stack from '@mui/material/Stack'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
 
-function Sidebar(props) {
-  const { archives, description, title } = props;
+const Sidebar = (props) => {
+  const { recipe } = props
 
   return (
     <Grid item xs={12} md={4}>
       <Paper elevation={0} sx={{ p: 2, bgcolor: 'grey.200' }}>
         <Typography variant="h6" gutterBottom>
-          {title}
+          {recipe.servings} servings
         </Typography>
-        <Typography>{description}</Typography>
+        <Typography>{recipe.bakingTime}</Typography>
       </Paper>
       <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-        Archives
+        Ingredients
       </Typography>
-      {archives.map((archive) => (
-        <Link display="block" variant="body1" href={archive.url} key={archive.title}>
-          {archive.title}
-        </Link>
+      {recipe.ingredients.map((ingredient) => (
+        <Typography display="block" variant="body1" key={ingredient.ingredient}>
+          {ingredient.quantity} {ingredient.unit} {ingredient.ingredient}
+        </Typography>
       ))}
 
     </Grid>
-  );
+  )
 }
 
-Sidebar.propTypes = {
-  archives: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  description: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-export default Sidebar;
+export default Sidebar

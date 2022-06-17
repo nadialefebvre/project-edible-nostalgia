@@ -3,17 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Provider } from "react-redux"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import CssBaseline from '@mui/material/CssBaseline'
-// import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+
+
 import Header from './components/Header'
-// import FeaturedPost from './FeaturedPost'
-// import Main from './Main'
-// import Sidebar from './Sidebar'
 import Footer from './components/Footer'
-// import post1 from './blog-post.1.md'
-// import post2 from './blog-post.2.md'
-// import post3 from './blog-post.3.md'
 
 
 import loading from "reducers/loading"
@@ -70,8 +65,8 @@ const App = () => {
                 {/* <Route path="/recipes" element={<RecipesPage />} />
             <Route path="/recipes/:recipeId" element={<SingleRecipePage />} /> */}
                 {/* <Route path="/loggedin" element={<LoggedIn />} /> */}
-                <Route path="/allrecipes" element={<AllRecipes />} />
-                <Route path="/recipe" element={<SingleRecipe />} />
+                <Route path="/recipes" element={<AllRecipes />} />
+                <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
                 <Route path="/addrecipe" element={<AddRecipe />} />
                 <Route path="/login" element={<Login />} />
                 {/* <Route path="/testpage/:recipeId" element={<TestPage />} /> */}

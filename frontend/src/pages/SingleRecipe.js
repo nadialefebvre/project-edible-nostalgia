@@ -1,66 +1,54 @@
-import * as React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
-import CameraIcon from '@mui/icons-material/PhotoCamera'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import CssBaseline from '@mui/material/CssBaseline'
+import React, { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+
 import Grid from '@mui/material/Grid'
-import Stack from '@mui/material/Stack'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import Link from '@mui/material/Link'
 
-// import { createTheme, ThemeProvider } from '@mui/material/styles'
-import MainFeaturedPost from '../components/MainFeaturedPost'
-import FeaturedPost from "../components/FeaturedPost"
+import Hero from '../components/Hero'
 import Sidebar from '../components/Sidebar'
-import Main from "../components/Main"
-
-const mainFeaturedPost = {
-  title: 'Title of a longer featured blog post',
-  description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: 'https://source.unsplash.com/random',
-  imageText: 'main image description',
-}
-
-const sidebar = {
-  title: 'About',
-  description:
-    'Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.',
-  archives: [
-    { title: 'March 2020', url: '#' },
-    { title: 'February 2020', url: '#' },
-    { title: 'January 2020', url: '#' },
-    { title: 'November 1999', url: '#' },
-    { title: 'October 1999', url: '#' },
-    { title: 'September 1999', url: '#' },
-    { title: 'August 1999', url: '#' },
-    { title: 'July 1999', url: '#' },
-    { title: 'June 1999', url: '#' },
-    { title: 'May 1999', url: '#' },
-    { title: 'April 1999', url: '#' },
-  ],
-}
+import Steps from "../components/Steps"
+import { API_URL } from "../utils/utils"
+import Loader from "../components/Loader"
+import loading from "../reducers/loading"
 
 
 export default function SingleRecipe() {
+  const { recipeId } = useParams()
+  const dispatch = useDispatch()
+
+  const [recipe, setRecipe] = useState({})
+
+  const isLoading = useSelector((store) => store.loading.isLoading)
+
+  useEffect(() => {
+    dispatch(loading.actions.setLoading(true))
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": accessToken,
+      },
+    }
+
+    fetch(API_URL(`recipes/recipe/${recipeId}`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        setRecipe(data.response)
+        dispatch(loading.actions.setLoading(false))
+      })
+  }, [])
+
+
+  if (isLoading || Object.keys(recipe).length === 0) {
+    return <Loader />
+  }
+
   return (
     <>
-      <MainFeaturedPost post={mainFeaturedPost} />
+      <Hero recipe={recipe} />
       <Grid container spacing={5} sx={{ mt: 3 }}>
-        <Sidebar
-          title={sidebar.title}
-          description={sidebar.description}
-          archives={sidebar.archives}
-        />
-
-        <Main title="From the firehose" />
+        <Sidebar recipe={recipe} />
+        <Steps recipe={recipe} />
       </Grid>
     </>
   )

@@ -1,24 +1,20 @@
-import * as React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
-import CameraIcon from '@mui/icons-material/PhotoCamera'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import CssBaseline from '@mui/material/CssBaseline'
-import Grid from '@mui/material/Grid'
-import Stack from '@mui/material/Stack'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import Link from '@mui/material/Link'
-// import { createTheme, ThemeProvider } from '@mui/material/styles'
-import MainFeaturedPost from '../components/MainFeaturedPost'
-import FeaturedPost from "../components/FeaturedPost"
+import React, { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-const mainFeaturedPost = {
+
+import Grid from '@mui/material/Grid'
+import Toolbar from '@mui/material/Toolbar'
+import Link from '@mui/material/Link'
+
+import { API_URL } from "../utils/utils"
+import loading from "../reducers/loading"
+import Loader from "../components/Loader"
+
+
+import Hero from '../components/Hero'
+import RecipeCard from "../components/RecipeCard"
+
+const hero = {
   title: 'Title of a longer featured blog post',
   description:
     "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
@@ -34,45 +30,44 @@ const sections = [
   { title: 'Politics', url: '#' },
 ]
 
-const featuredPosts = [
-  {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-  {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-]
-
 export default function AllRecipes() {
+
+  const dispatch = useDispatch()
+
+  const isLoading = useSelector((store) => store.loading.isLoading)
+
+  const [recipes, setRecipes] = useState([])
+
+  useEffect(() => {
+    dispatch(loading.actions.setLoading(true))
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": accessToken,
+      },
+    }
+
+    fetch(API_URL(`recipes/all`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setRecipes(data.response)
+        } else {
+          alert(data.response.message)
+        }
+        dispatch(loading.actions.setLoading(false))
+      })
+  }, [])
+
+  if (isLoading) {
+    return <Loader />
+  }
+
+
   return (
     <>
-      <MainFeaturedPost post={mainFeaturedPost} />
+      <Hero recipe={hero} />
       <Toolbar
         component="nav"
         variant="dense"
@@ -92,8 +87,8 @@ export default function AllRecipes() {
         ))}
       </Toolbar>
       <Grid container spacing={4}>
-        {featuredPosts.map((post) => (
-          <FeaturedPost key={post.title} post={post} />
+        {recipes.map((recipe) => (
+          <RecipeCard key={recipe.title} recipe={recipe} />
         ))}
       </Grid>
     </>

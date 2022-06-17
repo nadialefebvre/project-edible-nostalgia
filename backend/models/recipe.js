@@ -6,9 +6,7 @@ const RecipeSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  description: {
-    type: String
-  },
+  description: String,
   image: {
     type: String
   },
@@ -29,24 +27,12 @@ const RecipeSchema = new mongoose.Schema({
   },
   ingredients: [
     {
-      quantity: {
-        type: Number,
-      },
-      unit: {
-        type: String
-      },
-      ingredient: {
-        type: String
-      }
+      quantity: Number,
+      unit: String,
+      ingredient: String
     }
   ],
-  steps: [
-    {
-      step: {
-        type: String
-      }
-    },
-  ],
+  steps: [String],
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"

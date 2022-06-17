@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-function MainFeaturedPost(props) {
-  const { post } = props;
+const Hero = (props) => {
+  const { recipe } = props;
 
   return (
     <Paper
@@ -18,11 +18,11 @@ function MainFeaturedPost(props) {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundImage: `url(${post.image})`,
+        backgroundImage: `url(${recipe.image})`,
       }}
     >
       {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
+      {<img style={{ display: 'none' }} src={recipe.image} alt={recipe.title} />}
       <Box
         sx={{
           position: 'absolute',
@@ -43,10 +43,10 @@ function MainFeaturedPost(props) {
             }}
           >
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-              {post.title}
+              {recipe.title}
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
-              {post.description}
+              {recipe.description}
             </Typography>
           </Box>
         </Grid>
@@ -55,13 +55,4 @@ function MainFeaturedPost(props) {
   );
 }
 
-MainFeaturedPost.propTypes = {
-  post: PropTypes.shape({
-    description: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    imageText: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-export default MainFeaturedPost;
+export default Hero;
