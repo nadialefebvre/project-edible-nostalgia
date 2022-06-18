@@ -20,7 +20,6 @@ const ITEM_HEIGHT = 48
 
 const Header = () => {
 
-
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -97,7 +96,7 @@ const Header = () => {
             <MenuItem onClick={() => dispatch(user.actions.logOut())}>
               Log out
             </MenuItem> :
-            <MenuItem onClick={() => navigate("/login")}>
+            <MenuItem onClick={() => navigate("/user/login")}>
               Log in
             </MenuItem>
           }
@@ -120,13 +119,14 @@ const Header = () => {
           }}>
             Add a recipe
           </MenuItem>
-          <MenuItem onClick={() => {
-            navigate("/edituser")
-            setAnchorEl(null)
-          }}>
-            Edit user
-          </MenuItem>
-
+          {accessToken &&
+            <MenuItem onClick={() => {
+              navigate("/user/edit")
+              setAnchorEl(null)
+            }}>
+              Edit user
+            </MenuItem>
+          }
         </Menu>
 
         {/* <IconButton>

@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
+import Paper from '@mui/material/Paper'
+import InputBase from '@mui/material/InputBase'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import SearchIcon from '@mui/icons-material/Search'
+import DirectionsIcon from '@mui/icons-material/Directions'
 
 import Grid from '@mui/material/Grid'
 import Toolbar from '@mui/material/Toolbar'
@@ -58,6 +65,15 @@ const AllRecipes = () => {
       })
   }, [])
 
+  const [inputSearch, setInputSearch] = useState("")
+
+  const onRecipeSearch = (e) => {
+    setInputSearch(e.target.value)
+  }
+
+  const filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(inputSearch.toLowerCase()))
+
+
   if (isLoading) {
     return <Loader />
   }
@@ -66,26 +82,19 @@ const AllRecipes = () => {
   return (
     <>
       <Hero hero={hero} />
-      <Toolbar
-        component="nav"
-        variant="dense"
-        sx={{ justifyContent: 'space-between', overflowX: 'auto' }}
-      >
-        {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            sx={{ p: 1, flexShrink: 0 }}
-          >
-            {section.title}
-          </Link>
-        ))}
-      </Toolbar>
-      <Grid container spacing={4}>
-        {recipes.map((recipe) => (
+      <Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 250 }}>
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="Filter the recipes"
+          inputProps={{ 'aria-label': 'filter the recipes' }}
+          onChange={onRecipeSearch}
+        />
+        <IconButton sx={{ p: '10px' }} aria-label="search">
+          <SearchIcon />
+        </IconButton>
+      </Paper>
+      <Grid container spacing={4} marginTop={1}>
+        {filteredRecipes.map((recipe) => (
           <RecipeCard key={recipe.title} recipe={recipe} />
         ))}
       </Grid>

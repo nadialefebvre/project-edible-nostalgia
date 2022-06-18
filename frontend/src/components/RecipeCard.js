@@ -25,7 +25,7 @@ const RecipeCard = (props) => {
               {recipe.description}
             </Typography>
             <Typography variant="subtitle1" color="primary">
-              Continue reading...
+              Read more...
             </Typography>
           </CardContent>
           <CardMedia

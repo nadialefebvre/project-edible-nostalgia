@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import uniqid from "uniqid"
 
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
+
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import Stack from '@mui/material/Stack'
 import MenuItem from '@mui/material/MenuItem'
-import IconButton from '@mui/material/IconButton'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 import { API_URL } from "../utils/utils"
 import loading from "../reducers/loading"
@@ -222,7 +217,7 @@ const RecipeForm = () => {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
+          {recipeId ? <ModeEditOutlinedIcon /> : <AddOutlinedIcon />}
         </Avatar>
         <Typography component="h1" variant="h5">
           {recipeId ? "EDIT recipe" : "ADD recipe"}
@@ -348,7 +343,7 @@ const RecipeForm = () => {
           >
             {recipeId ? "Edit this recipe" : "Add a recipe"}
           </Button>
-          
+
           <Grid container>
             <Grid item>
               {recipeId ?

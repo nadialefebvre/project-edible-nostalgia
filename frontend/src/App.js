@@ -22,7 +22,7 @@ import Home from "./pages/Home"
 import SingleRecipe from "./pages/SingleRecipe"
 import AllRecipes from "./pages/AllRecipes"
 import RecipeForm from "./pages/RecipeForm"
-import EditUser from "./pages/EditUser"
+import UserForm from "./pages/UserForm"
 
 const theme = createTheme()
 
@@ -65,8 +65,8 @@ const App = () => {
                 <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
                 <Route path="/recipes/add" element={<RecipeForm />} />
                 <Route path="/recipes/:recipeId/edit" element={<RecipeForm />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/edituser" element={<EditUser />} />
+                <Route path="/user/login" element={<UserForm />} />
+                <Route path="/user/edit" element={<UserForm />} />
 
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<Error404 />} />
