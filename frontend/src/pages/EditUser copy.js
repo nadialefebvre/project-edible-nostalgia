@@ -27,60 +27,17 @@ const EditUser = () => {
   const userEmail = useSelector((store) => store.user.email)
   const userId = useSelector((store) => store.user.userId)
 
-  const [firstName, setFirstName] = useState(userFirstName || "")
-  const [email, setEmail] = useState(userEmail || "")
+  const [firstName, setFirstName] = useState(userFirstName)
+  const [email, setEmail] = useState(userEmail)
   const [password, setPassword] = useState("")
 
-  const [mode, setMode] = useState("login")
+  const [mode, setMode] = useState("register")
 
   // useEffect(() => {
   //   if (accessToken) {
   //     navigate("/recipes")
   //   }
   // }, [accessToken])
-
-  const loginOrRegister = () => {
-    if (mode === "register" && (!email || !password)) {
-      alert("All fields are required.")
-    } else if (mode === "login" && (!email || !password)) {
-      alert("Email and password are required.")
-    } else {
-      dispatch(loading.actions.setLoading(true))
-      const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, email, password })
-      }
-      fetch(API_URL(mode), options)
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            batch(() => {
-              if (mode === "register") {
-                alert("User has been created.")
-              } else {
-                alert("User is now logged in.")
-              }
-              dispatch(user.actions.setFirstName(data.response.firstName))
-              dispatch(user.actions.setEmail(data.response.email))
-              dispatch(user.actions.setUserId(data.response.userId))
-              dispatch(user.actions.setAccessToken(data.response.accessToken))
-              dispatch(user.actions.setError(null))
-            })
-          } else {
-            batch(() => {
-              alert(data.response.message)
-              dispatch(user.actions.setError(data.response))
-              dispatch(user.actions.setFirstName(null))
-              dispatch(user.actions.setEmail(null))
-              dispatch(user.actions.setUserId(null))
-              dispatch(user.actions.setAccessToken(null))
-            })
-          }
-          dispatch(loading.actions.setLoading(false))
-        })
-    }
-  }
 
   const editOtherFields = () => {
     const options = {
@@ -96,7 +53,6 @@ const EditUser = () => {
       .then(data => {
         if (data.success) {
           batch(() => {
-            alert("First name and/or email have been updated.")
             dispatch(user.actions.setFirstName(firstName))
             dispatch(user.actions.setEmail(email))
             dispatch(user.actions.setError(null))
@@ -141,15 +97,11 @@ const EditUser = () => {
   const onFormSubmit = (event) => {
     event.preventDefault()
     dispatch(loading.actions.setLoading(true))
-    if (accessToken) {
-      if (firstName !== userFirstName || email !== userEmail) {
-        editOtherFields()
-      }
-      if (password !== "") {
-        editPassword()
-      }
-    } else {
-      loginOrRegister()
+    if (firstName !== userFirstName || email !== userEmail) {
+      editOtherFields()
+    }
+    if (password !== "") {
+      editPassword()
     }
   }
 
@@ -172,15 +124,15 @@ const EditUser = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            {accessToken ? "Edit user" : mode === "register" ? "Register" : "Log in"}
+            {mode === "register" ? "Register" : "Log in"}
           </Typography>
           <Box component="form" onSubmit={onFormSubmit} noValidate sx={{ mt: 1 }}>
-            {mode === "register" || accessToken ?
+            {mode === "register" ?
               <TextField
                 margin="normal"
                 fullWidth
                 id="firstName"
-                label={accessToken ? "New first name" : "First name"}
+                label="First name"
                 name="firstName"
                 autoComplete="given-name"
                 autoFocus
@@ -194,7 +146,7 @@ const EditUser = () => {
               required
               fullWidth
               id="email"
-              label={accessToken ? "New email" : "Email"}
+              label="Email address"
               name="email"
               autoComplete="email"
               autoFocus
@@ -207,7 +159,7 @@ const EditUser = () => {
               required
               fullWidth
               name="password"
-              label={accessToken ? "New password" : "Password"}
+              label="New password"
               type="password"
               autoComplete="current-password"
               onChange={e => setPassword(e.target.value)}
@@ -219,16 +171,15 @@ const EditUser = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: 'lightblue' }}
             >
-              {accessToken ? "Edit user" : mode === "register" ? "Register" : "Log in"}
+              {mode === "register" ? "Register" : "Log in"}
             </Button>
             <Grid container>
               <Grid item>
                 <Link
                   href="#"
                   variant="body2"
-                  onClick={() => accessToken ? navigate("/recipes") : (setMode(mode === "register" ? "login" : "register"))}
-                >
-                  {accessToken ? "Changed your mind about these changes? Go back to profile" : mode === "register"
+                  onClick={() => setMode(mode === "register" ? "login" : "register")}>
+                  {mode === "register"
                     ?
                     "You have an account? Click here to log in"
                     :

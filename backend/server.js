@@ -107,10 +107,12 @@ app.get("/loggedin", (req, res) => {
 })
 
 //--------------------------- EDIT PROFILE ENDPOINT - PASSWORD ---------------------------//
-app.patch("/users/user/:userId/edit/password", authenticateUser, editProfilePassword)
+// app.patch("/users/user/:userId/edit/password", authenticateUser, editProfilePassword)
+app.patch("/users/user/:userId/edit/password", editProfilePassword)
 
 //--------------------------- EDIT PROFILE ENDPOINT - OTHER FIELDS ---------------------------//
-app.patch("/users/user/:userId/edit/other", authenticateUser, editProfileOtherFields)
+// app.patch("/users/user/:userId/edit/other", authenticateUser, editProfileOtherFields)
+app.patch("/users/user/:userId/edit/other", editProfileOtherFields)
 
 //--------------------------- GET PROFILE ENDPOINT ---------------------------//
 app.get("/users/user/:userId", authenticateUser, getProfile)

@@ -120,6 +120,13 @@ const Header = () => {
           }}>
             Add a recipe
           </MenuItem>
+          <MenuItem onClick={() => {
+            navigate("/edituser")
+            setAnchorEl(null)
+          }}>
+            Edit user
+          </MenuItem>
+
         </Menu>
 
         {/* <IconButton>
