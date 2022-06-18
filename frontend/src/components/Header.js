@@ -9,10 +9,18 @@ import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-
+import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ContentCut from '@mui/icons-material/ContentCut'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined'
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import ClearAllOutlinedIcon from '@mui/icons-material/ClearAllOutlined'
 
 import user from "../reducers/user"
 
@@ -92,39 +100,60 @@ const Header = () => {
             },
           }}
         >
-          {accessToken ?
-            <MenuItem onClick={() => dispatch(user.actions.logOut())}>
-              Log out
-            </MenuItem> :
-            <MenuItem onClick={() => navigate("/user/login")}>
-              Log in
-            </MenuItem>
-          }
+
           <MenuItem onClick={() => {
             navigate("/")
             setAnchorEl(null)
           }}>
-            Home
+            <ListItemIcon>
+              <HomeOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Home</ListItemText>
           </MenuItem>
 
           <MenuItem onClick={() => {
             navigate("/recipes")
             setAnchorEl(null)
           }}>
-            All recipes
+            <ListItemIcon>
+              <ClearAllOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>All recipes</ListItemText>
           </MenuItem>
           <MenuItem onClick={() => {
             navigate("/recipes/add")
             setAnchorEl(null)
           }}>
-            Add a recipe
+            <ListItemIcon>
+              <AddOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Add recipe</ListItemText>
           </MenuItem>
+
           {accessToken &&
             <MenuItem onClick={() => {
-              navigate("/user/edit")
+              navigate("/user/profile")
               setAnchorEl(null)
             }}>
-              Edit user
+              <ListItemIcon>
+                <LockOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Profile</ListItemText>
+            </MenuItem>
+          }
+
+          {accessToken ?
+            <MenuItem onClick={() => dispatch(user.actions.logOut())}>
+              <ListItemIcon>
+                <LogoutOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Log out</ListItemText>
+            </MenuItem> :
+            <MenuItem onClick={() => navigate("/user/login")}>
+              <ListItemIcon>
+                <LoginOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Log in</ListItemText>
             </MenuItem>
           }
         </Menu>

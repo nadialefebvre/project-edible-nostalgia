@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid'
 import Toolbar from '@mui/material/Toolbar'
 import Link from '@mui/material/Link'
 
-import { API_URL } from "../utils/utils"
+import { API_URL } from "../utils/urls"
 import loading from "../reducers/loading"
 import Loader from "../components/Loader"
 
@@ -75,10 +75,13 @@ const AllRecipes = () => {
     recipe.category.toLowerCase().startsWith(inputSearch.toLowerCase()))
 
 
-  if (isLoading) {
-    return <Loader />
-  }
+  // if (isLoading) {
+  //   return <Loader />
+  // }
 
+  // useEffect(() => {
+  //   dispatch(loading.actions.setLoading(true))
+  // }, [])
 
   return (
     <>

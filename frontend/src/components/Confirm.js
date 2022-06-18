@@ -7,12 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
 const Confirm = (props) => {
-  const { open, setOpen, handleDeleteRecipe, recipeId } = props
-  // const [open, setOpen] = useState(false)
-
-  // const handleClickOpen = () => {
-  //   setOpen(true)
-  // }
+  const { open, setOpen, handleDeleteRecipe, itemId, title, text } = props
 
   const handleClose = () => {
     setOpen(false)
@@ -27,16 +22,16 @@ const Confirm = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Delete this recipe?"}
+          {title}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Click to confirm that you want to delete this recipe. This action cannot be undone.
+            {text} This action cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => handleDeleteRecipe(recipeId)} autoFocus>
+          <Button onClick={() => handleDeleteRecipe(itemId)} autoFocus>
             Delete
           </Button>
         </DialogActions>

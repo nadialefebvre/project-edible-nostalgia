@@ -118,7 +118,8 @@ app.patch("/users/user/:userId/edit/other", editProfileOtherFields)
 app.get("/users/user/:userId", authenticateUser, getProfile)
 
 //--------------------------- DELETE PROFILE ENDPOINT ---------------------------//
-app.delete("/users/user/:userId", authenticateUser, deleteProfile)
+// app.delete("/users/user/:userId", authenticateUser, deleteProfile)
+app.delete("/users/user/:userId", deleteProfile)
 
 
 

@@ -11,11 +11,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import loading from "../reducers/loading"
 import user from "../reducers/user"
 import Loader from "../components/Loader"
-import { API_URL } from "../utils/utils"
+import FormLoader from "../components/FormLoader"
+
+import { API_URL } from "../utils/urls"
 
 
 const UserForm = () => {
@@ -95,7 +99,7 @@ const UserForm = () => {
       .then(data => {
         if (data.success) {
           batch(() => {
-            alert("First name and/or email have been updated.")
+            // alert("First name and/or email have been updated.")
             dispatch(user.actions.setFirstName(firstName))
             dispatch(user.actions.setEmail(email))
             dispatch(user.actions.setError(null))
@@ -126,7 +130,7 @@ const UserForm = () => {
       .then(data => {
         if (data.success) {
           setPassword("")
-          alert("Password has been updated.")
+          // alert("Password has been updated.")
           dispatch(user.actions.setError(null))
         } else {
           alert(data.response.message)
@@ -153,7 +157,8 @@ const UserForm = () => {
   }
 
   if (isLoading) {
-    return <Loader />
+    return <FormLoader />
+    // return <Loader />
   }
 
   return (

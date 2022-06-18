@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
 
-import { API_URL } from "../utils/utils"
+import { API_URL } from "../utils/urls"
 import loading from "../reducers/loading"
 import Loader from "../components/Loader"
 import user from "../reducers/user"
