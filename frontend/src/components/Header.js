@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -101,6 +101,12 @@ const Header = () => {
               Log in
             </MenuItem>
           }
+          <MenuItem onClick={() => {
+            navigate("/")
+            setAnchorEl(null)
+          }}>
+            Home
+          </MenuItem>
 
           <MenuItem onClick={() => {
             navigate("/recipes")
