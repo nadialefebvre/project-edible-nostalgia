@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import Paper from '@mui/material/Paper'
 import InputBase from '@mui/material/InputBase'
-import Divider from '@mui/material/Divider'
+import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
@@ -71,7 +71,8 @@ const AllRecipes = () => {
     setInputSearch(e.target.value)
   }
 
-  const filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(inputSearch.toLowerCase()))
+  const filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(inputSearch.toLowerCase()) ||
+    recipe.category.toLowerCase().startsWith(inputSearch.toLowerCase()))
 
 
   if (isLoading) {
@@ -82,10 +83,10 @@ const AllRecipes = () => {
   return (
     <>
       <Hero hero={hero} />
-      <Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 250 }}>
+      <Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 320 }}>
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Filter the recipes"
+          placeholder="Filter the recipes (title or category)"
           inputProps={{ 'aria-label': 'filter the recipes' }}
           onChange={onRecipeSearch}
         />

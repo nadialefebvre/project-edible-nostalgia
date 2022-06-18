@@ -13,7 +13,6 @@ import Footer from './components/Footer'
 
 import loading from "reducers/loading"
 import user from "./reducers/user"
-import Login from "./pages/Login"
 // import LoggedIn from "./pages/LoggedIn"
 import Error404 from "pages/Error404"
 // import Profile from "./pages/Profile"
