@@ -49,7 +49,7 @@ export default function SingleRecipe() {
       <Grid container spacing={5} sx={{ mt: 3 }}>
         <Sidebar recipe={recipe} />
         <Steps recipe={recipe} />
-        <button onClick={() => navigate(`/editrecipe/${recipe._id}`)}>Edit</button>
+        <button onClick={() => navigate(`/recipes/${recipe._id}/edit`)}>Edit</button>
       </Grid>
     </>
   )

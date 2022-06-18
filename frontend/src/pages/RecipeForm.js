@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
 
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
@@ -95,12 +96,14 @@ const units = [
 ]
 
 
-export default function AddRecipe() {
+const RecipeForm = () => {
+
+  const { recipeId } = useParams()
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const isLoading = useSelector((store) => store.loading.isLoading)
-
 
   // const [unit, setUnit] = useState("")
 
@@ -118,12 +121,46 @@ export default function AddRecipe() {
   ])
   const [steps, setSteps] = useState([""])
 
+  if (recipeId) {
+    useEffect(() => {
+      dispatch(loading.actions.setLoading(true))
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // "Authorization": accessToken,
+        },
+      }
 
-  const onAddRecipe = (event) => {
+      fetch(API_URL(`recipes/recipe/${recipeId}`), options)
+        .then((res) => res.json())
+        .then((data) => {
+          setTitle(data.response.title)
+          setDescription(data.response.description)
+          setCategory(data.response.category)
+          setBakingTime(data.response.bakingTime)
+          setServings(data.response.servings)
+          if (data.response.ingredients.length) {
+            setIngredients(data.response.ingredients)
+          }
+          if (data.response.steps.length) {
+            setSteps(data.response.steps)
+          }
+          dispatch(loading.actions.setLoading(false))
+        })
+    }, [])
+  }
+
+
+
+
+
+  const handleSubmitRecipe = (event) => {
     event.preventDefault()
     dispatch(loading.actions.setLoading(true))
     const options = {
-      method: "POST",
+      method: `${recipeId ? "PATCH" : "POST"}`,
+      // method: "PATCH",
       headers: {
         // "Authorization": accessToken,
         "Content-Type": "application/json"
@@ -131,24 +168,30 @@ export default function AddRecipe() {
       body: JSON.stringify({ title, description, category, bakingTime, servings, ingredients, steps })
     }
 
-    fetch(API_URL("recipes"), options)
+    fetch(API_URL(`${recipeId ? `recipes/recipe/${recipeId}` : "recipes"}`), options)
+      // fetch(API_URL(`recipes/recipe/${recipeId}`), options)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          alert("Recipe has been added.")
-          setTitle("")
-          setDescription("")
-          setCategory("")
-          setBakingTime("")
-          setServings("")
-          setIngredients([
-            {
-              quantity: "",
-              unit: "",
-              ingredient: "",
-            }
-          ])
-          setSteps([""])
+          if (recipeId) {
+            alert("Recipe has been edited.")
+            navigate(`/recipes/${recipeId}`)
+          } else {
+            alert("Recipe has been added.")
+            setTitle("")
+            setDescription("")
+            setCategory("")
+            setBakingTime("")
+            setServings("")
+            setIngredients([
+              {
+                quantity: "",
+                unit: "",
+                ingredient: "",
+              }
+            ])
+            setSteps([""])
+          }
         } else {
           alert(data.response.message)
         }
@@ -222,9 +265,9 @@ export default function AddRecipe() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          New recipe
+          {recipeId ? "EDIT recipe" : "ADD recipe"}
         </Typography>
-        <Box component="form" onSubmit={onAddRecipe} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmitRecipe} noValidate sx={{ mt: 1 }}>
 
           <Grid container spacing={2}>
 
@@ -455,18 +498,19 @@ export default function AddRecipe() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Add recipe
+            {recipeId ? "Edit this recipe" : "Add a recipe"}
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              {recipeId ?
+                <Link href="#" variant="body2" onClick={() => navigate(`/recipes/${recipeId}`)}>
+                  Changed your mind about these changes? Go back to recipe
+                </Link>
+                :
+                <Link href="#" variant="body2" onClick={() => navigate("/recipes")}>
+                  You don't want to add this recipe anymore? Go back to all recipes
+                </Link>
+              }
             </Grid>
           </Grid>
         </Box>
@@ -474,3 +518,5 @@ export default function AddRecipe() {
     </Container>
   )
 }
+
+export default RecipeForm

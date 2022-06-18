@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
+import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Toolbar from '@mui/material/Toolbar'
-import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import Typography from '@mui/material/Typography'
@@ -20,7 +21,7 @@ const ITEM_HEIGHT = 48
 const Header = () => {
 
 
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -38,12 +39,34 @@ const Header = () => {
 
   return (
     <>
-      <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', justifyContent: "space-between" }}>
         {/* {accessToken &&
           <Button size="small" onClick={() => dispatch(user.actions.logOut())}>Log out</Button>
         } */}
-
-
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/">
+            MUI
+          </Link>
+          <Link
+            underline="hover"
+            color="inherit"
+            href="/material-ui/getting-started/installation/"
+          >
+            Core
+          </Link>
+          <Typography color="text.primary">Breadcrumbs</Typography>
+        </Breadcrumbs>
+        {/* <Typography
+          component="h2"
+          variant="h5"
+          color="inherit"
+          align="center"
+          noWrap
+          sx={{ flex: 1 }}
+        >
+          {firstName ? `${firstName}'s recipes` : "Your recipes"}
+        </Typography>
+ */}
 
         <IconButton
           aria-label="more"
@@ -86,30 +109,17 @@ const Header = () => {
             All recipes
           </MenuItem>
           <MenuItem onClick={() => {
-            navigate("/addrecipe")
+            navigate("/recipes/add")
             setAnchorEl(null)
           }}>
             Add a recipe
           </MenuItem>
         </Menu>
 
-
-
-
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          sx={{ flex: 1 }}
-        >
-          {firstName ? `${firstName}'s recipes` : "Your recipes"}
-        </Typography>
         {/* <IconButton>
           <SearchIcon />
         </IconButton> */}
-        <Box sx={{ width: 85 }}>
+        {/* <Box sx={{ width: 85 }}>
           {accessToken ?
             <Button variant="outlined" size="small" onClick={() => dispatch(user.actions.logOut())}>Log out</Button> :
             <Button variant="outlined" size="small" onClick={() => navigate("/login")}>
@@ -117,7 +127,7 @@ const Header = () => {
             </Button>
           }
         </Box>
-
+ */}
       </Toolbar>
     </>
   )
