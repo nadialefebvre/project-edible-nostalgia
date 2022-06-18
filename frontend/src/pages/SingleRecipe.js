@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 
 import Grid from '@mui/material/Grid'
@@ -11,15 +11,13 @@ import { API_URL } from "../utils/utils"
 import Loader from "../components/Loader"
 import loading from "../reducers/loading"
 
-
-export default function SingleRecipe() {
+const SingleRecipe = () => {
   const { recipeId } = useParams()
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [recipe, setRecipe] = useState({})
 
   const isLoading = useSelector((store) => store.loading.isLoading)
-  console.log(recipeId)
+
   useEffect(() => {
     dispatch(loading.actions.setLoading(true))
     const options = {
@@ -49,8 +47,9 @@ export default function SingleRecipe() {
       <Grid container spacing={5} sx={{ mt: 3 }}>
         <Sidebar recipe={recipe} />
         <Steps recipe={recipe} />
-        <button onClick={() => navigate(`/recipes/${recipe._id}/edit`)}>Edit</button>
       </Grid>
     </>
   )
 }
+
+export default SingleRecipe

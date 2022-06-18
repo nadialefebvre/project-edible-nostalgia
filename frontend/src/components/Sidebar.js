@@ -1,10 +1,15 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom"
+
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
+import EditIcon from '@mui/icons-material/Edit'
 
 const Sidebar = (props) => {
   const { recipe } = props
+  const navigate = useNavigate()
 
   return (
     <Grid item xs={12} md={4}>
@@ -22,7 +27,9 @@ const Sidebar = (props) => {
           {ingredient.quantity} {ingredient.unit} {ingredient.ingredient}
         </Typography>
       ))}
-
+      <IconButton color="inherit" aria-label="edit" onClick={() => navigate(`/recipes/${recipe._id}/edit`)}>
+        <EditIcon fontSize="small" />
+      </IconButton>
     </Grid>
   )
 }
