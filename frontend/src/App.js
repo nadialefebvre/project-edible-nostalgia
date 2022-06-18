@@ -15,13 +15,14 @@ import loading from "reducers/loading"
 import user from "./reducers/user"
 import Login from "./pages/Login"
 // import LoggedIn from "./pages/LoggedIn"
-// import NotFound from "pages/NotFound"
+import Error404 from "pages/Error404"
 // import Profile from "./pages/Profile"
 // import EditProfile from "./pages/EditProfile"
 import Home from "./pages/Home"
 import SingleRecipe from "./pages/SingleRecipe"
 import AllRecipes from "./pages/AllRecipes"
 import RecipeForm from "./pages/RecipeForm"
+import EditUser from "./pages/EditUser"
 
 const theme = createTheme()
 
@@ -65,8 +66,11 @@ const App = () => {
                 <Route path="/recipes/add" element={<RecipeForm />} />
                 <Route path="/recipes/:recipeId/edit" element={<RecipeForm />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/edituser" element={<EditUser />} />
+
                 <Route path="/" element={<Home />} />
-                {/* <Route path="*" element={<NotFound />} /> */}
+                <Route path="*" element={<Error404 />} />
+                <Route path="/error404" element={<Error404 />} />
               </Routes>
             </main>
           </Container>

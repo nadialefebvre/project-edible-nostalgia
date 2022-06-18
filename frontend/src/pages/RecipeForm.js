@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
+import uniqid from "uniqid"
 
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
@@ -23,6 +24,8 @@ import { API_URL } from "../utils/utils"
 import loading from "../reducers/loading"
 import Loader from "../components/Loader"
 import user from "../reducers/user"
+import Ingredient from "components/Ingredient"
+import Step from "components/Step"
 
 
 const categories = [
@@ -55,47 +58,6 @@ const bakingTimes = [
   }
 ]
 
-
-const units = [
-  {
-    value: 'ml',
-    label: 'ml',
-  },
-  {
-    value: 'dl',
-    label: 'dl',
-  },
-  {
-    value: 'L',
-    label: 'L',
-  },
-  {
-    value: 'g',
-    label: 'g',
-  },
-  {
-    value: 'kg',
-    label: 'kg',
-  },
-  {
-    value: 'tsp',
-    label: 'tsp',
-  },
-  {
-    value: 'tbsp',
-    label: 'tbsp',
-  },
-  {
-    value: 'cup(s)',
-    label: 'cup(s)',
-  },
-  {
-    value: 'pcs',
-    label: 'pcs',
-  }
-]
-
-
 const RecipeForm = () => {
 
   const { recipeId } = useParams()
@@ -104,8 +66,6 @@ const RecipeForm = () => {
   const navigate = useNavigate()
 
   const isLoading = useSelector((store) => store.loading.isLoading)
-
-  // const [unit, setUnit] = useState("")
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -362,92 +322,8 @@ const RecipeForm = () => {
 
 
             {ingredients.map((ingredient, index) => (
-              <>
-                {/* <Grid item xs={12}>
-              <Stack direction="row" spacing={2}> */}
-                <Grid item xs={2} sm={2}>
-                  <TextField
-                    name="quantity"
-                    required
-                    fullWidth
-                    id="quantity"
-                    label="Qty"
-                    value={ingredient.quantity}
-                    onChange={(e) => handleIngredientChange(e, index)}
-                  />
-                </Grid>
-
-
-                <Grid item xs={2} sm={2}>
-
-                  <TextField
-                    id="unit"
-                    required
-                    fullWidth
-                    select
-                    label="Unit"
-                    name="unit"
-                    // value={unit}
-                    // onChange={(e) => setUnit(e.target.value)}
-                    value={ingredient.unit}
-                    onChange={(e) => handleIngredientChange(e, index)}
-                  // helperText="Unit"
-                  >
-                    {units.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="ingredient"
-                    label="Ingredient"
-                    name="ingredient"
-                    value={ingredient.ingredient}
-                    onChange={(e) => handleIngredientChange(e, index)}
-                  />
-                </Grid>
-
-                <Grid item xs={2} sm={2}>
-                  {ingredients.length - 1 === index &&
-                    ingredients.length < 10 && (
-                      <Box sx={{
-                        width: 30, display: "flex", justifyContent: "flex-end", marginRight: 0
-                      }}>
-                        <IconButton aria-label="add" size="small" onClick={handleIngredientAdd}>
-                          <AddCircleOutlineIcon fontSize="inherit" />
-                        </IconButton>
-                      </Box>
-                    )}
-                  {ingredients.length !== 1 && (
-                    <Box sx={{
-                      width: 30, display: "flex", justifyContent: "flex-end", marginRight: 0
-                    }}>
-                      <IconButton aria-label="delete" size="small" onClick={() => handleIngredientDelete(index)}>
-                        <DeleteOutlineIcon fontSize="inherit" />
-                      </IconButton>
-                    </Box>
-                  )}
-
-
-                </Grid>
-                {/* </Stack>
-            </Grid> */}
-              </>
+              <Ingredient key={`ingredient-${index}`} ingredientsLength={ingredients.length} ingredient={ingredient} index={index} onIngredientChange={handleIngredientChange} onIngredientAdd={handleIngredientAdd} onIngredientDelete={handleIngredientDelete} />
             ))}
-
-
-
-
-
-
-
-
 
 
             <Grid item xs={12} marginTop={2}>
@@ -456,37 +332,9 @@ const RecipeForm = () => {
               </Typography>
             </Grid>
 
-
-
-
             {steps.map((step, index) => (
-              <>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="step"
-                    label="Step"
-                    name="step"
-                    value={step}
-                    onChange={(e) => handleStepChange(e, index)}
-                  />
-                </Grid>
-                {steps.length !== 1 && (
-                  <IconButton aria-label="delete" size="small" onClick={() => handleStepDelete(index)}>
-                    <DeleteOutlineIcon fontSize="inherit" />
-                  </IconButton>
-                )}
-                {steps.length - 1 === index &&
-                  steps.length < 10 && (
-                    <IconButton aria-label="add" size="small" onClick={handleStepAdd}>
-                      <AddCircleOutlineIcon fontSize="inherit" />
-                    </IconButton>
-                  )}
-              </>
+              <Step key={`step-${index}`} stepsLength={steps.length} step={step} index={index} onStepChange={handleStepChange} onStepDelete={handleStepDelete} onStepAdd={handleStepAdd} />
             ))}
-
-
 
           </Grid>
 
@@ -500,6 +348,7 @@ const RecipeForm = () => {
           >
             {recipeId ? "Edit this recipe" : "Add a recipe"}
           </Button>
+          
           <Grid container>
             <Grid item>
               {recipeId ?

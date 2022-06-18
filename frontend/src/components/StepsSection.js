@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from "react-router-dom"
+
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import uniqid from "uniqid"
 
 
-const Steps = (props) => {
+const StepsSection = (props) => {
   const { recipe } = props
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (recipe === undefined) {
+      navigate("/error404")
+    }
+  })
 
   return (
     <Grid
@@ -27,4 +36,4 @@ const Steps = (props) => {
   )
 }
 
-export default Steps
+export default StepsSection

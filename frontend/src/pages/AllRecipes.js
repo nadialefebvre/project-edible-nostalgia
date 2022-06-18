@@ -65,7 +65,7 @@ const AllRecipes = () => {
 
   return (
     <>
-      <Hero recipe={hero} />
+      <Hero hero={hero} />
       <Toolbar
         component="nav"
         variant="dense"

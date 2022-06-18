@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 import Hero from '../components/Hero'
 
@@ -10,11 +11,20 @@ const hero = {
   imageText: 'main image description',
 }
 
-const Home = () => {
+const Error404 = () => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate("/error404")
+  }, [navigate])
 
   return (
-    <Hero hero={hero} />
+    <>
+      <Hero hero={hero} />
+
+      <div>Not found</div>
+    </>
   )
 }
 
-export default Home
+export default Error404

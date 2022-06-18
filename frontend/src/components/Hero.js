@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 
 const Hero = (props) => {
-  const { recipe } = props
+  const { hero } = props
 
   return (
     <Paper
@@ -17,11 +17,11 @@ const Hero = (props) => {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundImage: `url(${recipe.image})`,
+        backgroundImage: `url(${hero.image})`,
       }}
     >
       {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none' }} src={recipe.image} alt={recipe.title} />}
+      {<img style={{ display: 'none' }} src={hero.image} alt={hero.title} />}
       <Box
         sx={{
           position: 'absolute',
@@ -41,11 +41,11 @@ const Hero = (props) => {
               pr: { md: 0 },
             }}
           >
-            <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-              {recipe.title}
+            <Typography component="h1" variant="h3" color="inherit" fontFamily="Meddon" gutterBottom>
+              {hero.title}
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
-              {recipe.description}
+              {hero.description}
             </Typography>
           </Box>
         </Grid>
