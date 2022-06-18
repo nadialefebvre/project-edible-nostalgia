@@ -26,11 +26,9 @@ const sections = [
   { title: 'Technology', url: '#' },
   { title: 'Design', url: '#' },
   { title: 'Culture', url: '#' },
-  { title: 'Business', url: '#' },
-  { title: 'Politics', url: '#' },
 ]
 
-export default function AllRecipes() {
+const AllRecipes = () => {
 
   const dispatch = useDispatch()
 
@@ -94,3 +92,5 @@ export default function AllRecipes() {
     </>
   )
 }
+
+export default AllRecipes
