@@ -25,6 +25,7 @@ import SingleRecipe from "./pages/SingleRecipe"
 // import TestPage from "pages/TestPage"
 import AddRecipe from "./pages/AddRecipe"
 import AllRecipes from "./pages/AllRecipes"
+import EditRecipe from "./pages/EditRecipe"
 
 const theme = createTheme()
 
@@ -67,7 +68,9 @@ const App = () => {
                 {/* <Route path="/loggedin" element={<LoggedIn />} /> */}
                 <Route path="/recipes" element={<AllRecipes />} />
                 <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
-                <Route path="/addrecipe" element={<AddRecipe />} />
+                <Route path="/addrecipe" element={<EditRecipe />} />
+                <Route path="/editrecipe/:recipeId" element={<EditRecipe />} />
+
                 <Route path="/login" element={<Login />} />
                 {/* <Route path="/testpage/:recipeId" element={<TestPage />} /> */}
                 {/* <Route path="/" element={<Home />} /> */}

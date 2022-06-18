@@ -15,11 +15,11 @@ import loading from "../reducers/loading"
 export default function SingleRecipe() {
   const { recipeId } = useParams()
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const [recipe, setRecipe] = useState({})
 
   const isLoading = useSelector((store) => store.loading.isLoading)
-
+  console.log(recipeId)
   useEffect(() => {
     dispatch(loading.actions.setLoading(true))
     const options = {
@@ -49,6 +49,7 @@ export default function SingleRecipe() {
       <Grid container spacing={5} sx={{ mt: 3 }}>
         <Sidebar recipe={recipe} />
         <Steps recipe={recipe} />
+        <button onClick={() => navigate(`/editrecipe/${recipe._id}`)}>Edit</button>
       </Grid>
     </>
   )
