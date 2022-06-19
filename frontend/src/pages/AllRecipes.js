@@ -6,7 +6,7 @@ import InputBase from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import SearchIcon from '@mui/icons-material/Search'
+import FilterListIcon from '@mui/icons-material/FilterList';
 import DirectionsIcon from '@mui/icons-material/Directions'
 import InputAdornment from '@mui/material/InputAdornment'
 
@@ -63,7 +63,7 @@ const AllRecipes = () => {
         }
         dispatch(loading.actions.setLoading(false))
       })
-  }, [])
+  }, [recipes])
 
   const [inputSearch, setInputSearch] = useState("")
 
@@ -91,7 +91,7 @@ const AllRecipes = () => {
           sx={{ ml: 1, flex: 1, p: '4px' }}
           placeholder="Filter the recipes (title or category)"
           inputProps={{ 'aria-label': 'filter the recipes' }}
-          endAdornment={<InputAdornment position="end"><SearchIcon /></InputAdornment>}
+          startAdornment={<InputAdornment position="start"><FilterListIcon /></InputAdornment>}
           onChange={onRecipeSearch}
         />
       </Paper>
