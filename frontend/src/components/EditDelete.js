@@ -2,6 +2,7 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 
 import Grid from '@mui/material/Grid'
+import Tooltip from '@mui/material/Tooltip'
 
 import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
@@ -25,20 +26,24 @@ const EditDelete = (props) => {
 
   return (
     <Grid container justifyContent="flex-end">
-      <IconButton
-        aria-label="edit"
-        size="small"
-        onClick={() => navigate(editPath)}
-      >
-        <EditIcon fontSize="small" />
-      </IconButton>
-      <IconButton
-        aria-label="delete"
-        size="small"
-        onClick={openAction}
-      >
-        <DeleteOutlineIcon fontSize="small" />
-      </IconButton>
+      <Tooltip title="Edit">
+        <IconButton
+          aria-label="edit"
+          size="small"
+          onClick={() => navigate(editPath)}
+        >
+          <EditIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Delete">
+        <IconButton
+          aria-label="delete"
+          size="small"
+          onClick={openAction}
+        >
+          <DeleteOutlineIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
       <Confirm
         open={open}
         setOpen={setOpen}
