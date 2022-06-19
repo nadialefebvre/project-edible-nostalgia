@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
@@ -48,7 +49,7 @@ const units = [
 ]
 
 const Ingredient = (props) => {
-  const {ingredientsLength, ingredient, index, onIngredientChange, onIngredientAdd, onIngredientDelete } = props
+  const { ingredientsLength, ingredient, index, onIngredientChange, onIngredientAdd, onIngredientDelete } = props
 
 
 
@@ -110,18 +111,22 @@ const Ingredient = (props) => {
             <Box sx={{
               width: 30, display: "flex", justifyContent: "flex-end", marginRight: 0
             }}>
-              <IconButton aria-label="add" size="small" onClick={onIngredientAdd}>
-                <AddCircleOutlineIcon fontSize="inherit" />
-              </IconButton>
+              <Tooltip title="Add" placement="right">
+                <IconButton aria-label="add" size="small" onClick={onIngredientAdd}>
+                  <AddCircleOutlineIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
             </Box>
           )}
         {ingredientsLength !== 1 && (
           <Box sx={{
             width: 30, display: "flex", justifyContent: "flex-end", marginRight: 0
           }}>
-            <IconButton aria-label="delete" size="small" onClick={() => onIngredientDelete(index)}>
-              <DeleteOutlineIcon fontSize="inherit" />
-            </IconButton>
+            <Tooltip title="Delete" placement="right">
+              <IconButton aria-label="delete" size="small" onClick={() => onIngredientDelete(index)}>
+                <DeleteOutlineIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
           </Box>
         )}
 
