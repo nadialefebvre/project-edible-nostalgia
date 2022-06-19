@@ -2,16 +2,10 @@ import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
-import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Toolbar from '@mui/material/Toolbar'
-import Link from '@mui/material/Link'
 import IconButton from '@mui/material/IconButton'
-import SearchIcon from '@mui/icons-material/Search'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import ContentCut from '@mui/icons-material/ContentCut'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -20,9 +14,11 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
 import ClearAllOutlinedIcon from '@mui/icons-material/ClearAllOutlined'
 
 import user from "../reducers/user"
+import BreadcrumbsNav from "./BreadcrumbsNav"
 
 const ITEM_HEIGHT = 48
 
@@ -45,133 +41,94 @@ const Header = () => {
   const firstName = useSelector((store) => store.user.firstName)
 
   return (
-    <>
-      <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', justifyContent: "space-between" }}>
-        {/* {accessToken &&
-          <Button size="small" onClick={() => dispatch(user.actions.logOut())}>Log out</Button>
-        } */}
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/">
-            MUI
-          </Link>
-          <Link
-            underline="hover"
-            color="inherit"
-            href="/material-ui/getting-started/installation/"
-          >
-            Core
-          </Link>
-          <Typography color="text.primary">Breadcrumbs</Typography>
-        </Breadcrumbs>
-        {/* <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          sx={{ flex: 1 }}
-        >
-          {firstName ? `${firstName}'s recipes` : "Your recipes"}
-        </Typography>
- */}
+    <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', justifyContent: "space-between" }}>
+      <BreadcrumbsNav />
 
-        <IconButton
-          aria-label="more"
-          id="long-button"
-          aria-controls={open ? 'long-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <MoreVertIcon />
-        </IconButton>
-        <Menu
-          id="long-menu"
-          MenuListProps={{
-            'aria-labelledby': 'long-button',
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: '20ch',
-            },
-          }}
-        >
+      <IconButton
+        aria-label="more"
+        id="long-button"
+        aria-controls={open ? 'long-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: '20ch',
+          },
+        }}
+      >
 
-          <MenuItem onClick={() => {
-            navigate("/")
-            setAnchorEl(null)
-          }}>
+        <MenuItem onClick={() => {
+          navigate("/")
+          setAnchorEl(null)
+        }}>
+          <ListItemIcon>
+            <HomeOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Home</ListItemText>
+        </MenuItem>
+
+        <MenuItem onClick={() => {
+          navigate("/recipes")
+          setAnchorEl(null)
+        }}>
+          <ListItemIcon>
+            <ClearAllOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>All recipes</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => {
+          navigate("/recipes/add")
+          setAnchorEl(null)
+        }}>
+          <ListItemIcon>
+            <AddOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Add recipe</ListItemText>
+        </MenuItem>
+
+        <MenuItem onClick={() => {
+          navigate("/profile")
+          setAnchorEl(null)
+        }}>
+          <ListItemIcon>
+            {accessToken ?
+              <LockOpenOutlinedIcon fontSize="small" />
+              :
+              <LockOutlinedIcon fontSize="small" />
+            }
+          </ListItemIcon>
+          <ListItemText>Profile</ListItemText>
+        </MenuItem>
+
+        {accessToken ?
+          <MenuItem onClick={() => dispatch(user.actions.logOut())}>
             <ListItemIcon>
-              <HomeOutlinedIcon fontSize="small" />
+              <LogoutOutlinedIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText>Home</ListItemText>
-          </MenuItem>
-
-          <MenuItem onClick={() => {
-            navigate("/recipes")
-            setAnchorEl(null)
-          }}>
+            <ListItemText>Log out</ListItemText>
+          </MenuItem> :
+          <MenuItem onClick={() => navigate("/login")}>
             <ListItemIcon>
-              <ClearAllOutlinedIcon fontSize="small" />
+              <LoginOutlinedIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText>All recipes</ListItemText>
+            <ListItemText>Log in</ListItemText>
           </MenuItem>
-          <MenuItem onClick={() => {
-            navigate("/recipes/add")
-            setAnchorEl(null)
-          }}>
-            <ListItemIcon>
-              <AddOutlinedIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Add recipe</ListItemText>
-          </MenuItem>
-
-          {accessToken &&
-            <MenuItem onClick={() => {
-              navigate("/user/profile")
-              setAnchorEl(null)
-            }}>
-              <ListItemIcon>
-                <LockOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Profile</ListItemText>
-            </MenuItem>
-          }
-
-          {accessToken ?
-            <MenuItem onClick={() => dispatch(user.actions.logOut())}>
-              <ListItemIcon>
-                <LogoutOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Log out</ListItemText>
-            </MenuItem> :
-            <MenuItem onClick={() => navigate("/user/login")}>
-              <ListItemIcon>
-                <LoginOutlinedIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Log in</ListItemText>
-            </MenuItem>
-          }
-        </Menu>
-
-        {/* <IconButton>
-          <SearchIcon />
-        </IconButton> */}
-        {/* <Box sx={{ width: 85 }}>
-          {accessToken ?
-            <Button variant="outlined" size="small" onClick={() => dispatch(user.actions.logOut())}>Log out</Button> :
-            <Button variant="outlined" size="small" onClick={() => navigate("/login")}>
-              Log in
-            </Button>
-          }
-        </Box>
- */}
-      </Toolbar>
-    </>
+        }
+      </Menu>
+    </Toolbar>
   )
 }
 

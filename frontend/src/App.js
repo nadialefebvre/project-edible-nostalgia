@@ -13,10 +13,8 @@ import Footer from './components/Footer'
 
 import loading from "reducers/loading"
 import user from "./reducers/user"
-// import LoggedIn from "./pages/LoggedIn"
 import Error404 from "pages/Error404"
 import Profile from "./pages/Profile"
-// import EditProfile from "./pages/EditProfile"
 import Home from "./pages/Home"
 import SingleRecipe from "./pages/SingleRecipe"
 import AllRecipes from "./pages/AllRecipes"
@@ -43,10 +41,6 @@ store.subscribe(() => {
   localStorage.setItem("state", JSON.stringify(store.getState()))
 })
 
-
-
-
-
 const App = () => {
   return (
     <Provider store={store}>
@@ -57,15 +51,13 @@ const App = () => {
             <Header />
             <main>
               <Routes>
-                {/* <Route path="/loggedin" element={<LoggedIn />} /> */}
                 <Route path="/recipes" element={<AllRecipes />} />
                 <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
                 <Route path="/recipes/add" element={<RecipeForm />} />
                 <Route path="/recipes/:recipeId/edit" element={<RecipeForm />} />
-                <Route path="/user/login" element={<UserForm />} />
-                <Route path="/user/profile" element={<Profile />} />
-                <Route path="/user/edit" element={<UserForm />} />
-
+                <Route path="/login" element={<UserForm />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/edit" element={<UserForm />} />
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<Error404 />} />
                 <Route path="/error404" element={<Error404 />} />

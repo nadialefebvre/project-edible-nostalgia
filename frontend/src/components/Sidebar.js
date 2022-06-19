@@ -19,12 +19,13 @@ const Sidebar = (props) => {
     <Grid item xs={12} md={4}>
       <Paper elevation={0} sx={{ p: 2, bgcolor: 'grey.200' }}>
         <Typography variant="h6" gutterBottom>
-          {recipe.servings} servings
+          {recipe.category}
         </Typography>
+        <Typography>{recipe.servings} serving{recipe.servings > 1 && "s"}</Typography>
         <Typography>{recipe.bakingTime}</Typography>
       </Paper>
       <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-        Ingredients
+        Ingredient{recipe.ingredients.length > 1 && "s"}
       </Typography>
       {recipe.ingredients.map((ingredient) => (
         <Typography display="block" variant="body1" key={ingredient.ingredient}>

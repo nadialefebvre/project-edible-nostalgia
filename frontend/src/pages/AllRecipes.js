@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import DirectionsIcon from '@mui/icons-material/Directions'
+import InputAdornment from '@mui/material/InputAdornment'
 
 import Grid from '@mui/material/Grid'
 import Toolbar from '@mui/material/Toolbar'
@@ -16,7 +17,6 @@ import Link from '@mui/material/Link'
 import { API_URL } from "../utils/urls"
 import loading from "../reducers/loading"
 import Loader from "../components/Loader"
-
 
 import Hero from '../components/Hero'
 import RecipeCard from "../components/RecipeCard"
@@ -88,14 +88,12 @@ const AllRecipes = () => {
       <Hero hero={hero} />
       <Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 320 }}>
         <InputBase
-          sx={{ ml: 1, flex: 1 }}
+          sx={{ ml: 1, flex: 1, p: '4px' }}
           placeholder="Filter the recipes (title or category)"
           inputProps={{ 'aria-label': 'filter the recipes' }}
+          endAdornment={<InputAdornment position="end"><SearchIcon /></InputAdornment>}
           onChange={onRecipeSearch}
         />
-        <IconButton sx={{ p: '10px' }} aria-label="search">
-          <SearchIcon />
-        </IconButton>
       </Paper>
       <Grid container spacing={4} marginTop={1}>
         {filteredRecipes.map((recipe) => (

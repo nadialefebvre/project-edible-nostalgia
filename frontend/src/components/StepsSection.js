@@ -31,7 +31,7 @@ const StepsSection = (props) => {
       md={8}
     >
       <Typography variant="h6" gutterBottom>
-        Steps
+        Step{recipe.steps.length > 1 && "s"}
       </Typography>
       <Divider />
       {recipe.steps.map(step => (
