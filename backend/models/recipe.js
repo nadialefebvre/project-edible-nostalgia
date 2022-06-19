@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 
+// FIX FIELDS EVENTUALLY
 const RecipeSchema = new mongoose.Schema({
   title: {
     type: String,

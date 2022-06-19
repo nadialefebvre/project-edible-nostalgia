@@ -62,10 +62,21 @@ const Profile = () => {
   return (
     <>
       <Hero hero={hero} />
-      <EditDelete editPath={"/profile/edit"} openAction={handleClickOpen} open={open} setOpen={setOpen} handleDeleteRecipe={handleDeleteProfile} itemId={userId} title={"Delete your profile?"} text={"Click to confirm that you want to delete your profile."} />
+      {accessToken &&
+        <EditDelete
+          editPath={"/profile/edit"}
+          openAction={handleClickOpen}
+          open={open}
+          setOpen={setOpen}
+          handleDelete={handleDeleteProfile}
+          itemId={userId}
+          title={"Delete your profile?"}
+          text={"Click to confirm that you want to delete your profile."}
+        />
+      }
       <Grid item xs={12} md={8}>
         <Typography variant="h6" gutterBottom>
-        Profile
+          Profile
         </Typography>
         <Divider />
         <Typography paragraph variant="p">

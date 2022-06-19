@@ -26,6 +26,7 @@ const SingleRecipe = () => {
   const [recipe, setRecipe] = useState({})
 
   const isLoading = useSelector((store) => store.loading.isLoading)
+  const accessToken = useSelector((store) => store.user.accessToken)
 
   useEffect(() => {
     dispatch(loading.actions.setLoading(true))
@@ -49,8 +50,8 @@ const SingleRecipe = () => {
     const options = {
       method: "DELETE",
       headers: {
-        // "Authorization": accessToken,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": accessToken,
       },
     }
 
@@ -80,18 +81,17 @@ const SingleRecipe = () => {
   return (
     <>
       <Hero hero={recipe} />
-      <EditDelete editPath={`/recipes/${recipe._id}/edit`} openAction={handleClickOpen} open={open} setOpen={setOpen} handleDeleteRecipe={handleDeleteRecipe} itemId={recipe._id} title={"Delete this recipe?"} text={"Click to confirm that you want to delete this recipe."} />
-      {/* <Grid container justifyContent="flex-end">
-        <IconButton aria-label="edit" size="small" onClick={() => navigate(`/recipes/${recipe._id}/edit`)}>
-          <EditIcon fontSize="small" />
-        </IconButton>
-        <IconButton aria-label="delete" size="small" onClick={handleClickOpen}>
-          <DeleteOutlineIcon fontSize="small" />
-        </IconButton>
-        <Confirm open={open} setOpen={setOpen} handleDeleteRecipe={handleDeleteRecipe} recipeId={recipe._id} />
-      </Grid> */}
-
-
+      {accessToken &&
+        <EditDelete
+          editPath={`/recipes/${recipe._id}/edit`}
+          openAction={handleClickOpen}
+          open={open} setOpen={setOpen}
+          handleDelete={handleDeleteRecipe}
+          itemId={recipe._id}
+          title={"Delete this recipe?"}
+          text={"Click to confirm that you want to delete this recipe."}
+        />
+      }
       <Grid container spacing={5}>
         <Sidebar recipe={recipe} />
         <StepsSection recipe={recipe} />

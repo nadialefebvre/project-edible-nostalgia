@@ -63,6 +63,7 @@ const Ingredient = (props) => {
           id="quantity"
           label="Qty"
           value={ingredient.quantity}
+          // inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
           onChange={(e) => onIngredientChange(e, index)}
         />
       </Grid>

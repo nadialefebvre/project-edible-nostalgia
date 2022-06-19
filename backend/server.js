@@ -107,46 +107,39 @@ app.get("/loggedin", (req, res) => {
 })
 
 //--------------------------- EDIT PROFILE ENDPOINT - PASSWORD ---------------------------//
-// app.patch("/users/user/:userId/edit/password", authenticateUser, editProfilePassword)
-app.patch("/users/user/:userId/edit/password", editProfilePassword)
+app.patch("/users/user/:userId/edit/password", authenticateUser, editProfilePassword)
 
 //--------------------------- EDIT PROFILE ENDPOINT - OTHER FIELDS ---------------------------//
-// app.patch("/users/user/:userId/edit/other", authenticateUser, editProfileOtherFields)
-app.patch("/users/user/:userId/edit/other", editProfileOtherFields)
+app.patch("/users/user/:userId/edit/other", authenticateUser, editProfileOtherFields)
 
+// TO REMOVE EVENTUALLY??
 //--------------------------- GET PROFILE ENDPOINT ---------------------------//
 app.get("/users/user/:userId", authenticateUser, getProfile)
 
 //--------------------------- DELETE PROFILE ENDPOINT ---------------------------//
-// app.delete("/users/user/:userId", authenticateUser, deleteProfile)
-app.delete("/users/user/:userId", deleteProfile)
-
-
+app.delete("/users/user/:userId", authenticateUser, deleteProfile)
 
 //--------------------------- ADD RECIPE ENDPOINT ---------------------------//
-// app.post("/recipes", authenticateUser, addRecipe)
-app.post("/recipes", addRecipe)
+app.post("/recipes", authenticateUser, addRecipe)
 
 //--------------------------- GET ALL RECIPES ENDPOINT FOR DEV PURPOSE - TO REMOVE EVENTUALLY ---------------------------//
 app.get("/recipes/all", getRecipes)
 
+// TO REMOVE EVENTUALLY??
 //--------------------------- GET RECIPES NOT ADDED BY USERS ENDPOINT ---------------------------//
 app.get("/recipes/no_user", getRecipesNoUser)
 
 //--------------------------- GET RECIPES ADDED BY SPECIFIC USER ENDPOINT ---------------------------//
-// app.get("/recipes/user/:userId", authenticateUser, getRecipesByUserId)
-app.get("/recipes/user/:userId", getRecipesByUserId)
+app.get("/recipes/user/:userId", authenticateUser, getRecipesByUserId)
 
 //--------------------------- GET SINGLE RECIPE ENDPOINT ---------------------------//
 app.get("/recipes/recipe/:recipeId", getSingleRecipe)
 
 //--------------------------- EDIT RECIPE ENDPOINT ---------------------------//
-// app.patch("/recipes/recipe/:recipeId", authenticateUser, editRecipe)
-app.patch("/recipes/recipe/:recipeId", editRecipe)
+app.patch("/recipes/recipe/:recipeId", authenticateUser, editRecipe)
 
 //--------------------------- DELETE RECIPE ENDPOINT ---------------------------//
-// app.delete("/recipes/recipe/:recipeId", authenticateUser, deleteRecipe)
-app.delete("/recipes/recipe/:recipeId", deleteRecipe)
+app.delete("/recipes/recipe/:recipeId", authenticateUser, deleteRecipe)
 
 
 // Start the server

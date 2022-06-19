@@ -38,11 +38,11 @@ const UserForm = () => {
 
   const [mode, setMode] = useState("login")
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     navigate("/recipes")
-  //   }
-  // }, [accessToken])
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/login")
+    }
+  }, [accessToken])
 
   const loginOrRegister = () => {
     if (!email || !password) {
@@ -89,8 +89,8 @@ const UserForm = () => {
     const options = {
       method: "PATCH",
       headers: {
-        // "Authorization": accessToken,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": accessToken
       },
       body: JSON.stringify({ firstName, email })
     }
@@ -120,8 +120,8 @@ const UserForm = () => {
     const options = {
       method: "PATCH",
       headers: {
-        // "Authorization": accessToken,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": accessToken
       },
       body: JSON.stringify({ password })
     }

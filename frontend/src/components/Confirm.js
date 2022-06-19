@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
 const Confirm = (props) => {
-  const { open, setOpen, handleDeleteRecipe, itemId, title, text } = props
+  const { open, setOpen, handleDelete, itemId, title, text } = props
 
   const handleClose = () => {
     setOpen(false)
@@ -31,7 +31,7 @@ const Confirm = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => handleDeleteRecipe(itemId)} autoFocus>
+          <Button onClick={() => handleDelete(itemId)} autoFocus>
             Delete
           </Button>
         </DialogActions>

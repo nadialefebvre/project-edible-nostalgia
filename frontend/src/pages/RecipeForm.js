@@ -19,8 +19,8 @@ import { API_URL } from "../utils/urls"
 import loading from "../reducers/loading"
 import Loader from "../components/Loader"
 import user from "../reducers/user"
-import Ingredient from "components/Ingredient"
-import Step from "components/Step"
+import Ingredient from "../components/Ingredient"
+import Step from "../components/Step"
 
 
 const categories = [
@@ -61,6 +61,8 @@ const RecipeForm = () => {
   const navigate = useNavigate()
 
   const isLoading = useSelector((store) => store.loading.isLoading)
+  const accessToken = useSelector((store) => store.user.accessToken)
+  const userId = useSelector((store) => store.user.userId)
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -115,16 +117,14 @@ const RecipeForm = () => {
     dispatch(loading.actions.setLoading(true))
     const options = {
       method: `${recipeId ? "PATCH" : "POST"}`,
-      // method: "PATCH",
       headers: {
-        // "Authorization": accessToken,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": accessToken
       },
-      body: JSON.stringify({ title, description, category, bakingTime, servings, ingredients, steps })
+      body: JSON.stringify({ title, description, category, bakingTime, servings, ingredients, steps, addedBy: userId })
     }
 
     fetch(API_URL(`${recipeId ? `recipes/recipe/${recipeId}` : "recipes"}`), options)
-      // fetch(API_URL(`recipes/recipe/${recipeId}`), options)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -222,142 +222,147 @@ const RecipeForm = () => {
         <Typography component="h1" variant="h5">
           {recipeId ? "EDIT recipe" : "ADD recipe"}
         </Typography>
-        <Box component="form" onSubmit={handleSubmitRecipe} noValidate sx={{ mt: 1 }}>
+        {!accessToken ?
+          <Box sx={{ mt: 1 }}>You need to be logged in to be able to {recipeId ? "edit" : "add"} a recipe</Box>
+          :
+          <Box component="form" onSubmit={handleSubmitRecipe} noValidate sx={{ mt: 1 }}>
 
-          <Grid container spacing={2}>
+            <Grid container spacing={2}>
 
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="title"
-                label="Title"
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="title"
+                  label="Title"
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  multiline
+                  maxRows={4}
+                  fullWidth
+                  name="description"
+                  label="Description"
+                  type="text"
+                  id="description"
+                  helperText="Write a meaningful description for your recipe"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Grid>
+
+
+              <Grid item xs={12}>
+                <TextField
+                  id="category"
+                  required
+                  fullWidth
+                  select
+                  label="Category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                // helperText="Category"
+                >
+                  {categories.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+
+
+
+              <Grid item xs={6} sm={6}>
+                <TextField
+                  name="servings"
+                  required
+                  fullWidth
+                  id="servings"
+                  label="Servings"
+                  value={servings}
+                  // inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                  onChange={(e) => setServings(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+
+                <TextField
+                  id="bakingTime"
+                  required
+                  fullWidth
+                  select
+                  label="Baking time"
+                  value={bakingTime}
+                  onChange={(e) => setBakingTime(e.target.value)}
+                // helperText="Baking time"
+                >
+                  {bakingTimes.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12} marginTop={2}>
+                <Typography variant="subtitle1" color="text.secondary">
+                  Ingredients
+                </Typography>
+              </Grid>
+
+
+              {ingredients.map((ingredient, index) => (
+                <Ingredient key={`ingredient-${index}`} ingredientsLength={ingredients.length} ingredient={ingredient} index={index} onIngredientChange={handleIngredientChange} onIngredientAdd={handleIngredientAdd} onIngredientDelete={handleIngredientDelete} />
+              ))}
+
+
+              <Grid item xs={12} marginTop={2}>
+                <Typography variant="subtitle1" color="text.secondary">
+                  Steps
+                </Typography>
+              </Grid>
+
+              {steps.map((step, index) => (
+                <Step key={`step-${index}`} stepsLength={steps.length} step={step} index={index} onStepChange={handleStepChange} onStepDelete={handleStepDelete} onStepAdd={handleStepAdd} />
+              ))}
+
             </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                required
-                multiline
-                maxRows={4}
-                fullWidth
-                name="description"
-                label="Description"
-                type="text"
-                id="description"
-                helperText="Write a meaningful description for your recipe"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
+
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              {recipeId ? "Edit this recipe" : "Add a recipe"}
+            </Button>
+
+            <Grid container>
+              <Grid item>
+                {recipeId ?
+                  <Link href="#" variant="body2" onClick={() => navigate(`/recipes/${recipeId}`)}>
+                    Changed your mind about these changes? Go back to recipe
+                  </Link>
+                  :
+                  <Link href="#" variant="body2" onClick={() => navigate("/recipes")}>
+                    You don't want to add this recipe anymore? Go back to all recipes
+                  </Link>
+                }
+              </Grid>
             </Grid>
-
-
-            <Grid item xs={12}>
-              <TextField
-                id="category"
-                required
-                fullWidth
-                select
-                label="Category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              // helperText="Category"
-              >
-                {categories.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-
-
-
-
-            <Grid item xs={6} sm={6}>
-              <TextField
-                name="servings"
-                required
-                fullWidth
-                id="servings"
-                label="Servings"
-                value={servings}
-                onChange={(e) => setServings(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={6} sm={6}>
-
-              <TextField
-                id="bakingTime"
-                required
-                fullWidth
-                select
-                label="Baking time"
-                value={bakingTime}
-                onChange={(e) => setBakingTime(e.target.value)}
-              // helperText="Baking time"
-              >
-                {bakingTimes.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-
-            <Grid item xs={12} marginTop={2}>
-              <Typography variant="subtitle1" color="text.secondary">
-                Ingredients
-              </Typography>
-            </Grid>
-
-
-            {ingredients.map((ingredient, index) => (
-              <Ingredient key={`ingredient-${index}`} ingredientsLength={ingredients.length} ingredient={ingredient} index={index} onIngredientChange={handleIngredientChange} onIngredientAdd={handleIngredientAdd} onIngredientDelete={handleIngredientDelete} />
-            ))}
-
-
-            <Grid item xs={12} marginTop={2}>
-              <Typography variant="subtitle1" color="text.secondary">
-                Steps
-              </Typography>
-            </Grid>
-
-            {steps.map((step, index) => (
-              <Step key={`step-${index}`} stepsLength={steps.length} step={step} index={index} onStepChange={handleStepChange} onStepDelete={handleStepDelete} onStepAdd={handleStepAdd} />
-            ))}
-
-          </Grid>
-
-
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            {recipeId ? "Edit this recipe" : "Add a recipe"}
-          </Button>
-
-          <Grid container>
-            <Grid item>
-              {recipeId ?
-                <Link href="#" variant="body2" onClick={() => navigate(`/recipes/${recipeId}`)}>
-                  Changed your mind about these changes? Go back to recipe
-                </Link>
-                :
-                <Link href="#" variant="body2" onClick={() => navigate("/recipes")}>
-                  You don't want to add this recipe anymore? Go back to all recipes
-                </Link>
-              }
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        }
       </Box>
     </Container>
   )
