@@ -47,7 +47,7 @@ const App = () => {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Container maxWidth="lg">
+          <Container maxWidth="md" sx={{ bgcolor: "aliceblue" }}>
             <Header />
             <main>
               <Routes>
@@ -63,11 +63,11 @@ const App = () => {
                 <Route path="/error404" element={<Error404 />} />
               </Routes>
             </main>
+            <Footer
+              title="Footer"
+              description="Something here to give the footer a purpose!"
+            />
           </Container>
-          <Footer
-            title="Footer"
-            description="Something here to give the footer a purpose!"
-          />
         </ThemeProvider>
       </BrowserRouter>
     </Provider>
