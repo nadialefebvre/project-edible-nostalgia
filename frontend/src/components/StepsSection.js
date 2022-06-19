@@ -35,12 +35,10 @@ const StepsSection = (props) => {
       </Typography>
       <Divider />
       {recipe.steps.map(step => (
-
-          <Typography key={uniqid()} paragraph variant="p">
-            {/* {step} */}
-            {isLoading ? <Skeleton /> : step}
-          </Typography>
-
+        <Typography key={uniqid()} paragraph variant="p">
+          {/* {step} */}
+          {isLoading ? <Skeleton /> : step}
+        </Typography>
       ))}
     </Grid>
   )

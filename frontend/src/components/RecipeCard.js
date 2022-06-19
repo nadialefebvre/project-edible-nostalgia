@@ -21,7 +21,7 @@ const RecipeCard = (props) => {
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea onClick={() => navigate(`/recipes/${recipe._id}`)} component="a" href="#">
-        {isLoading ? <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 1 }}/> :
+        {/* {isLoading ? <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 1 }}/> : */}
 
           <Card sx={{ display: 'flex' }}>
             <CardContent sx={{ flex: 1 }}>
@@ -31,6 +31,7 @@ const RecipeCard = (props) => {
               <Typography variant="subtitle1" paragraph color="text.secondary">
                 {recipe.description}
               </Typography>
+              {/* maybe remove "read more (and remove "paragraph" attribute to description) */}
               <Typography variant="subtitle1" color="primary">
                 Read more...
               </Typography>
@@ -42,7 +43,7 @@ const RecipeCard = (props) => {
               alt={recipe.imageLabel}
             />
           </Card>
-        }
+        {/* } */}
       </CardActionArea>
     </Grid>
   )
