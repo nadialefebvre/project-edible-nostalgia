@@ -27,7 +27,7 @@ const BreadcrumbsNav = () => {
           component={NavLink}
           underline="hover"
           color="inherit"
-          href="#"
+          href={match.pathname}
           to={match.pathname}
         >
           {breadcrumb}

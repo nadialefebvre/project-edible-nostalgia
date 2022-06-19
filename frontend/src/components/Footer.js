@@ -11,7 +11,7 @@ const Footer = (props) => {
   return (
     <Box component="footer" sx={{ py: 6 }}>
       <Container maxWidth="lg">
-        <Typography variant="h6" align="center" gutterBottom>
+        {/* <Typography variant="h6" align="center" gutterBottom>
           {title}
         </Typography>
         <Typography
@@ -21,7 +21,7 @@ const Footer = (props) => {
           component="p"
         >
           {description}
-        </Typography>
+        </Typography> */}
         <Copyright />
       </Container>
     </Box>

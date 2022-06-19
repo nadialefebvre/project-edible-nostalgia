@@ -26,7 +26,7 @@ import { API_URL } from "../utils/urls"
 import user from "../reducers/user"
 import loading from "../reducers/loading"
 
-function descendingComparator(a, b, orderBy) {
+const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
     return -1
   }
@@ -36,7 +36,7 @@ function descendingComparator(a, b, orderBy) {
   return 0
 }
 
-function getComparator(order, orderBy) {
+const getComparator = (order, orderBy) => {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy)
@@ -65,7 +65,7 @@ const headCells = [
   },
 ]
 
-function EnhancedTableHead(props) {
+const EnhancedTableHead = (props) => {
   const { order, orderBy, onRequestSort } =
     props
   const createSortHandler = (property) => (event) => {
@@ -101,7 +101,7 @@ function EnhancedTableHead(props) {
   )
 }
 
-const Profile = () => {
+const Profile = ({hero}) => {
 
   const [order, setOrder] = useState('asc')
   const [orderBy, setOrderBy] = useState('title')
@@ -120,15 +120,6 @@ const Profile = () => {
   const email = useSelector((store) => store.user.email)
   const accessToken = useSelector((store) => store.user.accessToken)
   const userId = useSelector((store) => store.user.userId)
-
-  const hero = {
-    title: 'Title of a longer featured blog post',
-    description:
-      "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-    image: 'https://source.unsplash.com/random',
-    imageText: 'main image description',
-  }
-
 
   const handleDeleteProfile = () => {
     const options = {

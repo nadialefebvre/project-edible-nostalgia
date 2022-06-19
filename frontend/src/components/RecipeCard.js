@@ -22,7 +22,7 @@ const RecipeCard = (props) => {
 
   return (
     <Grid item xs={12} md={6}>
-      <CardActionArea onClick={() => navigate(`/recipes/${recipe._id}`)} component="a" href="#">
+      <CardActionArea onClick={() => navigate(`/recipes/${recipe._id}`)} component="a" href={`/recipes/${recipe._id}`}>
         {/* {isLoading ? <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 1 }}/> : */}
 
           <Card sx={{ display: 'flex' }}>

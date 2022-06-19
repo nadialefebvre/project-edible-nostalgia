@@ -16,6 +16,8 @@ const Step = (props) => {
         <TextField
           required
           fullWidth
+          multiline
+          maxRows={4}
           id="step"
           label="Step"
           name="step"

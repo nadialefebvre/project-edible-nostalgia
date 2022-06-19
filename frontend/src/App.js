@@ -41,6 +41,14 @@ store.subscribe(() => {
   localStorage.setItem("state", JSON.stringify(store.getState()))
 })
 
+const hero = {
+  title: 'Edible nostalgia',
+  description:
+  "Food has a special place in our brain, it is deeply connected to all our reminiscences. Collect here your precious recipes.",
+  image: 'https://res.cloudinary.com/devnadia/image/upload/v1655658415/nostalgia_qk8prs.jpg'
+}
+
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -51,16 +59,16 @@ const App = () => {
             <Header />
             <main>
               <Routes>
-                <Route path="/recipes" element={<AllRecipes />} />
+                <Route path="/recipes" element={<AllRecipes hero={hero} />} />
                 <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
                 <Route path="/recipes/add" element={<RecipeForm />} />
                 <Route path="/recipes/:recipeId/edit" element={<RecipeForm />} />
                 <Route path="/login" element={<UserForm />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile hero={hero} />} />
                 <Route path="/profile/edit" element={<UserForm />} />
-                <Route path="/" element={<Home />} />
-                <Route path="*" element={<Error404 />} />
-                <Route path="/error404" element={<Error404 />} />
+                <Route path="/" element={<Home hero={hero} />} />
+                <Route path="*" element={<Error404 hero={hero} />} />
+                <Route path="/error404" element={<Error404 hero={hero} />} />
               </Routes>
             </main>
             <Footer

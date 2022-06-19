@@ -355,11 +355,11 @@ const RecipeForm = () => {
             <Grid container>
               <Grid item>
                 {recipeId ?
-                  <Link href="#" variant="body2" onClick={() => navigate(`/recipes/${recipeId}`)}>
+                  <Link href={`/recipes/${recipeId}`} variant="body2" onClick={() => navigate(`/recipes/${recipeId}`)}>
                     Changed your mind about these changes? Go back to recipe
                   </Link>
                   :
-                  <Link href="#" variant="body2" onClick={() => navigate("/recipes")}>
+                  <Link href="/recipes" variant="body2" onClick={() => navigate("/recipes")}>
                     You don't want to add this recipe anymore? Go back to all recipes
                   </Link>
                 }

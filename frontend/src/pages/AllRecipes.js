@@ -3,16 +3,10 @@ import { useDispatch, useSelector } from "react-redux"
 
 import Paper from '@mui/material/Paper'
 import InputBase from '@mui/material/InputBase'
-import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
 import FilterListIcon from '@mui/icons-material/FilterList';
-import DirectionsIcon from '@mui/icons-material/Directions'
 import InputAdornment from '@mui/material/InputAdornment'
 
 import Grid from '@mui/material/Grid'
-import Toolbar from '@mui/material/Toolbar'
-import Link from '@mui/material/Link'
 
 import { API_URL } from "../utils/urls"
 import loading from "../reducers/loading"
@@ -21,21 +15,7 @@ import Loader from "../components/Loader"
 import Hero from '../components/Hero'
 import RecipeCard from "../components/RecipeCard"
 
-const hero = {
-  title: 'Title of a longer featured blog post',
-  description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: 'https://source.unsplash.com/random',
-  imageText: 'main image description',
-}
-
-const sections = [
-  { title: 'Technology', url: '#' },
-  { title: 'Design', url: '#' },
-  { title: 'Culture', url: '#' },
-]
-
-const AllRecipes = () => {
+const AllRecipes = ({hero}) => {
 
   const dispatch = useDispatch()
 

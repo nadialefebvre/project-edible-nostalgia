@@ -153,6 +153,7 @@ const UserForm = () => {
       }
     } else {
       loginOrRegister()
+      navigate("/profile")
     }
   }
 
