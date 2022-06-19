@@ -9,6 +9,7 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Skeleton from '@mui/material/Skeleton'
 
+import { imageToUse } from "../utils/urls"
 import loading from "../reducers/loading"
 
 const RecipeCard = (props) => {
@@ -17,6 +18,7 @@ const RecipeCard = (props) => {
   const dispatch = useDispatch()
 
   const isLoading = useSelector((store) => store.loading.isLoading)
+
 
   return (
     <Grid item xs={12} md={6}>
@@ -39,7 +41,7 @@ const RecipeCard = (props) => {
             <CardMedia
               component="img"
               sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-              image={recipe.image}
+              image={imageToUse(recipe.category)}
               alt={recipe.imageLabel}
             />
           </Card>

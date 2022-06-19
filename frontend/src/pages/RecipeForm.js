@@ -29,12 +29,16 @@ const categories = [
     label: 'Christmas',
   },
   {
+    value: 'Childhood',
+    label: 'Childhood',
+  },
+  {
     value: 'Birthday',
     label: 'Birthday',
   },
   {
-    value: 'Whatever',
-    label: 'Whatever',
+    value: 'Homesick',
+    label: 'Homesick',
   }
 ]
 
