@@ -103,6 +103,30 @@ export const getRecipesByUserId = async (req, res) => {
   }
 }
 
+//--------------------------- GET RECIPES ADDED BY SPECIFIC USER + NOT ADDED BY USERS CONTROLLER ---------------------------//
+export const getRecipesByUserIdAndNoUser = async (req, res) => {
+  const { userId } = req.params
+
+  try {
+    const allRecipesByUserId = await Recipe.find({ $or: [{ addedBy: userId }, { addedBy: undefined }] })
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: allRecipesByUserId
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request.",
+        errors: error
+      }
+    })
+  }
+}
+
 //--------------------------- GET SINGLE RECIPE CONTROLLER ---------------------------//
 export const getSingleRecipe = async (req, res) => {
   const { recipeId } = req.params

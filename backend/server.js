@@ -17,6 +17,7 @@ import {
   getRecipes,
   getRecipesNoUser,
   getRecipesByUserId,
+  getRecipesByUserIdAndNoUser,
   getSingleRecipe,
   editRecipe,
   deleteRecipe
@@ -39,7 +40,7 @@ app.use((req, res, next) => {
   } else {
     res.status(503).json({ error: "Service unavailable" })
   }
-}) 
+})
 
 app.get("/", (req, res) => {
   res.send(
@@ -131,6 +132,9 @@ app.get("/recipes/no_user", getRecipesNoUser)
 
 //--------------------------- GET RECIPES ADDED BY SPECIFIC USER ENDPOINT ---------------------------//
 app.get("/recipes/user/:userId", authenticateUser, getRecipesByUserId)
+
+//--------------------------- GET RECIPES ADDED BY SPECIFIC USER + NOT ADDED BY USERS ENDPOINT ---------------------------//
+app.get("/recipes/user/:userId/all", authenticateUser, getRecipesByUserIdAndNoUser)
 
 //--------------------------- GET SINGLE RECIPE ENDPOINT ---------------------------//
 app.get("/recipes/recipe/:recipeId", getSingleRecipe)

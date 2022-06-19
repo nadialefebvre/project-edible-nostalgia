@@ -53,6 +53,7 @@ const AllRecipes = () => {
       },
     }
 
+    // use other endpoint for recipes by user + no user
     fetch(API_URL(`recipes/all`), options)
       .then((res) => res.json())
       .then((data) => {
