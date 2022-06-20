@@ -4,22 +4,21 @@ import crypto from "crypto"
 const UserSchema = new mongoose.Schema({
   firstName: String,
   email: {
-		type: String,
-		lowercase: true,
-		unique: true,
-		required: true,
-	},
+    type: String,
+    lowercase: true,
+    unique: true,
+    required: true,
+  },
   password: {
     type: String,
     required: true,
   },
-  // recipes: [
-	// 	{
-	// 		type: Schema.Types.ObjectId,
-	// 		default: [],
-	// 		ref: 'recipe',
-	// 	},
-	// ],
+  ratings: [
+    {
+      recipeId: String,
+      rating: Number
+    }
+  ],
   accessToken: {
     type: String,
     default: () => crypto.randomBytes(128).toString("hex")

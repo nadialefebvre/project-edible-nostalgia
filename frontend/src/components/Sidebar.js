@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom"
+import uniqid from "uniqid"
 
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -27,8 +28,8 @@ const Sidebar = (props) => {
       <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
         Ingredient{recipe.ingredients.length > 1 && "s"}
       </Typography>
-      {recipe.ingredients.map((ingredient) => (
-        <Typography display="block" variant="body1" key={ingredient.ingredient}>
+      {recipe.ingredients.map((ingredient, index) => (
+        <Typography display="block" variant="body1" key={uniqid()}>
           {ingredient.quantity} {ingredient.unit} {ingredient.ingredient}
         </Typography>
       ))}

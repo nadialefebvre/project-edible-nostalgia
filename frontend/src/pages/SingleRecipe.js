@@ -3,11 +3,9 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 
 import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-
-import IconButton from '@mui/material/IconButton'
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import Box from '@mui/material/Box'
+import Rating from '@mui/material/Rating'
+import Typography from '@mui/material/Typography'
 
 import Hero from '../components/Hero'
 import Sidebar from '../components/Sidebar'
@@ -15,8 +13,8 @@ import StepsSection from "../components/StepsSection"
 import { API_URL } from "../utils/urls"
 import Loader from "../components/Loader"
 import loading from "../reducers/loading"
-import Confirm from "../components/Confirm"
 import EditDelete from "../components/EditDelete"
+import { SentimentVerySatisfiedRounded } from "@mui/icons-material"
 
 const SingleRecipe = () => {
   const { recipeId } = useParams()
@@ -24,9 +22,37 @@ const SingleRecipe = () => {
   const navigate = useNavigate()
 
   const [recipe, setRecipe] = useState({})
+  const [userRatings, setUserRatings] = useState([])
 
   const isLoading = useSelector((store) => store.loading.isLoading)
   const accessToken = useSelector((store) => store.user.accessToken)
+  const userId = useSelector((store) => store.user.userId)
+
+  useEffect(() => {
+    dispatch(loading.actions.setLoading(true))
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": accessToken,
+      },
+    }
+
+    fetch(API_URL(`users/user/${userId}`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setUserRatings(data.response.ratings)
+        } else {
+          alert(data.response.message)
+        }
+        dispatch(loading.actions.setLoading(false))
+      })
+  }, [])
+
+
+const recipeRating = userRatings.find(item => item.recipeId === recipeId)
+
 
   useEffect(() => {
     dispatch(loading.actions.setLoading(true))
@@ -74,6 +100,61 @@ const SingleRecipe = () => {
   }
 
 
+
+  const [rating, setRating] = useState(0)
+  const [isRated, setIsRated] = useState(false)
+
+
+  const addRatingToRecipe = () => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": accessToken,
+      },
+      body: JSON.stringify({ rating })
+    }
+
+    fetch(API_URL(`recipes/recipe/${recipeId}/rating`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Recipe has been rated")
+        } else {
+          alert(data.response.message)
+        }
+      })
+  }
+
+  const addRatingToUser = () => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": accessToken,
+      },
+      body: JSON.stringify({ recipeId, rating })
+    }
+
+    fetch(API_URL(`users/user/${userId}/edit/rating`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          alert("User rating has been added")
+        } else {
+          alert(data.response.message)
+        }
+      })
+  }
+
+  const handleRateRecipe = () => {
+    addRatingToRecipe()
+    addRatingToUser()
+    setIsRated(true)
+  }
+
+
+
   if (isLoading || Object.keys(recipe).length === 0) {
     return <Loader />
   }
@@ -92,6 +173,13 @@ const SingleRecipe = () => {
           text={"Click to confirm that you want to delete this recipe."}
         />
       }
+      <Typography component="legend" color="text.secondary">{recipeRating !== undefined || isRated ? "Your rating" : "Rate this recipe"}</Typography>
+      <Rating
+        value={recipeRating !== undefined ? recipeRating.rating : rating}
+        disabled={recipeRating !== undefined || isRated}
+        onChangeActive={(event, newValue) => setRating(newValue)}
+        onChange={handleRateRecipe}
+      />
       <Grid container spacing={5}>
         <Sidebar recipe={recipe} />
         <StepsSection recipe={recipe} />

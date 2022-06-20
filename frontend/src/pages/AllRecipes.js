@@ -44,7 +44,7 @@ const AllRecipes = ({hero}) => {
         }
         dispatch(loading.actions.setLoading(false))
       })
-  }, [recipes])
+  }, [])
 
   const [inputSearch, setInputSearch] = useState("")
 

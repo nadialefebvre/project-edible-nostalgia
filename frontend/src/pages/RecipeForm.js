@@ -125,7 +125,7 @@ const RecipeForm = () => {
         "Content-Type": "application/json",
         "Authorization": accessToken
       },
-      body: JSON.stringify({ title, description, category, bakingTime, servings, ingredients, steps, addedBy: userId })
+      body: JSON.stringify({ title, description, category, bakingTime, servings, ingredients, steps, ratingCount: 0, totalRating: 0, addedBy: userId })
     }
 
     fetch(API_URL(`${recipeId ? `recipes/recipe/${recipeId}` : "recipes"}`), options)

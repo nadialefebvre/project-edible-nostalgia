@@ -14,25 +14,18 @@ export const imageToUse = (category) => {
   switch (category) {
     case "Homesick":
       return "https://res.cloudinary.com/devnadia/image/upload/v1655655685/maple_f8n3r1.jpg"
-      break
     case "Childhood":
       return "https://res.cloudinary.com/devnadia/image/upload/v1655652905/childhood_aep1gl.jpg"
-      break
     case "Birthday":
       return "https://res.cloudinary.com/devnadia/image/upload/v1655654517/birthday_eyj6w9.jpg"
-      break
     case "Christmas":
       return "https://res.cloudinary.com/devnadia/image/upload/v1655654833/christmas_yl7v9f.jpg"
-      break
     // case "Grandma":
     //   return ""
-    //   break
     // case "":
     //   return ""
-    //   break
     // case "":
     //   return ""
-    //   break
 
     default:
       return ""

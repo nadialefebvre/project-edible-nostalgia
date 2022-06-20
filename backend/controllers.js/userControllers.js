@@ -178,6 +178,41 @@ export const editProfileOtherFields = async (req, res) => {
   }
 }
 
+//--------------------------- ADD RATING TO USER CONTROLLER ---------------------------//
+export const addRatingToUser = async (req, res) => {
+  const { userId } = req.params
+  const { recipeId, rating } = req.body
+
+  try {
+    const newRating = {
+      recipeId,
+      rating
+    }
+    await User.findByIdAndUpdate(userId, {
+      $push: {
+        ratings: newRating,
+      },
+    })
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: {
+        message: "User rating has been added."
+      }
+    })
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request, could not find and update this user.",
+        error: err.errors
+      }
+    })
+  }
+}
+
 //--------------------------- GET PROFILE CONTROLLER ---------------------------//
 export const getProfile = async (req, res) => {
   const { userId } = req.params

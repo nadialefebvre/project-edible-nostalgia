@@ -153,26 +153,28 @@ const Profile = ({hero}) => {
 
 
   useEffect(() => {
-    dispatch(loading.actions.setLoading(true))
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": accessToken,
-      },
-    }
+    if (userId != null) {
+      dispatch(loading.actions.setLoading(true))
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": accessToken,
+        },
+      }
 
-    fetch(API_URL(slugToUse), options)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setUserRecipes(data.response)
-        } else {
-          alert(data.response.message)
-        }
-        dispatch(loading.actions.setLoading(false))
-      })
-  }, [userRecipes])
+      fetch(API_URL(slugToUse), options)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            setUserRecipes(data.response)
+          } else {
+            alert(data.response.message)
+          }
+          dispatch(loading.actions.setLoading(false))
+        })
+      }
+  }, [userId])
 
 
 

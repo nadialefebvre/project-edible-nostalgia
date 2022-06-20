@@ -59,16 +59,16 @@ const UserForm = () => {
         .then(data => {
           if (data.success) {
             batch(() => {
-              if (mode === "register") {
-                alert("User has been created.")
-              } else {
-                alert("User is now logged in.")
-              }
               dispatch(user.actions.setFirstName(data.response.firstName))
               dispatch(user.actions.setEmail(data.response.email))
               dispatch(user.actions.setUserId(data.response.userId))
               dispatch(user.actions.setAccessToken(data.response.accessToken))
               dispatch(user.actions.setError(null))
+              if (mode === "register") {
+                alert("User has been created.")
+              } else {
+                alert("User is now logged in.")
+              }              
             })
           } else {
             batch(() => {

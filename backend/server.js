@@ -9,6 +9,7 @@ import {
   loginUser,
   editProfilePassword,
   editProfileOtherFields,
+  addRatingToUser,
   getProfile,
   deleteProfile
 } from "./controllers.js/userControllers"
@@ -20,6 +21,7 @@ import {
   getRecipesByUserIdAndNoUser,
   getSingleRecipe,
   editRecipe,
+  addRatingToRecipe,
   deleteRecipe
 } from "./controllers.js/recipeControllers"
 import User from "./models/user"
@@ -113,6 +115,9 @@ app.patch("/users/user/:userId/edit/password", authenticateUser, editProfilePass
 //--------------------------- EDIT PROFILE ENDPOINT - OTHER FIELDS ---------------------------//
 app.patch("/users/user/:userId/edit/other", authenticateUser, editProfileOtherFields)
 
+//--------------------------- ADD RATING TO RECIPE ENDPOINT ---------------------------//
+app.patch("/users/user/:userId/edit/rating", authenticateUser, addRatingToUser)
+
 // TO REMOVE EVENTUALLY??
 //--------------------------- GET PROFILE ENDPOINT ---------------------------//
 app.get("/users/user/:userId", authenticateUser, getProfile)
@@ -141,6 +146,9 @@ app.get("/recipes/recipe/:recipeId", getSingleRecipe)
 
 //--------------------------- EDIT RECIPE ENDPOINT ---------------------------//
 app.patch("/recipes/recipe/:recipeId", authenticateUser, editRecipe)
+
+//--------------------------- ADD RATING TO RECIPE ENDPOINT ---------------------------//
+app.patch("/recipes/recipe/:recipeId/rating", authenticateUser, addRatingToRecipe)
 
 //--------------------------- DELETE RECIPE ENDPOINT ---------------------------//
 app.delete("/recipes/recipe/:recipeId", authenticateUser, deleteRecipe)

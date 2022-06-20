@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-// FIX FIELDS EVENTUALLY
+// FIX FIELDS EVENTUALLY : REQUIRED OR NOT here?? UNIQUE?
 const RecipeSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -11,19 +11,12 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: {
-    type: String
-  },
   category: {
     type: String,
     required: true,
   },
-  bakingTime: {
-    type: String
-  },
-  servings: {
-    type: Number
-  },
+  bakingTime: String,
+  servings: Number,
   ingredients: [
     {
       quantity: Number,
@@ -35,7 +28,9 @@ const RecipeSchema = new mongoose.Schema({
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
-  }
+  },
+  ratingCount: Number,
+  totalRating: Number
 })
 
 const Recipe = mongoose.model("Recipe", RecipeSchema)

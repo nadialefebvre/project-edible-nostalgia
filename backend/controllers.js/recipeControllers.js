@@ -195,6 +195,33 @@ export const editRecipe = async (req, res) => {
   }
 }
 
+//--------------------------- ADD RATING TO RECIPE CONTROLLER ---------------------------//
+export const addRatingToRecipe = async (req, res) => {
+  const { recipeId } = req.params
+  const { rating } = req.body
+
+  try {
+    await Recipe.findByIdAndUpdate(recipeId, { $inc: { ratingCount: 1, totalRating: rating } })
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: {
+        message: "Recipe has been rated."
+      }
+    })
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      status_code: 400,
+      response: {
+        message: "Bad request, could not find and rate this recipe.",
+        error: err.errors
+      }
+    })
+  }
+}
+
 
 //--------------------------- DELETE RECIPE CONTROLLER ---------------------------//
 export const deleteRecipe = async (req, res) => {
