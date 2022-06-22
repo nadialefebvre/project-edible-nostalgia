@@ -1,78 +1,62 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined'
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
-import ClearAllOutlinedIcon from '@mui/icons-material/ClearAllOutlined'
+import Toolbar from "@mui/material/Toolbar"
+import IconButton from "@mui/material/IconButton"
+import ListItemText from "@mui/material/ListItemText"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import Menu from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
+import MoreVertIcon from "@mui/icons-material/MoreVert"
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined"
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined"
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
+import ClearAllOutlinedIcon from "@mui/icons-material/ClearAllOutlined"
 
-import user from "../reducers/user"
 import BreadcrumbsNav from "./BreadcrumbsNav"
-
-const ITEM_HEIGHT = 48
+import user from "../reducers/user"
 
 const Header = () => {
-
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
   const dispatch = useDispatch()
-
   const navigate = useNavigate()
 
-  const accessToken = useSelector((store) => store.user.accessToken)
-  const firstName = useSelector((store) => store.user.firstName)
+  const accessToken = useSelector(store => store.user.accessToken)
+  
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const open = Boolean(anchorEl)
 
   return (
     <Toolbar sx={{
       borderBottom: 1,
-      borderColor: 'divider',
+      borderColor: "divider",
       justifyContent: "space-between",
-      displayPrint: 'none'
+      displayPrint: "none"
     }}>
       <BreadcrumbsNav />
 
       <IconButton
         aria-label="more"
         id="long-button"
-        aria-controls={open ? 'long-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
+        aria-controls={open ? "long-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
-        onClick={handleClick}
+        onClick={(e) => setAnchorEl(e.currentTarget)}
       >
         <MoreVertIcon />
       </IconButton>
+
       <Menu
         id="long-menu"
         MenuListProps={{
-          'aria-labelledby': 'long-button',
+          "aria-labelledby": "long-button",
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch',
-          },
-        }}
+        onClose={() => setAnchorEl(null)}
       >
 
         <MenuItem onClick={() => {
@@ -84,7 +68,7 @@ const Header = () => {
           </ListItemIcon>
           <ListItemText>All</ListItemText>
         </MenuItem>
-        
+
         <MenuItem onClick={() => {
           navigate("/recipes/add")
           setAnchorEl(null)
@@ -113,12 +97,13 @@ const Header = () => {
           <MenuItem onClick={() => {
             navigate("/recipes")
             dispatch(user.actions.logOut())
-            }}>
+          }}>
             <ListItemIcon>
               <LogoutOutlinedIcon fontSize="small" color="secondary" />
             </ListItemIcon>
             <ListItemText>Log out</ListItemText>
-          </MenuItem> :
+          </MenuItem>
+          :
           <MenuItem onClick={() => navigate("/login")}>
             <ListItemIcon>
               <LoginOutlinedIcon fontSize="small" color="secondary" />

@@ -1,21 +1,12 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from "react-router-dom"
+import React from "react"
 import uniqid from "uniqid"
 
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import Divider from "@mui/material/Divider"
 
 const StepsSection = (props) => {
   const { recipe } = props
-  const navigate = useNavigate()
-
-  // need to check if still useful
-  useEffect(() => {
-    if (recipe === undefined) {
-      navigate("/error404")
-    }
-  })
 
   return (
     <Grid
@@ -27,8 +18,13 @@ const StepsSection = (props) => {
         Step{recipe.steps.length > 1 && "s"}
       </Typography>
       <Divider />
+
       {recipe.steps.map(step => (
-        <Typography key={uniqid()} paragraph variant="p">
+        <Typography
+          key={uniqid()}
+          paragraph
+          variant="p"
+        >
           {step}
         </Typography>
       ))}

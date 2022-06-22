@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Provider } from "react-redux"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
+
 import CssBaseline from "@mui/material/CssBaseline"
 import Container from "@mui/material/Container"
 import { ThemeProvider } from "@mui/material/styles"
@@ -14,10 +15,10 @@ import Profile from "./pages/Profile"
 import UserForm from "./pages/UserForm"
 import Error404 from "pages/Error404"
 import AccessDenied from "./pages/AccessDenied"
-import loading from "reducers/loading"
-import user from "./reducers/user"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+import loading from "reducers/loading"
+import user from "./reducers/user"
 import { theme } from "./utils/theme"
 
 const reducer = combineReducers({
@@ -42,7 +43,6 @@ const hero = {
   title: "Edible nostalgia",
 }
 
-
 const App = () => {
   return (
     <Provider store={store}>
@@ -53,17 +53,17 @@ const App = () => {
             <Header />
             <main>
               <Routes>
-                <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
                 <Route path="/recipes/add" element={<RecipeForm />} />
-                <Route path="/recipes" element={<Recipes hero={hero} />} />
                 <Route path="/recipes/:recipeId/edit" element={<RecipeForm />} />
+                <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
+                <Route path="/recipes" element={<Recipes hero={hero} />} />
                 <Route path="/login" element={<UserForm />} />
-                <Route path="/profile" element={<Profile hero={hero} />} />
                 <Route path="/profile/edit" element={<UserForm />} />
-                <Route path="/" element={<Home hero={hero} />} />
-                <Route path="*" element={<Error404 hero={hero} />} />
+                <Route path="/profile" element={<Profile hero={hero} />} />
                 <Route path="/error404" element={<Error404 hero={hero} />} />
                 <Route path="/accessdenied" element={<AccessDenied hero={hero} />} />
+                <Route path="/" element={<Home hero={hero} />} />
+                <Route path="*" element={<Error404 hero={hero} />} />
               </Routes>
             </main>
             <Footer />

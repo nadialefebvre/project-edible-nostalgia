@@ -1,13 +1,13 @@
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import Divider from "@mui/material/Divider"
 
-import Hero from '../components/Hero'
+import Hero from "../components/Hero"
 
-const Error404 = ({hero}) => {
+const Error404 = ({ hero }) => {
   const navigate = useNavigate()
 
   useEffect(() => {

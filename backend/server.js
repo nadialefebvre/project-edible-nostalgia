@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
     {
       "Welcome!": "Nadia's final project",
       "All endpoints are listed here": "/endpoints",
-      "Frontend": "https://URL.HERE"
+      "Frontend": "https://edible-nostalgia.netlify.app/"
     }
   )
 })
@@ -97,18 +97,6 @@ const authenticateUser = async (req, res, next) => {
   }
 }
 
-// TO REMOVE EVENTUALLY
-app.get("/loggedin", authenticateUser)
-app.get("/loggedin", (req, res) => {
-  res.status(200).json({
-    success: true,
-    status_code: 200,
-    response: {
-      message: "You are logged in!"
-    }
-  })
-})
-
 //--------------------------- EDIT PROFILE ENDPOINT - PASSWORD ---------------------------//
 app.patch("/users/user/:userId/edit/password", authenticateUser, editProfilePassword)
 
@@ -118,7 +106,6 @@ app.patch("/users/user/:userId/edit/other", authenticateUser, editProfileOtherFi
 //--------------------------- ADD RATING TO RECIPE ENDPOINT ---------------------------//
 app.patch("/users/user/:userId/edit/rating", authenticateUser, addRatingToUser)
 
-// TO REMOVE EVENTUALLY??
 //--------------------------- GET PROFILE ENDPOINT ---------------------------//
 app.get("/users/user/:userId", authenticateUser, getProfile)
 
@@ -151,7 +138,6 @@ app.patch("/recipes/recipe/:recipeId/rating", authenticateUser, addRatingToRecip
 
 //--------------------------- DELETE RECIPE ENDPOINT ---------------------------//
 app.delete("/recipes/recipe/:recipeId", authenticateUser, deleteRecipe)
-
 
 // Start the server
 app.listen(port, () => {

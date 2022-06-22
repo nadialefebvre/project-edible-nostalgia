@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
+import React from "react"
+
+import Button from "@mui/material/Button"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
 
 const Confirm = (props) => {
   const { open, setOpen, handleDelete, itemId, title, text } = props
@@ -24,11 +25,13 @@ const Confirm = (props) => {
         <DialogTitle id="alert-dialog-title">
           {title}
         </DialogTitle>
+
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {text} This action cannot be undone.
           </DialogContentText>
         </DialogContent>
+
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={() => handleDelete(itemId)} autoFocus>

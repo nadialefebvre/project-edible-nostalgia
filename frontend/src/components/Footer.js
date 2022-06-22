@@ -1,12 +1,13 @@
-import React from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
+import React from "react"
+
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
+import Link from "@mui/material/Link"
 
 const Footer = () => {
 
   return (
-    <Box component="footer" sx={{ py: 6, displayPrint: 'none' }}>
+    <Box component="footer" sx={{ py: 6, displayPrint: "none" }}>
       <Typography
         variant="body2"
         color="text.secondary"

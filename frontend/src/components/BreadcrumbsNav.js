@@ -1,18 +1,12 @@
 import React from "react"
-import useBreadcrumbs from 'use-react-router-breadcrumbs'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from "react-router-dom"
+import useBreadcrumbs from "use-react-router-breadcrumbs"
 
-import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
+import Breadcrumbs from "@mui/material/Breadcrumbs"
+import Link from "@mui/material/Link"
+import Typography from "@mui/material/Typography"
 
-const routes = [
-  { path: '/recipes/:recipeId', breadcrumb: "Recipe" },
-  { path: '/recipes', breadcrumb: "All" },
-  { path: '/recipes/add', breadcrumb: "Add" },
-  { path: '/error404', breadcrumb: 'Error 404' },
-  { path: '/accessdenied', breadcrumb: 'Access denied' },
-]
+import {routes} from "../utils/arrays"
 
 const BreadcrumbsNav = () => {
   const breadcrumbs = useBreadcrumbs(routes)
@@ -21,10 +15,7 @@ const BreadcrumbsNav = () => {
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
-      {breadcrumbs.map(({
-        match,
-        breadcrumb
-      }) => (
+      {breadcrumbs.map(({ match, breadcrumb }) => (
         <Link
           key={match.pathname}
           component={NavLink}

@@ -2,7 +2,18 @@ import Recipe from "../models/recipe"
 
 //--------------------------- ADD RECIPE CONTROLLER ---------------------------//
 export const addRecipe = async (req, res) => {
-  const { title, description, image, category, servings, bakingTime, ingredients, steps, isPublic, addedBy } = req.body
+  const {
+    title,
+    description,
+    image,
+    category,
+    servings,
+    bakingTime,
+    ingredients,
+    steps,
+    isPublic,
+    addedBy
+  } = req.body
 
   try {
     const newRecipe = await new Recipe({
@@ -109,7 +120,9 @@ export const getRecipesByUserIdAndPublic = async (req, res) => {
   const { userId } = req.params
 
   try {
-    const recipesByUserIdAndPublic = await Recipe.find({ $or: [{ addedBy: userId }, { isPublic: true }] })
+    const recipesByUserIdAndPublic = await Recipe.find({
+      $or: [{ addedBy: userId }, { isPublic: true }]
+    })
 
     res.status(200).json({
       success: true,
@@ -202,7 +215,9 @@ export const addRatingToRecipe = async (req, res) => {
   const { rating } = req.body
 
   try {
-    await Recipe.findByIdAndUpdate(recipeId, { $inc: { ratingCount: 1, totalRating: rating } })
+    await Recipe.findByIdAndUpdate(
+      recipeId, { $inc: { ratingCount: 1, totalRating: rating } }
+    )
 
     res.status(200).json({
       success: true,

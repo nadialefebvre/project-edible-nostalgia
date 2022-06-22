@@ -2,36 +2,44 @@ import React, { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import Rating from '@mui/material/Rating'
-import Typography from '@mui/material/Typography'
-import Snackbar from '@mui/material/Snackbar'
-import Alert from '@mui/material/Alert'
-
-import Hero from '../components/Hero'
-import Sidebar from '../components/Sidebar'
-import StepsSection from "../components/StepsSection"
-import { API_URL } from "../utils/urls"
-import loading from "../reducers/loading"
-import EditDelete from "../components/EditDelete"
+import Grid from "@mui/material/Grid"
+import Box from "@mui/material/Box"
+import Rating from "@mui/material/Rating"
+import Typography from "@mui/material/Typography"
+import Snackbar from "@mui/material/Snackbar"
+import Alert from "@mui/material/Alert"
 import Skeleton from "@mui/material/Skeleton"
+
+import EditDelete from "../components/EditDelete"
+import Hero from "../components/Hero"
+import Sidebar from "../components/Sidebar"
+import StepsSection from "../components/StepsSection"
+import loading from "../reducers/loading"
+import { API_URL } from "../utils/urls"
 
 const SingleRecipe = () => {
   const { recipeId } = useParams()
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const isLoading = useSelector(store => store.loading.isLoading)
+  const accessToken = useSelector(store => store.user.accessToken)
+  const userId = useSelector(store => store.user.userId)
+
   const [recipe, setRecipe] = useState({})
   const [userRatings, setUserRatings] = useState([])
+  const [open, setOpen] = useState(false)
+  const [rating, setRating] = useState(0)
+  const [isRated, setIsRated] = useState(false)
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 
-  const isLoading = useSelector((store) => store.loading.isLoading)
-  const accessToken = useSelector((store) => store.user.accessToken)
-  const userId = useSelector((store) => store.user.userId)
+  const recipeRating = userRatings.find(item => item.recipeId === recipeId)
 
   useEffect(() => {
     if (accessToken) {
       dispatch(loading.actions.setLoading(true))
+
       const options = {
         method: "GET",
         headers: {
@@ -53,21 +61,9 @@ const SingleRecipe = () => {
     }
   }, [])
 
-
-  const recipeRating = userRatings.find(item => item.recipeId === recipeId)
-
-
   useEffect(() => {
     dispatch(loading.actions.setLoading(true))
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        // "Authorization": accessToken,
-      },
-    }
-
-    fetch(API_URL(`recipes/recipe/${recipeId}`), options)
+    fetch(API_URL(`recipes/recipe/${recipeId}`))
       .then((res) => res.json())
       .then((data) => {
         setRecipe(data.response)
@@ -75,6 +71,9 @@ const SingleRecipe = () => {
       })
   }, [])
 
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
 
   const handleDeleteRecipe = (recipeId) => {
     const options = {
@@ -95,17 +94,6 @@ const SingleRecipe = () => {
         }
       })
   }
-
-  const [open, setOpen] = useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const [rating, setRating] = useState(0)
-  const [isRated, setIsRated] = useState(false)
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
-
 
   const addRatingToRecipe = () => {
     const options = {
@@ -167,8 +155,8 @@ const SingleRecipe = () => {
         </Alert>
       </Snackbar>
 
-
       <Hero hero={recipe} />
+
       {accessToken && userId === recipe.addedBy &&
         <EditDelete
           editPath={`/recipes/${recipe._id}/edit`}
@@ -176,12 +164,13 @@ const SingleRecipe = () => {
           open={open} setOpen={setOpen}
           handleDelete={handleDeleteRecipe}
           itemId={recipe._id}
-          title={"Delete this recipe?"}
-          text={"Click to confirm that you want to delete this recipe."}
+          title="Delete this recipe?"
+          text="Click to confirm that you want to delete this recipe."
         />
       }
+
       {accessToken &&
-        <Box sx={{ displayPrint: 'none' }}>
+        <Box sx={{ displayPrint: "none" }}>
           <Typography component="legend" color="text.secondary">
             {recipeRating !== undefined || isRated ? "Your rating" : "Rate this recipe"}
           </Typography>
@@ -193,8 +182,14 @@ const SingleRecipe = () => {
           />
         </Box>
       }
+
       {isLoading || Object.keys(recipe).length === 0 ?
-        <Skeleton variant="rectangular" height={140} width="100%" animation="wave" />
+        <Skeleton
+          variant="rectangular"
+          height={140}
+          width="100%"
+          animation="wave"
+        />
         :
         <Grid container spacing={5}>
           <Sidebar recipe={recipe} />

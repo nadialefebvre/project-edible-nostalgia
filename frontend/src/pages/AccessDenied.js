@@ -1,10 +1,10 @@
 import React from "react"
 
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import Divider from "@mui/material/Divider"
 
-import Hero from '../components/Hero'
+import Hero from "../components/Hero"
 
 const AccessDenied = ({ hero }) => {
 
@@ -17,8 +17,8 @@ const AccessDenied = ({ hero }) => {
         </Typography>
         <Divider />
         <Typography paragraph variant="p">
-          You tried to access a page you are not authorized to. If you don't have 
-          a profile, please create one to use all functionalities. If you have a 
+          You tried to access a page you are not authorized to. If you don't have
+          a profile, please create one to use all functionalities. If you have a
           profile, you may land here if you try to edit a recipe that isn't yours.
         </Typography>
       </Grid>

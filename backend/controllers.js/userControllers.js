@@ -124,7 +124,9 @@ export const editProfilePassword = async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync()
 
-    await User.findByIdAndUpdate(userId, { password: bcrypt.hashSync(password, salt) })
+    await User.findByIdAndUpdate(
+      userId, { password: bcrypt.hashSync(password, salt) }
+    )
 
     res.status(200).json({
       success: true,

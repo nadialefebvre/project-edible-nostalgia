@@ -1,96 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
-import Snackbar from '@mui/material/Snackbar'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-
-import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
-
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import MenuItem from '@mui/material/MenuItem'
+import Snackbar from "@mui/material/Snackbar"
+import Avatar from "@mui/material/Avatar"
+import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
+import Link from "@mui/material/Link"
+import Grid from "@mui/material/Grid"
+import Box from "@mui/material/Box"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import Checkbox from "@mui/material/Checkbox"
+import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined"
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
+import Typography from "@mui/material/Typography"
+import Container from "@mui/material/Container"
+import MenuItem from "@mui/material/MenuItem"
 import Skeleton from "@mui/material/Skeleton"
 import Alert from "@mui/material/Alert"
 
-import { API_URL } from "../utils/urls"
-import loading from "../reducers/loading"
 import Ingredient from "../components/Ingredient"
 import Step from "../components/Step"
-
-
-const categories = [
-  {
-    value: 'Holidays',
-    label: 'Holidays',
-  },
-  {
-    value: 'Childhood',
-    label: 'Childhood',
-  },
-  {
-    value: 'Travel',
-    label: 'Travel',
-  },
-  {
-    value: 'Birthday',
-    label: 'Birthday',
-  },
-  {
-    value: 'Homesick',
-    label: 'Homesick',
-  },
-  {
-    value: 'Grandma',
-    label: 'Grandma',
-  },
-  {
-    value: 'Friendship',
-    label: 'Friendship',
-  },
-  {
-    value: 'Love',
-    label: 'Love',
-  },
-  {
-    value: 'Other',
-    label: 'Other',
-  }
-]
-
-const bakingTimes = [
-  {
-    value: 'Quick and easy',
-    label: 'Quick and easy',
-  },
-  {
-    value: 'Squeezable',
-    label: 'Squeezable',
-  },
-  {
-    value: 'Needs more time',
-    label: 'Needs more time',
-  }
-]
+import loading from "../reducers/loading"
+import { API_URL } from "../utils/urls"
+import { categories, bakingTimes } from "../utils/arrays"
 
 const RecipeForm = () => {
-
   const { recipeId } = useParams()
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const isLoading = useSelector((store) => store.loading.isLoading)
-  const accessToken = useSelector((store) => store.user.accessToken)
-  const userId = useSelector((store) => store.user.userId)
+  const isLoading = useSelector(store => store.loading.isLoading)
+  const accessToken = useSelector(store => store.user.accessToken)
+  const userId = useSelector(store => store.user.userId)
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -105,13 +48,9 @@ const RecipeForm = () => {
     }
   ])
   const [steps, setSteps] = useState([""])
-
   const [checked, setChecked] = useState(false)
-
-  const handleChangePublic = (event) => {
-    setChecked(event.target.checked)
-  }
-
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+  const [isWarningSnackbarOpen, setIsWarningSnackbarOpen] = useState(false)
 
   useEffect(() => {
     if (!accessToken) {
@@ -119,19 +58,10 @@ const RecipeForm = () => {
     }
   })
 
-
   if (recipeId) {
     useEffect(() => {
       dispatch(loading.actions.setLoading(true))
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          // "Authorization": accessToken,
-        },
-      }
-
-      fetch(API_URL(`recipes/recipe/${recipeId}`), options)
+      fetch(API_URL(`recipes/recipe/${recipeId}`))
         .then((res) => res.json())
         .then((data) => {
           if (!accessToken || data.response.addedBy !== userId) {
@@ -154,20 +84,33 @@ const RecipeForm = () => {
     }, [])
   }
 
-
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
-  const [isWarningSnackbarOpen, setIsWarningSnackbarOpen] = useState(false)
+  const handleChangePublic = (event) => {
+    setChecked(event.target.checked)
+  }
 
   const handleSubmitRecipe = (event) => {
     event.preventDefault()
     dispatch(loading.actions.setLoading(true))
+    
     const options = {
       method: `${recipeId ? "PATCH" : "POST"}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": accessToken
       },
-      body: JSON.stringify({ title, description, category, bakingTime, servings, ingredients, steps, ratingCount: 0, totalRating: 0, isPublic: checked, addedBy: userId })
+      body: JSON.stringify({
+        title,
+        description,
+        category,
+        bakingTime,
+        servings,
+        ingredients,
+        steps,
+        ratingCount: 0,
+        totalRating: 0,
+        isPublic: checked,
+        addedBy: userId
+      })
     }
 
     fetch(API_URL(`${recipeId ? `recipes/recipe/${recipeId}` : "recipes"}`), options)
@@ -194,13 +137,11 @@ const RecipeForm = () => {
             setChecked(false)
           }
         } else {
-          // alert(data.response.message)
           setIsWarningSnackbarOpen(true)
         }
         dispatch(loading.actions.setLoading(false))
       })
   }
-
 
   const handleIngredientChange = (e, index) => {
     const { name, value } = e.target
@@ -226,9 +167,6 @@ const RecipeForm = () => {
     setIngredients(ingredientsList)
   }
 
-
-
-
   const handleStepChange = (e, index) => {
     const stepsList = [...steps]
     stepsList[index] = e.target.value
@@ -244,7 +182,6 @@ const RecipeForm = () => {
     stepsList.splice(index, 1)
     setSteps(stepsList)
   }
-
 
   return (
     <>
@@ -271,24 +208,32 @@ const RecipeForm = () => {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             {recipeId ? <ModeEditOutlinedIcon /> : <AddOutlinedIcon />}
           </Avatar>
           <Typography component="h1" variant="h5">
             {recipeId ? "EDIT recipe" : "ADD recipe"}
           </Typography>
           {isLoading ?
-            <Skeleton variant="rectangular" height={60} width="100%" animation="wave" />
+            <Skeleton
+              variant="rectangular"
+              height={60}
+              width="100%"
+              animation="wave"
+            />
             :
-            <Box component="form" onSubmit={handleSubmitRecipe} noValidate sx={{ mt: 1 }}>
-
+            <Box
+              component="form"
+              onSubmit={handleSubmitRecipe}
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <Grid container spacing={2}>
-
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -298,7 +243,7 @@ const RecipeForm = () => {
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    inputProps={{ maxLength: 50}}
+                    inputProps={{ maxLength: 50 }}
                   />
                 </Grid>
 
@@ -311,13 +256,12 @@ const RecipeForm = () => {
                     name="description"
                     label="Description"
                     type="text"
-                    helperText="Write a short meaningful memory this recipe reminds you (max 200 characters)."
+                    helperText="Write a short and meaningful memory this recipe reminds you (max 200 characters)."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    inputProps={{ maxLength: 200}}
+                    inputProps={{ maxLength: 200 }}
                   />
                 </Grid>
-
 
                 <Grid item xs={12}>
                   <TextField
@@ -347,8 +291,8 @@ const RecipeForm = () => {
                     onChange={(e) => setServings(e.target.value)}
                   />
                 </Grid>
-                <Grid item xs={6} sm={6}>
 
+                <Grid item xs={6} sm={6}>
                   <TextField
                     required
                     fullWidth
@@ -371,11 +315,17 @@ const RecipeForm = () => {
                   </Typography>
                 </Grid>
 
-
                 {ingredients.map((ingredient, index) => (
-                  <Ingredient key={`ingredient-${index}`} ingredientsLength={ingredients.length} ingredient={ingredient} index={index} onIngredientChange={handleIngredientChange} onIngredientAdd={handleIngredientAdd} onIngredientDelete={handleIngredientDelete} />
+                  <Ingredient
+                    key={`ingredient-${index}`}
+                    ingredientsLength={ingredients.length}
+                    ingredient={ingredient}
+                    index={index}
+                    onIngredientChange={handleIngredientChange}
+                    onIngredientAdd={handleIngredientAdd}
+                    onIngredientDelete={handleIngredientDelete}
+                  />
                 ))}
-
 
                 <Grid item xs={12} marginTop={2}>
                   <Typography variant="subtitle1" color="text.secondary">
@@ -384,14 +334,25 @@ const RecipeForm = () => {
                 </Grid>
 
                 {steps.map((step, index) => (
-                  <Step key={`step-${index}`} stepsLength={steps.length} step={step} index={index} onStepChange={handleStepChange} onStepDelete={handleStepDelete} onStepAdd={handleStepAdd} />
+                  <Step
+                    key={`step-${index}`}
+                    stepsLength={steps.length}
+                    step={step}
+                    index={index}
+                    onStepChange={handleStepChange}
+                    onStepDelete={handleStepDelete}
+                    onStepAdd={handleStepAdd}
+                  />
                 ))}
-
               </Grid>
 
               <FormControlLabel
-                control={<Checkbox value="public" color="primary" checked={checked}
-                  onChange={handleChangePublic} />}
+                control={<Checkbox
+                  value="public"
+                  color="primary"
+                  checked={checked}
+                  onChange={handleChangePublic}
+                />}
                 label="I want this recipe to be public!"
               />
 
@@ -407,11 +368,19 @@ const RecipeForm = () => {
               <Grid container>
                 <Grid item>
                   {recipeId ?
-                    <Link href={`/recipes/${recipeId}`} variant="body2" onClick={() => navigate(`/recipes/${recipeId}`)}>
+                    <Link
+                      href={`/recipes/${recipeId}`}
+                      variant="body2"
+                      onClick={() => navigate(`/recipes/${recipeId}`)}
+                    >
                       Changed your mind about these changes? Go back to recipe
                     </Link>
                     :
-                    <Link href="/recipes" variant="body2" onClick={() => navigate("/recipes")}>
+                    <Link
+                      href="/recipes"
+                      variant="body2"
+                      onClick={() => navigate("/recipes")}
+                    >
                       You don't want to add this recipe anymore? Go back to all recipes
                     </Link>
                   }

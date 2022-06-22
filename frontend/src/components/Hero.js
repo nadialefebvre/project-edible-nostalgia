@@ -1,4 +1,5 @@
 import React from "react"
+
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import Grid from "@mui/material/Grid"
@@ -24,12 +25,6 @@ const Hero = (props) => {
           backgroundImage: `url(${imageToUse(hero.category)})`,
         }}
       >
-        {/* Increase the priority of the hero background image */}
-        {<img
-          style={{ display: "none" }}
-          src={imageToUse(hero.category)}
-          alt={hero.title}
-        />}
         <Box
           sx={{
             position: "absolute",
@@ -57,7 +52,7 @@ const Hero = (props) => {
                 fontFamily="Meddon"
                 gutterBottom
               >
-                {hero.title ? hero.title : "Edible nostalgia"}
+                {hero.title}
               </Typography>
               <Typography
                 variant="h5"

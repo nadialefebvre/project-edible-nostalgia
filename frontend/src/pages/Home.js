@@ -21,7 +21,7 @@ const Home = ({ hero }) => {
           them with the world if you wish.
         </Typography>
         <Typography variant="p" >
-          This website is the final project for Technigo's frontend development 
+          This website is the final project for Technigo's frontend development
           bootcamp.
         </Typography>
       </Grid>

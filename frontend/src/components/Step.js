@@ -1,14 +1,21 @@
-import React from 'react'
+import React from "react"
 
-import TextField from '@mui/material/TextField'
-import Grid from '@mui/material/Grid'
-import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import TextField from "@mui/material/TextField"
+import Grid from "@mui/material/Grid"
+import IconButton from "@mui/material/IconButton"
+import Tooltip from "@mui/material/Tooltip"
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
 
 const Step = (props) => {
-  const { stepsLength, step, index, onStepChange, onStepDelete, onStepAdd } = props
+  const {
+    stepsLength,
+    step,
+    index,
+    onStepChange,
+    onStepDelete,
+    onStepAdd
+  } = props
 
   return (
     <>
@@ -24,18 +31,28 @@ const Step = (props) => {
           onChange={(e) => onStepChange(e, index)}
         />
       </Grid>
+
       <Grid item xs={2} sm={1}>
         {stepsLength !== 1 && (
           <Tooltip title="Delete" placement="right">
-            <IconButton aria-label="delete" size="small" onClick={() => onStepDelete(index)}>
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={() => onStepDelete(index)}
+            >
               <DeleteOutlineIcon fontSize="inherit" color="secondary" />
             </IconButton>
           </Tooltip>
         )}
+
         {stepsLength - 1 === index &&
           stepsLength < 10 && (
             <Tooltip title="Add" placement="right">
-              <IconButton aria-label="add" size="small" onClick={onStepAdd}>
+              <IconButton
+                aria-label="add"
+                size="small"
+                onClick={onStepAdd}
+              >
                 <AddCircleOutlineIcon fontSize="inherit" color="secondary" />
               </IconButton>
             </Tooltip>
