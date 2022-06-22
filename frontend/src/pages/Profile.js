@@ -127,7 +127,7 @@ const Profile = ({ hero }) => {
     if (!accessToken) {
       navigate("/accessdenied")
     }
-  })
+  }, [])
 
 
 
@@ -143,6 +143,7 @@ const Profile = ({ hero }) => {
     fetch(API_URL(`users/user/${userId}`), options)
       .then(res => res.json())
       .then(() => {
+        navigate("/recipes")
         dispatch(user.actions.logOut())
       })
   }

@@ -92,7 +92,7 @@ const Header = () => {
           <ListItemIcon>
             <ClearAllOutlinedIcon fontSize="small" color="secondary" />
           </ListItemIcon>
-          <ListItemText>All recipes</ListItemText>
+          <ListItemText>All</ListItemText>
         </MenuItem>
         
         <MenuItem onClick={() => {
@@ -102,7 +102,7 @@ const Header = () => {
           <ListItemIcon>
             <AddOutlinedIcon fontSize="small" color="secondary" />
           </ListItemIcon>
-          <ListItemText>Add recipe</ListItemText>
+          <ListItemText>Add</ListItemText>
         </MenuItem>
 
         <MenuItem onClick={() => {
@@ -120,7 +120,10 @@ const Header = () => {
         </MenuItem>
 
         {accessToken ?
-          <MenuItem onClick={() => dispatch(user.actions.logOut())}>
+          <MenuItem onClick={() => {
+            navigate("/recipes")
+            dispatch(user.actions.logOut())
+            }}>
             <ListItemIcon>
               <LogoutOutlinedIcon fontSize="small" color="secondary" />
             </ListItemIcon>

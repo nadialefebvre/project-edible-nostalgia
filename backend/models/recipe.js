@@ -15,8 +15,14 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  bakingTime: String,
-  servings: Number,
+  bakingTime: {
+    type: String,
+    required: true,
+  },
+  servings: {
+    type: Number,
+    required: true,
+  },
   ingredients: [
     {
       quantity: Number,

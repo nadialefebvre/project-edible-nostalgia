@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 
 const routes = [
   { path: '/recipes/:recipeId', breadcrumb: "Recipe" },
+  { path: '/recipes', breadcrumb: "All" },
   { path: '/recipes/add', breadcrumb: "Add" },
   { path: '/error404', breadcrumb: 'Error 404' },
   { path: '/accessdenied', breadcrumb: 'Access denied' },
