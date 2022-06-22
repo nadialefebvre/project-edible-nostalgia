@@ -38,6 +38,11 @@ store.subscribe(() => {
   localStorage.setItem("state", JSON.stringify(store.getState()))
 })
 
+const hero = {
+  title: "Edible nostalgia",
+}
+
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -50,15 +55,15 @@ const App = () => {
               <Routes>
                 <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
                 <Route path="/recipes/add" element={<RecipeForm />} />
-                <Route path="/recipes" element={<Recipes />} />
+                <Route path="/recipes" element={<Recipes hero={hero} />} />
                 <Route path="/recipes/:recipeId/edit" element={<RecipeForm />} />
                 <Route path="/login" element={<UserForm />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile hero={hero} />} />
                 <Route path="/profile/edit" element={<UserForm />} />
-                <Route path="/" element={<Home />} />
-                <Route path="*" element={<Error404 />} />
-                <Route path="/error404" element={<Error404 />} />
-                <Route path="/accessdenied" element={<AccessDenied />} />
+                <Route path="/" element={<Home hero={hero} />} />
+                <Route path="*" element={<Error404 hero={hero} />} />
+                <Route path="/error404" element={<Error404 hero={hero} />} />
+                <Route path="/accessdenied" element={<AccessDenied hero={hero} />} />
               </Routes>
             </main>
             <Footer />
