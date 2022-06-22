@@ -68,7 +68,7 @@ const UserForm = () => {
                 alert("User has been created.")
               } else {
                 alert("User is now logged in.")
-              }              
+              }
             })
           } else {
             batch(() => {
@@ -222,7 +222,7 @@ const UserForm = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: 'lightblue' }}
+              sx={{ mt: 3, mb: 2 }}
             >
               {accessToken ? "Edit user" : mode === "register" ? "Register" : "Log in"}
             </Button>

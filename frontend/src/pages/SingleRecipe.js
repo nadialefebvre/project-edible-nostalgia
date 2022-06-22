@@ -51,7 +51,7 @@ const SingleRecipe = () => {
   }, [])
 
 
-const recipeRating = userRatings.find(item => item.recipeId === recipeId)
+  const recipeRating = userRatings.find(item => item.recipeId === recipeId)
 
 
   useEffect(() => {
@@ -173,13 +173,17 @@ const recipeRating = userRatings.find(item => item.recipeId === recipeId)
           text={"Click to confirm that you want to delete this recipe."}
         />
       }
-      <Typography component="legend" color="text.secondary">{recipeRating !== undefined || isRated ? "Your rating" : "Rate this recipe"}</Typography>
-      <Rating
-        value={recipeRating !== undefined ? recipeRating.rating : rating}
-        disabled={recipeRating !== undefined || isRated}
-        onChangeActive={(event, newValue) => setRating(newValue)}
-        onChange={handleRateRecipe}
-      />
+      <Box sx={{ displayPrint: 'none' }}>
+        <Typography component="legend" color="text.secondary">
+          {recipeRating !== undefined || isRated ? "Your rating" : "Rate this recipe"}
+        </Typography>
+        <Rating
+          value={recipeRating !== undefined ? recipeRating.rating : rating}
+          disabled={recipeRating !== undefined || isRated}
+          onChangeActive={(event, newValue) => setRating(newValue)}
+          onChange={handleRateRecipe}
+        />
+      </Box>
       <Grid container spacing={5}>
         <Sidebar recipe={recipe} />
         <StepsSection recipe={recipe} />

@@ -25,14 +25,14 @@ const EditDelete = (props) => {
   const navigate = useNavigate()
 
   return (
-    <Grid container justifyContent="flex-end">
+    <Grid container justifyContent="flex-end" sx={{ displayPrint: 'none' }}>
       <Tooltip title="Edit">
         <IconButton
           aria-label="edit"
           size="small"
           onClick={() => navigate(editPath)}
         >
-          <EditIcon fontSize="small" />
+          <EditIcon fontSize="small" color="secondary" />
         </IconButton>
       </Tooltip>
       <Tooltip title="Delete">
@@ -41,7 +41,7 @@ const EditDelete = (props) => {
           size="small"
           onClick={openAction}
         >
-          <DeleteOutlineIcon fontSize="small" />
+          <DeleteOutlineIcon fontSize="small" color="secondary" />
         </IconButton>
       </Tooltip>
       <Confirm

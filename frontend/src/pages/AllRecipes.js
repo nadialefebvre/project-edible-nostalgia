@@ -72,7 +72,7 @@ const AllRecipes = ({hero}) => {
           sx={{ ml: 1, flex: 1, p: '4px' }}
           placeholder="Filter the recipes (title or category)"
           inputProps={{ 'aria-label': 'filter the recipes' }}
-          startAdornment={<InputAdornment position="start"><FilterListIcon /></InputAdornment>}
+          startAdornment={<InputAdornment position="start"><FilterListIcon color="secondary" /></InputAdornment>}
           onChange={onRecipeSearch}
         />
       </Paper>

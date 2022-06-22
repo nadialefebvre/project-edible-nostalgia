@@ -41,7 +41,12 @@ const Header = () => {
   const firstName = useSelector((store) => store.user.firstName)
 
   return (
-    <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', justifyContent: "space-between" }}>
+    <Toolbar sx={{
+      borderBottom: 1,
+      borderColor: 'divider',
+      justifyContent: "space-between",
+      displayPrint: 'none'
+    }}>
       <BreadcrumbsNav />
 
       <IconButton
@@ -75,7 +80,7 @@ const Header = () => {
           setAnchorEl(null)
         }}>
           <ListItemIcon>
-            <HomeOutlinedIcon fontSize="small" />
+            <HomeOutlinedIcon fontSize="small" color="secondary" />
           </ListItemIcon>
           <ListItemText>Home</ListItemText>
         </MenuItem>
@@ -85,7 +90,7 @@ const Header = () => {
           setAnchorEl(null)
         }}>
           <ListItemIcon>
-            <ClearAllOutlinedIcon fontSize="small" />
+            <ClearAllOutlinedIcon fontSize="small" color="secondary" />
           </ListItemIcon>
           <ListItemText>All recipes</ListItemText>
         </MenuItem>
@@ -94,7 +99,7 @@ const Header = () => {
           setAnchorEl(null)
         }}>
           <ListItemIcon>
-            <AddOutlinedIcon fontSize="small" />
+            <AddOutlinedIcon fontSize="small" color="secondary" />
           </ListItemIcon>
           <ListItemText>Add recipe</ListItemText>
         </MenuItem>
@@ -105,9 +110,9 @@ const Header = () => {
         }}>
           <ListItemIcon>
             {accessToken ?
-              <LockOpenOutlinedIcon fontSize="small" />
+              <LockOpenOutlinedIcon fontSize="small" color="secondary" />
               :
-              <LockOutlinedIcon fontSize="small" />
+              <LockOutlinedIcon fontSize="small" color="secondary" />
             }
           </ListItemIcon>
           <ListItemText>Profile</ListItemText>
@@ -116,13 +121,13 @@ const Header = () => {
         {accessToken ?
           <MenuItem onClick={() => dispatch(user.actions.logOut())}>
             <ListItemIcon>
-              <LogoutOutlinedIcon fontSize="small" />
+              <LogoutOutlinedIcon fontSize="small" color="secondary" />
             </ListItemIcon>
             <ListItemText>Log out</ListItemText>
           </MenuItem> :
           <MenuItem onClick={() => navigate("/login")}>
             <ListItemIcon>
-              <LoginOutlinedIcon fontSize="small" />
+              <LoginOutlinedIcon fontSize="small" color="secondary" />
             </ListItemIcon>
             <ListItemText>Log in</ListItemText>
           </MenuItem>

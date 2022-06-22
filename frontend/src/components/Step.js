@@ -28,7 +28,7 @@ const Step = (props) => {
       {stepsLength !== 1 && (
         <Tooltip title="Delete" placement="right">
           <IconButton aria-label="delete" size="small" onClick={() => onStepDelete(index)}>
-            <DeleteOutlineIcon fontSize="inherit" />
+            <DeleteOutlineIcon fontSize="inherit" color="secondary" />
           </IconButton>
         </Tooltip>
       )}
@@ -36,7 +36,7 @@ const Step = (props) => {
         stepsLength < 10 && (
           <Tooltip title="Add" placement="right">
             <IconButton aria-label="add" size="small" onClick={onStepAdd}>
-              <AddCircleOutlineIcon fontSize="inherit" />
+              <AddCircleOutlineIcon fontSize="inherit" color="secondary" />
             </IconButton>
           </Tooltip>
         )}

@@ -17,7 +17,7 @@ export const imageToUse = (category) => {
     case "Childhood":
       return "https://res.cloudinary.com/devnadia/image/upload/v1655652905/childhood_aep1gl.jpg"
     case "Birthday":
-      return "https://res.cloudinary.com/devnadia/image/upload/v1655654517/birthday_eyj6w9.jpg"
+      return "https://res.cloudinary.com/devnadia/image/upload/v1655882765/birthday_xjvnmg.jpg"
     case "Christmas":
       return "https://res.cloudinary.com/devnadia/image/upload/v1655654833/christmas_yl7v9f.jpg"
     // case "Grandma":

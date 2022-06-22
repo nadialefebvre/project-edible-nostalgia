@@ -113,7 +113,7 @@ const Ingredient = (props) => {
             }}>
               <Tooltip title="Add" placement="right">
                 <IconButton aria-label="add" size="small" onClick={onIngredientAdd}>
-                  <AddCircleOutlineIcon fontSize="inherit" />
+                  <AddCircleOutlineIcon fontSize="inherit" color="secondary" />
                 </IconButton>
               </Tooltip>
             </Box>
@@ -124,7 +124,7 @@ const Ingredient = (props) => {
           }}>
             <Tooltip title="Delete" placement="right">
               <IconButton aria-label="delete" size="small" onClick={() => onIngredientDelete(index)}>
-                <DeleteOutlineIcon fontSize="inherit" />
+                <DeleteOutlineIcon fontSize="inherit" color="secondary" />
               </IconButton>
             </Tooltip>
           </Box>

@@ -35,11 +35,6 @@ const RecipeCard = (props) => {
             <Typography variant="subtitle1" paragraph color="text.secondary">
               {recipe.description}
             </Typography>
-            {/* maybe remove "read more (and remove "paragraph" attribute to description) */}
-            <Typography variant="subtitle1" color="primary">
-              Read more...
-            </Typography>
-            <Typography component="legend">Rating</Typography>
             <Rating
               readOnly
               precision={0.5}

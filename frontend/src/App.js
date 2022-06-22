@@ -21,7 +21,9 @@ import AllRecipes from "./pages/AllRecipes"
 import RecipeForm from "./pages/RecipeForm"
 import UserForm from "./pages/UserForm"
 
-const theme = createTheme()
+// const theme = createTheme()
+
+import { theme } from "./utils/theme"
 
 const reducer = combineReducers({
   loading: loading.reducer,
@@ -44,7 +46,7 @@ store.subscribe(() => {
 const hero = {
   title: 'Edible nostalgia',
   description:
-  "Food has a special place in our brain, it is deeply connected to all our reminiscences. Collect here your precious recipes.",
+    "Food has a special place in our brain, it is deeply connected to all our reminiscences. Collect here your precious recipes.",
   image: 'https://res.cloudinary.com/devnadia/image/upload/v1655658415/nostalgia_qk8prs.jpg'
 }
 
@@ -55,7 +57,7 @@ const App = () => {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Container maxWidth="md" sx={{ bgcolor: "aliceblue" }}>
+          <Container maxWidth="md" sx={{ bgcolor: "#eddcd2" }}>
             <Header />
             <main>
               <Routes>
@@ -71,10 +73,7 @@ const App = () => {
                 <Route path="/error404" element={<Error404 hero={hero} />} />
               </Routes>
             </main>
-            <Footer
-              title="Footer"
-              description="Something here to give the footer a purpose!"
-            />
+            <Footer />
           </Container>
         </ThemeProvider>
       </BrowserRouter>
