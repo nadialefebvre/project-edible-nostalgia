@@ -85,7 +85,7 @@ const RecipeForm = () => {
   ])
   const [steps, setSteps] = useState([""])
 
-  const [checked, setChecked] = useState(true)
+  const [checked, setChecked] = useState(false)
 
   const handleChangePublic = (event) => {
     setChecked(event.target.checked)
@@ -124,6 +124,7 @@ const RecipeForm = () => {
           if (data.response.steps.length) {
             setSteps(data.response.steps)
           }
+          setChecked(data.response.isPublic)
           dispatch(loading.actions.setLoading(false))
         })
     }, [])
@@ -166,6 +167,7 @@ const RecipeForm = () => {
               }
             ])
             setSteps([""])
+            setChecked(false)
           }
         } else {
           alert(data.response.message)

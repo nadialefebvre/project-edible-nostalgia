@@ -58,10 +58,10 @@ export const getRecipes = async (req, res) => {
   }
 }
 
-//--------------------------- GET RECIPES NOT ADDED BY USERS CONTROLLER ---------------------------//
-export const getRecipesNoUser = async (req, res) => {
+//--------------------------- GET PUBLIC RECIPES CONTROLLER ---------------------------//
+export const getPublicRecipes = async (req, res) => {
   try {
-    const allRecipesNoUser = await Recipe.find({ addedBy: undefined })
+    const allRecipesNoUser = await Recipe.find({ isPublic })
 
     res.status(200).json({
       success: true,
@@ -104,12 +104,12 @@ export const getRecipesByUserId = async (req, res) => {
   }
 }
 
-//--------------------------- GET RECIPES ADDED BY SPECIFIC USER + NOT ADDED BY USERS CONTROLLER ---------------------------//
-export const getRecipesByUserIdAndNoUser = async (req, res) => {
+//--------------------------- GET RECIPES ADDED BY SPECIFIC USER + PUBLIC CONTROLLER ---------------------------//
+export const getRecipesByUserIdAndPublic = async (req, res) => {
   const { userId } = req.params
 
   try {
-    const allRecipesByUserId = await Recipe.find({ $or: [{ addedBy: userId }, { addedBy: undefined }] })
+    const allRecipesByUserId = await Recipe.find({ $or: [{ addedBy: userId }, { isPublic }] })
 
     res.status(200).json({
       success: true,

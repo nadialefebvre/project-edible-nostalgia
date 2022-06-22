@@ -19,6 +19,8 @@ const AllRecipes = ({ hero }) => {
   const dispatch = useDispatch()
 
   const isLoading = useSelector((store) => store.loading.isLoading)
+  const accessToken = useSelector((store) => store.user.accessToken)
+  const userId = useSelector((store) => store.user.userId)
 
   const [recipes, setRecipes] = useState([])
 
@@ -31,9 +33,10 @@ const AllRecipes = ({ hero }) => {
         // "Authorization": accessToken,
       },
     }
-
     // use other endpoint for recipes by user + no user
-    fetch(API_URL(`recipes/all`), options)
+    fetch(API_URL(accessToken ? `recipes/user/${userId}/public` : "recipes/public"), options)
+
+    // fetch(API_URL(`recipes/public`), options)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

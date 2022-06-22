@@ -16,9 +16,9 @@ import {
 import {
   addRecipe,
   getRecipes,
-  getRecipesNoUser,
+  getPublicRecipes,
   getRecipesByUserId,
-  getRecipesByUserIdAndNoUser,
+  getRecipesByUserIdAndPublic,
   getSingleRecipe,
   editRecipe,
   addRatingToRecipe,
@@ -131,15 +131,14 @@ app.post("/recipes", authenticateUser, addRecipe)
 //--------------------------- GET ALL RECIPES ENDPOINT FOR DEV PURPOSE - TO REMOVE EVENTUALLY ---------------------------//
 app.get("/recipes/all", getRecipes)
 
-// TO REMOVE EVENTUALLY??
-//--------------------------- GET RECIPES NOT ADDED BY USERS ENDPOINT ---------------------------//
-app.get("/recipes/no_user", getRecipesNoUser)
+//--------------------------- GET PUBLIC RECIPES ENDPOINT ---------------------------//
+app.get("/recipes/public", getPublicRecipes)
 
 //--------------------------- GET RECIPES ADDED BY SPECIFIC USER ENDPOINT ---------------------------//
 app.get("/recipes/user/:userId", authenticateUser, getRecipesByUserId)
 
-//--------------------------- GET RECIPES ADDED BY SPECIFIC USER + NOT ADDED BY USERS ENDPOINT ---------------------------//
-app.get("/recipes/user/:userId/all", authenticateUser, getRecipesByUserIdAndNoUser)
+//--------------------------- GET RECIPES ADDED BY SPECIFIC USER + PUBLIC ENDPOINT ---------------------------//
+app.get("/recipes/user/:userId/public", authenticateUser, getRecipesByUserIdAndPublic)
 
 //--------------------------- GET SINGLE RECIPE ENDPOINT ---------------------------//
 app.get("/recipes/recipe/:recipeId", getSingleRecipe)
