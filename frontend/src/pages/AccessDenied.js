@@ -17,8 +17,9 @@ const AccessDenied = ({ hero }) => {
         </Typography>
         <Divider />
         <Typography paragraph variant="p">
-          You are not authorized to access this page, please create an account
-          to use all functionalities.
+          You tried to access a page you are not authorized to. If you don't have 
+          a profile, please create one to use all functionalities. If you have a 
+          profile, you may land here if you try to edit a recipe that isn't yours.
         </Typography>
       </Grid>
     </>

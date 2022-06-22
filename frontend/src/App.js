@@ -24,6 +24,7 @@ import UserForm from "./pages/UserForm"
 
 import { theme } from "./utils/theme"
 import AccessDenied from "./pages/AccessDenied"
+import Recipes from "./pages/Recipes"
 
 const reducer = combineReducers({
   loading: loading.reducer,
@@ -45,8 +46,6 @@ store.subscribe(() => {
 
 const hero = {
   title: "Edible nostalgia",
-  description:
-    "Food holds a special place in our brain, as it is deeply connected to all our reminiscences. Collect your precious recipes here and share them with the world if you wish.",
   image: 'https://res.cloudinary.com/devnadia/image/upload/v1655658415/nostalgia_qk8prs.jpg'
 }
 
@@ -63,6 +62,7 @@ const App = () => {
               <Routes>
                 <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
                 <Route path="/recipes/add" element={<RecipeForm />} />
+                <Route path="/recipes" element={<Recipes hero={hero} />} />
                 <Route path="/recipes/:recipeId/edit" element={<RecipeForm />} />
                 <Route path="/login" element={<UserForm />} />
                 <Route path="/profile" element={<Profile hero={hero} />} />

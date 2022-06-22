@@ -86,6 +86,16 @@ const Header = () => {
         </MenuItem>
 
         <MenuItem onClick={() => {
+          navigate("/recipes")
+          setAnchorEl(null)
+        }}>
+          <ListItemIcon>
+            <ClearAllOutlinedIcon fontSize="small" color="secondary" />
+          </ListItemIcon>
+          <ListItemText>All recipes</ListItemText>
+        </MenuItem>
+        
+        <MenuItem onClick={() => {
           navigate("/recipes/add")
           setAnchorEl(null)
         }}>

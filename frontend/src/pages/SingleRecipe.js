@@ -101,6 +101,8 @@ const SingleRecipe = () => {
     setOpen(true)
   }
 
+  console.log(recipe.addedBy)
+  console.log(userId)
 
 
   const [rating, setRating] = useState(0)

@@ -10,11 +10,12 @@ const StepsSection = (props) => {
   const { recipe } = props
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (recipe === undefined) {
-  //     navigate("/error404")
-  //   }
-  // })
+  // need to check if still useful
+  useEffect(() => {
+    if (recipe === undefined) {
+      navigate("/error404")
+    }
+  })
 
   return (
     <Grid

@@ -10,6 +10,7 @@ const Sidebar = (props) => {
   const { recipe } = props
   const navigate = useNavigate()
 
+  // need to check if still useful
   useEffect(() => {
     if (recipe === undefined) {
       navigate("/error404")

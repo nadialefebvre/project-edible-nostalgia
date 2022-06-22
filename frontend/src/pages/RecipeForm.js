@@ -113,6 +113,9 @@ const RecipeForm = () => {
       fetch(API_URL(`recipes/recipe/${recipeId}`), options)
         .then((res) => res.json())
         .then((data) => {
+          if (!accessToken || data.response.addedBy !== userId) {
+            navigate("/accessdenied")
+          }
           setTitle(data.response.title)
           setDescription(data.response.description)
           setCategory(data.response.category)
@@ -129,7 +132,6 @@ const RecipeForm = () => {
         })
     }, [])
   }
-
 
 
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
