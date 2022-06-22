@@ -25,12 +25,24 @@ const RecipeSchema = new mongoose.Schema({
   },
   ingredients: [
     {
-      quantity: Number,
-      unit: String,
-      ingredient: String
+      quantity: {
+        type: Number,
+        required: true,
+      },
+      unit: {
+        type: String,
+        required: true,
+      },
+      ingredient: {
+        type: String,
+        required: true,
+      }
     }
   ],
-  steps: [String],
+  steps: [{
+    type: String,
+    required: true,
+  }],
   isPublic: Boolean,
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
