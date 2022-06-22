@@ -32,7 +32,13 @@ const RecipeCard = (props) => {
             <Typography component="h2" variant="h5">
               {recipe.title}
             </Typography>
-            <Typography variant="subtitle1" paragraph color="text.secondary">
+            <Typography variant="subtitle1" paragraph color="text.secondary" sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: '3',
+              WebkitBoxOrient: 'vertical',
+            }}>
               {recipe.description}
             </Typography>
             <Rating
