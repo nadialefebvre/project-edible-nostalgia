@@ -1,14 +1,6 @@
 import { createTheme } from "@mui/material/styles"
 
 export const theme = createTheme({
-  // typography: {
-  //   // fontFamily: ["Meddon", "Arial"].join(","),
-
-  //   // ne fonctionne pas???
-  //   h1: {
-  //     fontFamily: "Meddon"
-  //   }
-  // },
   palette: {
     primary: {
       light: "#c7c7b8",

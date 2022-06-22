@@ -18,7 +18,6 @@ const Step = (props) => {
           fullWidth
           multiline
           maxRows={4}
-          id="step"
           label="Step"
           name="step"
           value={step}

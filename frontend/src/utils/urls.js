@@ -15,17 +15,18 @@ export const imageToUse = (category) => {
     case "Homesick":
       return "https://res.cloudinary.com/devnadia/image/upload/v1655655685/maple_f8n3r1.jpg"
     case "Childhood":
-      return "https://res.cloudinary.com/devnadia/image/upload/v1655652905/childhood_aep1gl.jpg"
+      return "https://res.cloudinary.com/devnadia/image/upload/v1655919414/childhood_xgzqap.jpg"
     case "Birthday":
       return "https://res.cloudinary.com/devnadia/image/upload/v1655882765/birthday_xjvnmg.jpg"
-    case "Christmas":
-      return "https://res.cloudinary.com/devnadia/image/upload/v1655654833/christmas_yl7v9f.jpg"
-    // case "Grandma":
-    //   return ""
-    // case "":
-    //   return ""
-    // case "":
-    //   return ""
+    case "Holidays":
+      return "https://res.cloudinary.com/devnadia/image/upload/v1655919672/holidays_uogrrc.jpg"
+    case "Grandma":
+      return "https://res.cloudinary.com/devnadia/image/upload/v1655918880/grandma_vvdow5.jpg"
+    case "Friendship":
+      return "https://res.cloudinary.com/devnadia/image/upload/v1655919414/friendship_rm9yqu.jpg"
+        case "Love":
+      return "https://res.cloudinary.com/devnadia/image/upload/v1655919546/love_u8n8fw.jpg"
+
 
     default:
       return ""

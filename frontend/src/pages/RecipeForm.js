@@ -29,8 +29,8 @@ import Step from "../components/Step"
 
 const categories = [
   {
-    value: 'Christmas',
-    label: 'Christmas',
+    value: 'Holidays',
+    label: 'Holidays',
   },
   {
     value: 'Childhood',
@@ -43,6 +43,18 @@ const categories = [
   {
     value: 'Homesick',
     label: 'Homesick',
+  },
+  {
+    value: 'Grandma',
+    label: 'Grandma',
+  },
+  {
+    value: 'Friendship',
+    label: 'Friendship',
+  },
+  {
+    value: 'Love',
+    label: 'Love',
   }
 ]
 
@@ -52,12 +64,12 @@ const bakingTimes = [
     label: 'Quick and easy',
   },
   {
-    value: 'Squeezable between workday and bathtime',
-    label: 'Squeezable between workday and bathtime',
+    value: 'Squeezable',
+    label: 'Squeezable',
   },
   {
-    value: 'One day you will have the time',
-    label: 'One day you will have the time',
+    value: 'Needs more time',
+    label: 'Needs more time',
   }
 ]
 
@@ -278,6 +290,7 @@ const RecipeForm = () => {
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    inputProps={{ maxLength: 50}}
                   />
                 </Grid>
 
@@ -290,9 +303,10 @@ const RecipeForm = () => {
                     name="description"
                     label="Description"
                     type="text"
-                    helperText="Write a meaningful memory this recipe reminds you"
+                    helperText="Write a short meaningful memory this recipe reminds you (max 200 characters)."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                    inputProps={{ maxLength: 200}}
                   />
                 </Grid>
 

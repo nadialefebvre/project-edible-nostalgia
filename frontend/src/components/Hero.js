@@ -45,10 +45,20 @@ const Hero = (props) => {
                 pr: { md: 0 },
               }}
             >
-              <Typography component="h1" variant="h3" color="inherit" fontFamily="Meddon" gutterBottom>
+              <Typography
+                component="h1"
+                variant="h3"
+                fontSize={{ sm: 50, xs: 30 }}
+                color="inherit"
+                fontFamily="Meddon"
+                gutterBottom
+              >
                 {hero.title}
               </Typography>
-              <Typography variant="h5" color="inherit" paragraph>
+              <Typography 
+              variant="h5" 
+              color="inherit" 
+              paragraph>
                 {hero.description}
               </Typography>
             </Box>
