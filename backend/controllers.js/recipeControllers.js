@@ -61,12 +61,12 @@ export const getRecipes = async (req, res) => {
 //--------------------------- GET PUBLIC RECIPES CONTROLLER ---------------------------//
 export const getPublicRecipes = async (req, res) => {
   try {
-    const allRecipesNoUser = await Recipe.find({ isPublic })
+    const publicRecipes = await Recipe.find({ isPublic: true })
 
     res.status(200).json({
       success: true,
       status_code: 200,
-      response: allRecipesNoUser
+      response: publicRecipes
     })
   } catch (error) {
     res.status(400).json({
