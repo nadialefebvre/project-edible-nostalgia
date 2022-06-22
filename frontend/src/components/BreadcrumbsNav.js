@@ -1,3 +1,4 @@
+import React from "react"
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 import { NavLink } from 'react-router-dom'
 
@@ -8,7 +9,7 @@ import Typography from '@mui/material/Typography'
 const routes = [
   { path: '/recipes/:recipeId', breadcrumb: "Recipe" },
   { path: '/recipes/add', breadcrumb: "Add" },
-  { path: '/recipes', breadcrumb: 'All' },
+  { path: '/error404', breadcrumb: 'Error 404' },
   { path: '/accessdenied', breadcrumb: 'Access denied' },
 ]
 

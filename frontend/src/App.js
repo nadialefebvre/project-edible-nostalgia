@@ -17,7 +17,6 @@ import Error404 from "pages/Error404"
 import Profile from "./pages/Profile"
 import Home from "./pages/Home"
 import SingleRecipe from "./pages/SingleRecipe"
-import AllRecipes from "./pages/AllRecipes"
 import RecipeForm from "./pages/RecipeForm"
 import UserForm from "./pages/UserForm"
 
@@ -45,9 +44,9 @@ store.subscribe(() => {
 })
 
 const hero = {
-  title: 'Edible nostalgia',
+  title: "Edible nostalgia",
   description:
-    "Food has a special place in our brain, it is deeply connected to all our reminiscences. Collect here your precious recipes.",
+    "Food holds a special place in our brain, as it is deeply connected to all our reminiscences. Collect your precious recipes here and share them with the world if you wish.",
   image: 'https://res.cloudinary.com/devnadia/image/upload/v1655658415/nostalgia_qk8prs.jpg'
 }
 
@@ -62,7 +61,6 @@ const App = () => {
             <Header />
             <main>
               <Routes>
-                <Route path="/recipes" element={<AllRecipes hero={hero} />} />
                 <Route path="/recipes/:recipeId" element={<SingleRecipe />} />
                 <Route path="/recipes/add" element={<RecipeForm />} />
                 <Route path="/recipes/:recipeId/edit" element={<RecipeForm />} />

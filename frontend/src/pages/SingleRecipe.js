@@ -166,8 +166,7 @@ const SingleRecipe = () => {
       />
 
       <Hero hero={recipe} />
-      {accessToken &&
-        <>
+      {accessToken && userId === recipe.addedBy &&
           <EditDelete
             editPath={`/recipes/${recipe._id}/edit`}
             openAction={handleClickOpen}
@@ -177,6 +176,8 @@ const SingleRecipe = () => {
             title={"Delete this recipe?"}
             text={"Click to confirm that you want to delete this recipe."}
           />
+      }
+      { accessToken &&
           <Box sx={{ displayPrint: 'none' }}>
             <Typography component="legend" color="text.secondary">
               {recipeRating !== undefined || isRated ? "Your rating" : "Rate this recipe"}
@@ -188,7 +189,6 @@ const SingleRecipe = () => {
               onChange={handleRateRecipe}
             />
           </Box>
-        </>
       }
       {isLoading || Object.keys(recipe).length === 0 ?
         <Skeleton variant="rectangular" height={140} width="100%" animation="wave" />
