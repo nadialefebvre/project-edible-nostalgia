@@ -26,6 +26,7 @@ const AllRecipes = ({ hero }) => {
 
   useEffect(() => {
     dispatch(loading.actions.setLoading(true))
+    
     const options = {
       method: "GET",
       headers: {
@@ -33,10 +34,10 @@ const AllRecipes = ({ hero }) => {
         "Authorization": accessToken,
       },
     }
-    // use other endpoint for recipes by user + no user
-    fetch(API_URL(accessToken ? `recipes/user/${userId}/public` : "recipes/public"), options)
 
-    // fetch(API_URL(`recipes/public`), options)
+    const slugToUse = accessToken ? `recipes/user/${userId}/public` : "recipes/public"
+
+    fetch(API_URL(slugToUse), options)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

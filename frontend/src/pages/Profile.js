@@ -159,12 +159,11 @@ const Profile = ({ hero }) => {
 
   const [userRecipes, setUserRecipes] = useState([])
 
-  const slugToUse = hasAll ? `recipes/user/${userId}/all` : `recipes/user/${userId}`
-
 
   useEffect(() => {
     if (userId != null) {
       dispatch(loading.actions.setLoading(true))
+
       const options = {
         method: "GET",
         headers: {
@@ -172,6 +171,8 @@ const Profile = ({ hero }) => {
           "Authorization": accessToken,
         },
       }
+
+      const slugToUse = hasAll ? `recipes/user/${userId}/public` : `recipes/user/${userId}`
 
       fetch(API_URL(slugToUse), options)
         .then((res) => res.json())
@@ -184,7 +185,7 @@ const Profile = ({ hero }) => {
           dispatch(loading.actions.setLoading(false))
         })
     }
-  }, [userId])
+  }, [userId, hasAll])
 
 
 
@@ -199,16 +200,16 @@ const Profile = ({ hero }) => {
     <>
       <Hero hero={hero} />
 
-        <EditDelete
-          editPath={"/profile/edit"}
-          openAction={handleClickOpen}
-          open={open}
-          setOpen={setOpen}
-          handleDelete={handleDeleteProfile}
-          itemId={userId}
-          title={"Delete your profile?"}
-          text={"Click to confirm that you want to delete your profile."}
-        />
+      <EditDelete
+        editPath={"/profile/edit"}
+        openAction={handleClickOpen}
+        open={open}
+        setOpen={setOpen}
+        handleDelete={handleDeleteProfile}
+        itemId={userId}
+        title={"Delete your profile?"}
+        text={"Click to confirm that you want to delete your profile."}
+      />
       <Grid item xs={12} md={8}>
         <Typography variant="h6" gutterBottom>
           Profile
