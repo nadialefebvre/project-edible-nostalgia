@@ -14,7 +14,7 @@ const RecipeCard = (props) => {
   const { recipe } = props
   const navigate = useNavigate()
 
-  const recipeRating = recipe.totalRating / recipe.ratingCount
+  const recipeRating = recipe.ratingCount > 0 ? Math.round(recipe.totalRating / recipe.ratingCount) : 0
 
   return (
     <Grid item xs={12} md={6}>
@@ -35,7 +35,7 @@ const RecipeCard = (props) => {
             </Typography>
             <Rating
               readOnly
-              precision={0.5}
+              // precision={0.5}
               size="small"
               value={recipeRating}
             />

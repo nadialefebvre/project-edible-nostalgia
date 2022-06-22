@@ -1,6 +1,5 @@
 import mongoose from "mongoose"
 
-// FIX FIELDS EVENTUALLY : REQUIRED OR NOT here?? UNIQUE?
 const RecipeSchema = new mongoose.Schema({
   title: {
     type: String,

@@ -16,6 +16,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import Link from '@mui/material/Link'
 import Skeleton from '@mui/material/Skeleton'
+import Rating from '@mui/material/Rating'
 
 import Box from '@mui/material/Box'
 import TableSortLabel from '@mui/material/TableSortLabel'
@@ -48,6 +49,11 @@ const headCells = [
     id: 'title',
     disablePadding: true,
     label: 'Recipe',
+  },
+  {
+    id: 'rating',
+    disablePadding: true,
+    label: 'Rating',
   },
   {
     id: 'bakingTime',
@@ -158,7 +164,7 @@ const Profile = ({ hero }) => {
 
   const isLoading = useSelector((store) => store.loading.isLoading)
 
-  const [userRecipes, setUserRecipes] = useState([])
+  const [recipes, setRecipes] = useState([])
 
 
   useEffect(() => {
@@ -179,7 +185,7 @@ const Profile = ({ hero }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            setUserRecipes(data.response)
+            setRecipes(data.response)
           } else {
             alert(data.response.message)
           }
@@ -195,6 +201,8 @@ const Profile = ({ hero }) => {
     setHasAll(event.target.checked)
   }
 
+
+  // const recipeRating = recipe.ratingCount > 0 ? Math.round(recipe.totalRating / recipe.ratingCount) : 0
 
 
   return (
@@ -233,33 +241,46 @@ const Profile = ({ hero }) => {
                   order={order}
                   orderBy={orderBy}
                   onRequestSort={handleRequestSort}
-                  rowCount={userRecipes.length}
+                  rowCount={recipes.length}
                 />
                 <TableBody>
-                  {userRecipes.slice().sort(getComparator(order, orderBy))
-                    .map((recipe) => (
-                      <TableRow
-                        hover
-                        onClick={(event) => handleClick(event, recipe.title)}
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={recipe.title}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell
-                          component="th"
-                          id={recipe.title}
-                          scope="row"
+                  {recipes.slice().sort(getComparator(order, orderBy))
+                    .map((recipe) => {
+                      recipe.rating = recipe.ratingCount > 0 ? Math.round(recipe.totalRating / recipe.ratingCount) : 0
+                      return (
+                        <TableRow
+                          hover
+                          onClick={(event) => handleClick(event, recipe.title)}
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={recipe.title}
+                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                          <Link href={`/recipes/${recipe._id}`} color="inherit" underline="hover">
-                            {recipe.title}
-                          </Link>
-                        </TableCell>
-                        <TableCell align="right">{recipe.bakingTime}</TableCell>
-                        <TableCell align="right">{recipe.servings}</TableCell>
-                        <TableCell align="right">{recipe.category}</TableCell>
-                      </TableRow>
-                    ))}
+                          <TableCell
+                            component="th"
+                            id={recipe.title}
+                            scope="row"
+                          >
+                            <Link href={`/recipes/${recipe._id}`} color="inherit" underline="hover">
+                              {recipe.title}
+                            </Link>
+                          </TableCell>
+                          <TableCell align="right">
+                            <Rating
+                              readOnly
+                              size="small"
+                              value={recipe.rating}
+                            />
+                          </TableCell>
+                          <TableCell align="right">{recipe.bakingTime}</TableCell>
+                          <TableCell align="right">{recipe.servings}</TableCell>
+                          <TableCell align="right">{recipe.category}</TableCell>
+                        </TableRow>
+                      )
+                    }
+                    )
+
+                  }
                 </TableBody>
               </Table>
             </TableContainer>

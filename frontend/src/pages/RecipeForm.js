@@ -37,6 +37,10 @@ const categories = [
     label: 'Childhood',
   },
   {
+    value: 'Travel',
+    label: 'Travel',
+  },
+  {
     value: 'Birthday',
     label: 'Birthday',
   },
@@ -55,6 +59,10 @@ const categories = [
   {
     value: 'Love',
     label: 'Love',
+  },
+  {
+    value: 'Other',
+    label: 'Other',
   }
 ]
 
