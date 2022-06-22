@@ -7,6 +7,7 @@ import Box from '@mui/material/Box'
 import Rating from '@mui/material/Rating'
 import Typography from '@mui/material/Typography'
 import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
 import Hero from '../components/Hero'
 import Sidebar from '../components/Sidebar'
@@ -74,7 +75,7 @@ const SingleRecipe = () => {
       })
   }, [])
 
-  
+
   const handleDeleteRecipe = (recipeId) => {
     const options = {
       method: "DELETE",
@@ -156,37 +157,41 @@ const SingleRecipe = () => {
 
   return (
     <>
-          <Snackbar
+      <Snackbar
         autoHideDuration={3000}
         open={isSnackbarOpen}
-        message="Recipe has been rated"
         onClose={() => setIsSnackbarOpen(false)}
-      />
+      >
+        <Alert onClose={() => setIsSnackbarOpen(false)}>
+          Recipe has been rated
+        </Alert>
+      </Snackbar>
+
 
       <Hero hero={recipe} />
       {accessToken && userId === recipe.addedBy &&
-          <EditDelete
-            editPath={`/recipes/${recipe._id}/edit`}
-            openAction={handleClickOpen}
-            open={open} setOpen={setOpen}
-            handleDelete={handleDeleteRecipe}
-            itemId={recipe._id}
-            title={"Delete this recipe?"}
-            text={"Click to confirm that you want to delete this recipe."}
-          />
+        <EditDelete
+          editPath={`/recipes/${recipe._id}/edit`}
+          openAction={handleClickOpen}
+          open={open} setOpen={setOpen}
+          handleDelete={handleDeleteRecipe}
+          itemId={recipe._id}
+          title={"Delete this recipe?"}
+          text={"Click to confirm that you want to delete this recipe."}
+        />
       }
-      { accessToken &&
-          <Box sx={{ displayPrint: 'none' }}>
-            <Typography component="legend" color="text.secondary">
-              {recipeRating !== undefined || isRated ? "Your rating" : "Rate this recipe"}
-            </Typography>
-            <Rating
-              value={recipeRating !== undefined ? recipeRating.rating : rating}
-              disabled={recipeRating !== undefined || isRated}
-              onChangeActive={(event, newValue) => setRating(newValue)}
-              onChange={handleRateRecipe}
-            />
-          </Box>
+      {accessToken &&
+        <Box sx={{ displayPrint: 'none' }}>
+          <Typography component="legend" color="text.secondary">
+            {recipeRating !== undefined || isRated ? "Your rating" : "Rate this recipe"}
+          </Typography>
+          <Rating
+            value={recipeRating !== undefined ? recipeRating.rating : rating}
+            disabled={recipeRating !== undefined || isRated}
+            onChangeActive={(event, newValue) => setRating(newValue)}
+            onChange={handleRateRecipe}
+          />
+        </Box>
       }
       {isLoading || Object.keys(recipe).length === 0 ?
         <Skeleton variant="rectangular" height={140} width="100%" animation="wave" />

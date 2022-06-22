@@ -12,7 +12,7 @@ const Step = (props) => {
 
   return (
     <>
-      <Grid item xs={12}>
+      <Grid item xs={10} sm={11}>
         <TextField
           required
           fullWidth
@@ -25,21 +25,23 @@ const Step = (props) => {
           onChange={(e) => onStepChange(e, index)}
         />
       </Grid>
-      {stepsLength !== 1 && (
-        <Tooltip title="Delete" placement="right">
-          <IconButton aria-label="delete" size="small" onClick={() => onStepDelete(index)}>
-            <DeleteOutlineIcon fontSize="inherit" color="secondary" />
-          </IconButton>
-        </Tooltip>
-      )}
-      {stepsLength - 1 === index &&
-        stepsLength < 10 && (
-          <Tooltip title="Add" placement="right">
-            <IconButton aria-label="add" size="small" onClick={onStepAdd}>
-              <AddCircleOutlineIcon fontSize="inherit" color="secondary" />
+      <Grid item xs={2} sm={1}>
+        {stepsLength !== 1 && (
+          <Tooltip title="Delete" placement="right">
+            <IconButton aria-label="delete" size="small" onClick={() => onStepDelete(index)}>
+              <DeleteOutlineIcon fontSize="inherit" color="secondary" />
             </IconButton>
           </Tooltip>
         )}
+        {stepsLength - 1 === index &&
+          stepsLength < 10 && (
+            <Tooltip title="Add" placement="right">
+              <IconButton aria-label="add" size="small" onClick={onStepAdd}>
+                <AddCircleOutlineIcon fontSize="inherit" color="secondary" />
+              </IconButton>
+            </Tooltip>
+          )}
+      </Grid>
     </>
   )
 }

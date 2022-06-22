@@ -56,34 +56,29 @@ const Ingredient = (props) => {
 
   return (
     <>
-      <Grid item xs={2} sm={2}>
+      <Grid item xs={6} sm={2}>
         <TextField
           name="quantity"
           required
           fullWidth
-          id="quantity"
           label="Qty"
           value={ingredient.quantity}
-          // inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+          type="text"
           onChange={(e) => onIngredientChange(e, index)}
         />
       </Grid>
 
 
-      <Grid item xs={2} sm={2}>
+      <Grid item xs={6} sm={2}>
 
         <TextField
-          id="unit"
           required
           fullWidth
           select
           label="Unit"
           name="unit"
-          // value={unit}
-          // onChange={(e) => setUnit(e.target.value)}
           value={ingredient.unit}
           onChange={(e) => onIngredientChange(e, index)}
-        // helperText="Unit"
         >
           {units.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -93,11 +88,10 @@ const Ingredient = (props) => {
         </TextField>
       </Grid>
 
-      <Grid item xs={6} sm={6}>
+      <Grid item xs={10} sm={7}>
         <TextField
           required
           fullWidth
-          id="ingredient"
           label="Ingredient"
           name="ingredient"
           value={ingredient.ingredient}
@@ -105,32 +99,22 @@ const Ingredient = (props) => {
         />
       </Grid>
 
-      <Grid item xs={2} sm={2}>
+      <Grid item xs={2} sm={1}>
         {ingredientsLength - 1 === index &&
           ingredientsLength < 10 && (
-            <Box sx={{
-              width: 30, display: "flex", justifyContent: "flex-end", marginRight: 0
-            }}>
               <Tooltip title="Add" placement="right">
                 <IconButton aria-label="add" size="small" onClick={onIngredientAdd}>
                   <AddCircleOutlineIcon fontSize="inherit" color="secondary" />
                 </IconButton>
               </Tooltip>
-            </Box>
           )}
         {ingredientsLength !== 1 && (
-          <Box sx={{
-            width: 30, display: "flex", justifyContent: "flex-end", marginRight: 0
-          }}>
             <Tooltip title="Delete" placement="right">
               <IconButton aria-label="delete" size="small" onClick={() => onIngredientDelete(index)}>
                 <DeleteOutlineIcon fontSize="inherit" color="secondary" />
               </IconButton>
             </Tooltip>
-          </Box>
         )}
-
-
       </Grid>
     </>
   )

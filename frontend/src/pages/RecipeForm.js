@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
 import Skeleton from "@mui/material/Skeleton"
+import Alert from "@mui/material/Alert"
 
 import { API_URL } from "../utils/urls"
 import loading from "../reducers/loading"
@@ -135,6 +136,7 @@ const RecipeForm = () => {
 
 
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+  const [isWarningSnackbarOpen, setIsWarningSnackbarOpen] = useState(false)
 
   const handleSubmitRecipe = (event) => {
     event.preventDefault()
@@ -172,7 +174,8 @@ const RecipeForm = () => {
             setChecked(false)
           }
         } else {
-          alert(data.response.message)
+          // alert(data.response.message)
+          setIsWarningSnackbarOpen(true)
         }
         dispatch(loading.actions.setLoading(false))
       })
@@ -224,174 +227,179 @@ const RecipeForm = () => {
 
 
   return (
-    <Container component="main" maxWidth="sm">
+    <>
       <Snackbar
         autoHideDuration={3000}
         open={isSnackbarOpen}
-        message="Recipe has been added"
         onClose={() => setIsSnackbarOpen(false)}
-      />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          {recipeId ? <ModeEditOutlinedIcon /> : <AddOutlinedIcon />}
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          {recipeId ? "EDIT recipe" : "ADD recipe"}
-        </Typography>
-        {isLoading ?
-          <Skeleton variant="rectangular" height={60} width="100%" animation="wave" />
-          :
-          <Box component="form" onSubmit={handleSubmitRecipe} noValidate sx={{ mt: 1 }}>
+        <Alert onClose={() => setIsSnackbarOpen(false)}>
+          Recipe has been added
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        autoHideDuration={3000}
+        open={isWarningSnackbarOpen}
+        onClose={() => setIsWarningSnackbarOpen(false)}
+      >
+        <Alert onClose={() => setIsWarningSnackbarOpen(false)} severity="warning">
+          All fields required (numbers for servings/quantity)
+        </Alert>
+      </Snackbar>
 
-            <Grid container spacing={2}>
+      <Container component="main" maxWidth="sm">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            {recipeId ? <ModeEditOutlinedIcon /> : <AddOutlinedIcon />}
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            {recipeId ? "EDIT recipe" : "ADD recipe"}
+          </Typography>
+          {isLoading ?
+            <Skeleton variant="rectangular" height={60} width="100%" animation="wave" />
+            :
+            <Box component="form" onSubmit={handleSubmitRecipe} noValidate sx={{ mt: 1 }}>
 
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="title"
-                  label="Title"
-                  type="text"
-                  id="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
+              <Grid container spacing={2}>
+
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="title"
+                    label="Title"
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    multiline
+                    maxRows={4}
+                    fullWidth
+                    name="description"
+                    label="Description"
+                    type="text"
+                    helperText="Write a meaningful memory this recipe reminds you"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </Grid>
+
+
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    select
+                    label="Category"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
+                    {categories.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    name="servings"
+                    required
+                    fullWidth
+                    label="Servings"
+                    value={servings}
+                    type="text"
+                    onChange={(e) => setServings(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+
+                  <TextField
+                    required
+                    fullWidth
+                    select
+                    label="Baking time"
+                    value={bakingTime}
+                    onChange={(e) => setBakingTime(e.target.value)}
+                  >
+                    {bakingTimes.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={12} marginTop={2}>
+                  <Typography variant="subtitle1" color="text.secondary">
+                    Ingredients
+                  </Typography>
+                </Grid>
+
+
+                {ingredients.map((ingredient, index) => (
+                  <Ingredient key={`ingredient-${index}`} ingredientsLength={ingredients.length} ingredient={ingredient} index={index} onIngredientChange={handleIngredientChange} onIngredientAdd={handleIngredientAdd} onIngredientDelete={handleIngredientDelete} />
+                ))}
+
+
+                <Grid item xs={12} marginTop={2}>
+                  <Typography variant="subtitle1" color="text.secondary">
+                    Steps
+                  </Typography>
+                </Grid>
+
+                {steps.map((step, index) => (
+                  <Step key={`step-${index}`} stepsLength={steps.length} step={step} index={index} onStepChange={handleStepChange} onStepDelete={handleStepDelete} onStepAdd={handleStepAdd} />
+                ))}
+
               </Grid>
 
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  multiline
-                  maxRows={4}
-                  fullWidth
-                  name="description"
-                  label="Description"
-                  type="text"
-                  id="description"
-                  helperText="Write a meaningful description for your recipe"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
+              <FormControlLabel
+                control={<Checkbox value="public" color="primary" checked={checked}
+                  onChange={handleChangePublic} />}
+                label="I want this recipe to be public!"
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {recipeId ? "Edit this recipe" : "Add a recipe"}
+              </Button>
+
+              <Grid container>
+                <Grid item>
+                  {recipeId ?
+                    <Link href={`/recipes/${recipeId}`} variant="body2" onClick={() => navigate(`/recipes/${recipeId}`)}>
+                      Changed your mind about these changes? Go back to recipe
+                    </Link>
+                    :
+                    <Link href="/recipes" variant="body2" onClick={() => navigate("/recipes")}>
+                      You don't want to add this recipe anymore? Go back to all recipes
+                    </Link>
+                  }
+                </Grid>
               </Grid>
-
-
-              <Grid item xs={12}>
-                <TextField
-                  id="category"
-                  required
-                  fullWidth
-                  select
-                  label="Category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                // helperText="Category"
-                >
-                  {categories.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
-
-
-
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  name="servings"
-                  required
-                  fullWidth
-                  id="servings"
-                  label="Servings"
-                  value={servings}
-                  // inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                  onChange={(e) => setServings(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-
-                <TextField
-                  id="bakingTime"
-                  required
-                  fullWidth
-                  select
-                  label="Baking time"
-                  value={bakingTime}
-                  onChange={(e) => setBakingTime(e.target.value)}
-                // helperText="Baking time"
-                >
-                  {bakingTimes.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
-              <Grid item xs={12} marginTop={2}>
-                <Typography variant="subtitle1" color="text.secondary">
-                  Ingredients
-                </Typography>
-              </Grid>
-
-
-              {ingredients.map((ingredient, index) => (
-                <Ingredient key={`ingredient-${index}`} ingredientsLength={ingredients.length} ingredient={ingredient} index={index} onIngredientChange={handleIngredientChange} onIngredientAdd={handleIngredientAdd} onIngredientDelete={handleIngredientDelete} />
-              ))}
-
-
-              <Grid item xs={12} marginTop={2}>
-                <Typography variant="subtitle1" color="text.secondary">
-                  Steps
-                </Typography>
-              </Grid>
-
-              {steps.map((step, index) => (
-                <Step key={`step-${index}`} stepsLength={steps.length} step={step} index={index} onStepChange={handleStepChange} onStepDelete={handleStepDelete} onStepAdd={handleStepAdd} />
-              ))}
-
-            </Grid>
-
-            <FormControlLabel
-              control={<Checkbox value="public" color="primary" checked={checked}
-                onChange={handleChangePublic} />}
-              label="I want this recipe to be public!"
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {recipeId ? "Edit this recipe" : "Add a recipe"}
-            </Button>
-
-            <Grid container>
-              <Grid item>
-                {recipeId ?
-                  <Link href={`/recipes/${recipeId}`} variant="body2" onClick={() => navigate(`/recipes/${recipeId}`)}>
-                    Changed your mind about these changes? Go back to recipe
-                  </Link>
-                  :
-                  <Link href="/recipes" variant="body2" onClick={() => navigate("/recipes")}>
-                    You don't want to add this recipe anymore? Go back to all recipes
-                  </Link>
-                }
-              </Grid>
-            </Grid>
-          </Box>
-        }
-      </Box>
-    </Container>
+            </Box>
+          }
+        </Box>
+      </Container>
+    </>
   )
 }
 

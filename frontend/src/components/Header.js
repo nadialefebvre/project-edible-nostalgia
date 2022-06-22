@@ -76,16 +76,6 @@ const Header = () => {
       >
 
         <MenuItem onClick={() => {
-          navigate("/")
-          setAnchorEl(null)
-        }}>
-          <ListItemIcon>
-            <HomeOutlinedIcon fontSize="small" color="secondary" />
-          </ListItemIcon>
-          <ListItemText>Home</ListItemText>
-        </MenuItem>
-
-        <MenuItem onClick={() => {
           navigate("/recipes")
           setAnchorEl(null)
         }}>

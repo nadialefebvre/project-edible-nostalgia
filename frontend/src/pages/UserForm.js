@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Skeleton from "@mui/material/Skeleton"
 import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
 import loading from "../reducers/loading"
 import user from "../reducers/user"
@@ -153,12 +154,15 @@ const UserForm = () => {
 
   return (
     <>
-              <Snackbar
+      <Snackbar
         autoHideDuration={3000}
         open={isSnackbarOpen}
-        message={accessToken ? "No change to submit" : "Email and password are required"}
         onClose={() => setIsSnackbarOpen(false)}
-      />
+      >
+        <Alert onClose={() => setIsSnackbarOpen(false)} severity="warning">
+          {accessToken ? "No change to submit" : "Email and password are required"}
+        </Alert>
+      </Snackbar>
 
       <Container component="main" maxWidth="xs">
         <Box
