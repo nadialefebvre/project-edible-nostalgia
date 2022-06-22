@@ -15,6 +15,7 @@ import Paper from '@mui/material/Paper'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import Link from '@mui/material/Link'
+import Skeleton from '@mui/material/Skeleton'
 
 import Box from '@mui/material/Box'
 import TableSortLabel from '@mui/material/TableSortLabel'
@@ -101,7 +102,7 @@ const EnhancedTableHead = (props) => {
   )
 }
 
-const Profile = ({hero}) => {
+const Profile = ({ hero }) => {
 
   const [order, setOrder] = useState('asc')
   const [orderBy, setOrderBy] = useState('title')
@@ -120,6 +121,15 @@ const Profile = ({hero}) => {
   const email = useSelector((store) => store.user.email)
   const accessToken = useSelector((store) => store.user.accessToken)
   const userId = useSelector((store) => store.user.userId)
+
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/accessdenied")
+    }
+  })
+
+
 
   const handleDeleteProfile = () => {
     const options = {
@@ -173,7 +183,7 @@ const Profile = ({hero}) => {
           }
           dispatch(loading.actions.setLoading(false))
         })
-      }
+    }
   }, [userId])
 
 
@@ -188,7 +198,7 @@ const Profile = ({hero}) => {
   return (
     <>
       <Hero hero={hero} />
-      {accessToken &&
+
         <EditDelete
           editPath={"/profile/edit"}
           openAction={handleClickOpen}
@@ -199,62 +209,65 @@ const Profile = ({hero}) => {
           title={"Delete your profile?"}
           text={"Click to confirm that you want to delete your profile."}
         />
-      }
       <Grid item xs={12} md={8}>
         <Typography variant="h6" gutterBottom>
           Profile
         </Typography>
         <Divider />
         <Typography paragraph variant="p">
-          {accessToken ? `${firstName} (${email})` : "Create an account to have access to XYZ here"}
+          {firstName} {email}
         </Typography>
       </Grid>
-      <Box >
-        <Paper sx={{ mb: 2 }}>
-          <TableContainer>
-            <Table
-              aria-labelledby="tableTitle"
-            >
-              <EnhancedTableHead
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                rowCount={userRecipes.length}
-              />
-              <TableBody>
-                {userRecipes.slice().sort(getComparator(order, orderBy))
-                  .map((recipe) => (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, recipe.title)}
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={recipe.title}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell
-                        component="th"
-                        id={recipe.title}
-                        scope="row"
+      {isLoading ?
+        <Skeleton variant="rectangular" height={140} width="100%" animation="wave" />
+        :
+        <Box >
+          <Paper sx={{ mb: 2 }}>
+            <TableContainer>
+              <Table
+                aria-labelledby="tableTitle"
+              >
+                <EnhancedTableHead
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  rowCount={userRecipes.length}
+                />
+                <TableBody>
+                  {userRecipes.slice().sort(getComparator(order, orderBy))
+                    .map((recipe) => (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, recipe.title)}
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={recipe.title}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                       >
-                        <Link href={`/recipes/${recipe._id}`} color="inherit" underline="hover">
-                          {recipe.title}
-                        </Link>
-                      </TableCell>
-                      <TableCell align="right">{recipe.bakingTime}</TableCell>
-                      <TableCell align="right">{recipe.servings}</TableCell>
-                      <TableCell align="right">{recipe.category}</TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-        <FormControlLabel
-          control={<Switch checked={hasAll} onChange={handleChangeHasAll} />}
-          label="All recipes"
-        />
-      </Box>
+                        <TableCell
+                          component="th"
+                          id={recipe.title}
+                          scope="row"
+                        >
+                          <Link href={`/recipes/${recipe._id}`} color="inherit" underline="hover">
+                            {recipe.title}
+                          </Link>
+                        </TableCell>
+                        <TableCell align="right">{recipe.bakingTime}</TableCell>
+                        <TableCell align="right">{recipe.servings}</TableCell>
+                        <TableCell align="right">{recipe.category}</TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+          <FormControlLabel
+            control={<Switch checked={hasAll} onChange={handleChangeHasAll} />}
+            label="All recipes"
+          />
+        </Box>
+      }
     </>
   )
 }

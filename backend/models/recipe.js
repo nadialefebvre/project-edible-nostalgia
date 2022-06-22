@@ -25,6 +25,7 @@ const RecipeSchema = new mongoose.Schema({
     }
   ],
   steps: [String],
+  isPublic: Boolean,
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"

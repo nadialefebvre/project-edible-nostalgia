@@ -2,23 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
+import Snackbar from '@mui/material/Snackbar'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
+import Skeleton from "@mui/material/Skeleton"
 
 import { API_URL } from "../utils/urls"
 import loading from "../reducers/loading"
-import Loader from "../components/Loader"
-import user from "../reducers/user"
 import Ingredient from "../components/Ingredient"
 import Step from "../components/Step"
 
@@ -82,6 +85,20 @@ const RecipeForm = () => {
   ])
   const [steps, setSteps] = useState([""])
 
+  const [checked, setChecked] = useState(true)
+
+  const handleChangePublic = (event) => {
+    setChecked(event.target.checked)
+  }
+
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/accessdenied")
+    }
+  })
+
+
   if (recipeId) {
     useEffect(() => {
       dispatch(loading.actions.setLoading(true))
@@ -114,7 +131,7 @@ const RecipeForm = () => {
 
 
 
-
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 
   const handleSubmitRecipe = (event) => {
     event.preventDefault()
@@ -125,7 +142,7 @@ const RecipeForm = () => {
         "Content-Type": "application/json",
         "Authorization": accessToken
       },
-      body: JSON.stringify({ title, description, category, bakingTime, servings, ingredients, steps, ratingCount: 0, totalRating: 0, addedBy: userId })
+      body: JSON.stringify({ title, description, category, bakingTime, servings, ingredients, steps, ratingCount: 0, totalRating: 0, isPublic: checked, addedBy: userId })
     }
 
     fetch(API_URL(`${recipeId ? `recipes/recipe/${recipeId}` : "recipes"}`), options)
@@ -133,10 +150,9 @@ const RecipeForm = () => {
       .then(data => {
         if (data.success) {
           if (recipeId) {
-            alert("Recipe has been edited.")
             navigate(`/recipes/${recipeId}`)
           } else {
-            alert("Recipe has been added.")
+            setIsSnackbarOpen(true)
             setTitle("")
             setDescription("")
             setCategory("")
@@ -203,15 +219,14 @@ const RecipeForm = () => {
   }
 
 
-
-
-  if (isLoading) {
-    return <Loader />
-  }
-
-
   return (
     <Container component="main" maxWidth="sm">
+      <Snackbar
+        autoHideDuration={3000}
+        open={isSnackbarOpen}
+        message="Recipe has been added"
+        onClose={() => setIsSnackbarOpen(false)}
+      />
       <Box
         sx={{
           marginTop: 8,
@@ -226,8 +241,8 @@ const RecipeForm = () => {
         <Typography component="h1" variant="h5">
           {recipeId ? "EDIT recipe" : "ADD recipe"}
         </Typography>
-        {!accessToken ?
-          <Box sx={{ mt: 1 }}>You need to be logged in to be able to {recipeId ? "edit" : "add"} a recipe</Box>
+        {isLoading ?
+          <Skeleton variant="rectangular" height={60} width="100%" animation="wave" />
           :
           <Box component="form" onSubmit={handleSubmitRecipe} noValidate sx={{ mt: 1 }}>
 
@@ -341,7 +356,11 @@ const RecipeForm = () => {
 
             </Grid>
 
-
+            <FormControlLabel
+              control={<Checkbox value="public" color="primary" checked={checked}
+                onChange={handleChangePublic} />}
+              label="I want this recipe to be public!"
+            />
 
             <Button
               type="submit"

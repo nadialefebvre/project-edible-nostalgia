@@ -24,6 +24,7 @@ import UserForm from "./pages/UserForm"
 // const theme = createTheme()
 
 import { theme } from "./utils/theme"
+import AccessDenied from "./pages/AccessDenied"
 
 const reducer = combineReducers({
   loading: loading.reducer,
@@ -71,6 +72,7 @@ const App = () => {
                 <Route path="/" element={<Home hero={hero} />} />
                 <Route path="*" element={<Error404 hero={hero} />} />
                 <Route path="/error404" element={<Error404 hero={hero} />} />
+                <Route path="/accessdenied" element={<AccessDenied hero={hero} />} />
               </Routes>
             </main>
             <Footer />

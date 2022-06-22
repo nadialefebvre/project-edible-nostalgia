@@ -9,6 +9,7 @@ const routes = [
   { path: '/recipes/:recipeId', breadcrumb: "Recipe" },
   { path: '/recipes/add', breadcrumb: "Add" },
   { path: '/recipes', breadcrumb: 'All' },
+  { path: '/accessdenied', breadcrumb: 'Access denied' },
 ]
 
 const BreadcrumbsNav = () => {

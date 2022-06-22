@@ -3,19 +3,18 @@ import { useDispatch, useSelector } from "react-redux"
 
 import Paper from '@mui/material/Paper'
 import InputBase from '@mui/material/InputBase'
-import FilterListIcon from '@mui/icons-material/FilterList';
+import FilterListIcon from '@mui/icons-material/FilterList'
 import InputAdornment from '@mui/material/InputAdornment'
-
+import Skeleton from "@mui/material/Skeleton"
 import Grid from '@mui/material/Grid'
 
 import { API_URL } from "../utils/urls"
 import loading from "../reducers/loading"
-import Loader from "../components/Loader"
 
 import Hero from '../components/Hero'
 import RecipeCard from "../components/RecipeCard"
 
-const AllRecipes = ({hero}) => {
+const AllRecipes = ({ hero }) => {
 
   const dispatch = useDispatch()
 
@@ -56,14 +55,6 @@ const AllRecipes = ({hero}) => {
     recipe.category.toLowerCase().startsWith(inputSearch.toLowerCase()))
 
 
-  // if (isLoading) {
-  //   return <Loader />
-  // }
-
-  // useEffect(() => {
-  //   dispatch(loading.actions.setLoading(true))
-  // }, [])
-
   return (
     <>
       <Hero hero={hero} />
@@ -77,9 +68,15 @@ const AllRecipes = ({hero}) => {
         />
       </Paper>
       <Grid container spacing={4} marginTop={1}>
-        {filteredRecipes.map((recipe) => (
-          <RecipeCard key={recipe.title} recipe={recipe} />
-        ))}
+        {isLoading ? (
+          <Grid item xs={12} md={6}>
+                <Skeleton variant="rectangular" height={140} width="100%" animation="wave" />
+          </Grid>
+        ) : (
+          filteredRecipes.map((recipe) => (
+            <RecipeCard key={recipe.title} recipe={recipe} />
+          ))
+        )}
       </Grid>
     </>
   )

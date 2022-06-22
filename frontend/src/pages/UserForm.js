@@ -11,13 +11,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import Backdrop from '@mui/material/Backdrop'
-import CircularProgress from '@mui/material/CircularProgress'
+import Skeleton from "@mui/material/Skeleton"
+import Snackbar from '@mui/material/Snackbar'
 
 import loading from "../reducers/loading"
 import user from "../reducers/user"
-import Loader from "../components/Loader"
-import FormLoader from "../components/FormLoader"
 
 import { API_URL } from "../utils/urls"
 
@@ -38,6 +36,8 @@ const UserForm = () => {
 
   const [mode, setMode] = useState("login")
 
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+
   useEffect(() => {
     if (!accessToken) {
       navigate("/login")
@@ -46,7 +46,7 @@ const UserForm = () => {
 
   const loginOrRegister = () => {
     if (!email || !password) {
-      alert("All fields are required.")
+      setIsSnackbarOpen(true)
     } else {
       dispatch(loading.actions.setLoading(true))
       const options = {
@@ -59,16 +59,12 @@ const UserForm = () => {
         .then(data => {
           if (data.success) {
             batch(() => {
+              navigate("/profile")
               dispatch(user.actions.setFirstName(data.response.firstName))
               dispatch(user.actions.setEmail(data.response.email))
               dispatch(user.actions.setUserId(data.response.userId))
               dispatch(user.actions.setAccessToken(data.response.accessToken))
               dispatch(user.actions.setError(null))
-              if (mode === "register") {
-                alert("User has been created.")
-              } else {
-                alert("User is now logged in.")
-              }
             })
           } else {
             batch(() => {
@@ -80,7 +76,6 @@ const UserForm = () => {
               dispatch(user.actions.setAccessToken(null))
             })
           }
-          dispatch(loading.actions.setLoading(false))
         })
     }
   }
@@ -99,7 +94,7 @@ const UserForm = () => {
       .then(data => {
         if (data.success) {
           batch(() => {
-            // alert("First name and/or email have been updated.")
+            navigate("/profile")
             dispatch(user.actions.setFirstName(firstName))
             dispatch(user.actions.setEmail(email))
             dispatch(user.actions.setError(null))
@@ -112,7 +107,6 @@ const UserForm = () => {
             dispatch(user.actions.setEmail(null))
           })
         }
-        dispatch(loading.actions.setLoading(false))
       })
   }
 
@@ -129,14 +123,12 @@ const UserForm = () => {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          setPassword("")
-          // alert("Password has been updated.")
+          navigate("/profile")
           dispatch(user.actions.setError(null))
         } else {
           alert(data.response.message)
           dispatch(user.actions.setError(data.response))
         }
-        dispatch(loading.actions.setLoading(false))
       })
   }
 
@@ -147,23 +139,27 @@ const UserForm = () => {
     if (accessToken) {
       if (firstName !== userFirstName || email !== userEmail) {
         editOtherFields()
+      } else {
+        setIsSnackbarOpen(true)
       }
       if (password !== "") {
         editPassword()
       }
     } else {
       loginOrRegister()
-      navigate("/profile")
     }
-  }
-
-  if (isLoading) {
-    return <FormLoader />
-    // return <Loader />
+    dispatch(loading.actions.setLoading(false))
   }
 
   return (
     <>
+              <Snackbar
+        autoHideDuration={3000}
+        open={isSnackbarOpen}
+        message={accessToken ? "No change to submit" : "Email and password are required"}
+        onClose={() => setIsSnackbarOpen(false)}
+      />
+
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -177,72 +173,76 @@ const UserForm = () => {
             {accessToken ? <LockOpenOutlinedIcon /> : <LockOutlinedIcon />}
           </Avatar>
           <Typography component="h1" variant="h5">
-            {accessToken ? "Edit user" : mode === "register" ? "Register" : "Log in"}
+            {accessToken ? "Edit profile" : mode === "register" ? "Register" : "Log in"}
           </Typography>
-          <Box component="form" onSubmit={onFormSubmit} noValidate sx={{ mt: 1 }}>
-            {mode === "register" || accessToken ?
+          {isLoading ?
+            <Skeleton variant="rectangular" height={60} width="100%" animation="wave" />
+            :
+            <Box component="form" onSubmit={onFormSubmit} noValidate sx={{ mt: 1 }}>
+              {mode === "register" || accessToken ?
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  id="firstName"
+                  label={accessToken ? "New first name" : "First name"}
+                  name="firstName"
+                  autoComplete="given-name"
+                  autoFocus
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
+                />
+                : null}
+
               <TextField
                 margin="normal"
+                required
                 fullWidth
-                id="firstName"
-                label={accessToken ? "New first name" : "First name"}
-                name="firstName"
-                autoComplete="given-name"
+                id="email"
+                label={accessToken ? "New email" : "Email"}
+                name="email"
+                autoComplete="email"
                 autoFocus
-                value={firstName}
-                onChange={e => setFirstName(e.target.value)}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
               />
-              : null}
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label={accessToken ? "New email" : "Email"}
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label={accessToken ? "New password" : "Password"}
+                type="password"
+                autoComplete="current-password"
+                onChange={e => setPassword(e.target.value)}
+              />
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label={accessToken ? "New password" : "Password"}
-              type="password"
-              autoComplete="current-password"
-              onChange={e => setPassword(e.target.value)}
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {accessToken ? "Edit user" : mode === "register" ? "Register" : "Log in"}
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link
-                  href="#"
-                  variant="body2"
-                  onClick={() => accessToken ? navigate("/recipes") : (setMode(mode === "register" ? "login" : "register"))}
-                >
-                  {accessToken ? "Changed your mind about these changes? Go back to profile" : mode === "register"
-                    ?
-                    "You have an account? Click here to log in"
-                    :
-                    "Don't have an account? Click here to register"
-                  }
-                </Link>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {accessToken ? "Edit user" : mode === "register" ? "Register" : "Log in"}
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link
+                    href="#"
+                    variant="body2"
+                    onClick={() => accessToken ? navigate("/profile") : (setMode(mode === "register" ? "login" : "register"))}
+                  >
+                    {accessToken ? "Changed your mind or are done? Go back to profile" : mode === "register"
+                      ?
+                      "You have an account? Click here to log in"
+                      :
+                      "Don't have an account? Click here to register"
+                    }
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
+            </Box>
+          }
         </Box>
       </Container>
     </>
