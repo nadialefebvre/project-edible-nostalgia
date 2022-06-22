@@ -30,7 +30,7 @@ const AllRecipes = ({ hero }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // "Authorization": accessToken,
+        "Authorization": accessToken,
       },
     }
     // use other endpoint for recipes by user + no user

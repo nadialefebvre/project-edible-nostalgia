@@ -109,12 +109,12 @@ export const getRecipesByUserIdAndPublic = async (req, res) => {
   const { userId } = req.params
 
   try {
-    const allRecipesByUserId = await Recipe.find({ $or: [{ addedBy: userId }, { isPublic }] })
+    const recipesByUserIdAndPublic = await Recipe.find({ $or: [{ addedBy: userId }, { isPublic: true }] })
 
     res.status(200).json({
       success: true,
       status_code: 200,
-      response: allRecipesByUserId
+      response: recipesByUserIdAndPublic
     })
   } catch (error) {
     res.status(400).json({
