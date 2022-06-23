@@ -45,6 +45,7 @@ const UserForm = () => {
 
   const loginOrRegister = () => {
     if (!email || !password) {
+      setSnackbarMessage("Email and password are required.")
       setIsSnackbarOpen(true)
     } else {
       dispatch(loading.actions.setLoading(true))
