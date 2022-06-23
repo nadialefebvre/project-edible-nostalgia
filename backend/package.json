@@ -1,12 +1,12 @@
 {
-  "name": "project-auth-backend",
+  "name": "edible-nostalgia-backend",
   "version": "1.0.0",
-  "description": "Starter project to get up and running with express quickly",
+  "description": "Final project backend for Technigo's bootcamp",
   "scripts": {
     "start": "babel-node server.js",
     "dev": "nodemon server.js --exec babel-node"
   },
-  "author": "",
+  "author": "Nadia Lefebvre",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.17.9",
