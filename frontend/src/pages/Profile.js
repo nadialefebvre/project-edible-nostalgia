@@ -63,8 +63,8 @@ const Profile = ({ hero }) => {
         hasPublicRecipes ? `recipes/user/${userId}/public` : `recipes/user/${userId}`
 
       fetch(API_URL(slugToUse), options)
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (data.success) {
             setRecipes(data.response)
           } else {
@@ -72,6 +72,7 @@ const Profile = ({ hero }) => {
           }
           dispatch(loading.actions.setLoading(false))
         })
+        .catch(error => console.error("Error:", error))
     }
   }, [userId, hasPublicRecipes])
 
@@ -120,6 +121,7 @@ const Profile = ({ hero }) => {
         navigate("/recipes")
         dispatch(user.actions.logOut())
       })
+      .catch(error => console.error("Error:", error))
   }
 
   return (
@@ -166,7 +168,7 @@ const Profile = ({ hero }) => {
                 />
                 <TableBody>
                   {recipes.slice().sort(getComparator(order, orderBy))
-                    .map((recipe) => {
+                    .map(recipe => {
                       recipe.rating = recipe.ratingCount > 0
                         ? Math.round(recipe.totalRating / recipe.ratingCount)
                         : 0

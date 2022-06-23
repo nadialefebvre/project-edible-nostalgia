@@ -34,7 +34,7 @@ const Sidebar = (props) => {
       >
         Ingredient{recipe.ingredients.length > 1 && "s"}
       </Typography>
-      {recipe.ingredients.map((ingredient) => (
+      {recipe.ingredients.map(ingredient => (
         <Typography
           display="block"
           variant="body1"

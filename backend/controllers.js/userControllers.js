@@ -24,7 +24,6 @@ export const registerUser = async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync()
     const userExists = await User.findOne({ email })
-    // const passwordNotAccepted = password.length < 8
 
     emailValidation(email)
     passwordValidation(password)
@@ -37,14 +36,6 @@ export const registerUser = async (req, res) => {
           message: "Email already used."
         }
       })
-      // } else if (passwordNotAccepted) {
-      //   res.status(400).json({
-      //     success: false,
-      //     status_code: 400,
-      //     response: {
-      //       message: "Password must be at least 8 characters long."
-      //     }
-      //   })
     } else {
       const newUser = await new User({
         firstName: firstName,
@@ -143,20 +134,9 @@ export const editProfilePassword = async (req, res) => {
 
   try {
     const salt = bcrypt.genSaltSync()
-    // const passwordNotAccepted = password.length < 8
 
-    emailValidation(email)
     passwordValidation(password)
 
-    // if (passwordNotAccepted) {
-    //   res.status(400).json({
-    //     success: false,
-    //     status_code: 400,
-    //     response: {
-    //       message: "Password must be at least 8 characters long."
-    //     }
-    //   })
-    // } else {
     await User.findByIdAndUpdate(
       userId, { password: bcrypt.hashSync(password, salt) }
     )
@@ -168,13 +148,12 @@ export const editProfilePassword = async (req, res) => {
         message: "User has been updated."
       }
     })
-    // }
   } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
-        message: "Bad request, could not find and update this user.",
+        message: "Bad request, could not find and update this user (password).",
         error: err.errors
       }
     })
@@ -188,6 +167,8 @@ export const editProfileOtherFields = async (req, res) => {
   try {
     const listOfProperties = Object.keys(req.body)
     const fieldsToEdit = {}
+
+    emailValidation(email)
 
     listOfProperties.map(singleField => {
       fieldsToEdit[singleField] = req.body[singleField]
@@ -207,7 +188,7 @@ export const editProfileOtherFields = async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: "Bad request, could not find and update this user.",
+        message: "Bad request, could not find and update this user (name/email).",
         error: err.errors
       }
     })

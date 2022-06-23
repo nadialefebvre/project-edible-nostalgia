@@ -71,8 +71,7 @@ const UserForm = () => {
           } else {
             batch(() => {
               setIsSnackbarOpen(true)
-              console.log(data.response)
-              setSnackbarMessage(data.response)
+              setSnackbarMessage(data.response.message)
               dispatch(user.actions.setError(data.response))
               dispatch(user.actions.setFirstName(null))
               dispatch(user.actions.setEmail(null))
@@ -81,7 +80,7 @@ const UserForm = () => {
             })
           }
         })
-        .catch(error => console.error('Error:', error))
+        .catch(error => console.error("Error:", error))
     }
   }
 
@@ -114,6 +113,7 @@ const UserForm = () => {
           })
         }
       })
+      .catch(error => console.error("Error:", error))
   }
 
   const editPassword = () => {
@@ -138,6 +138,7 @@ const UserForm = () => {
           dispatch(user.actions.setError(data.response))
         }
       })
+      .catch(error => console.error("Error:", error))
   }
 
   const onFormSubmit = (event) => {

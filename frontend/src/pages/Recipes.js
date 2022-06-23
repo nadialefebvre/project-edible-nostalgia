@@ -39,8 +39,8 @@ const Recipes = ({ hero }) => {
       accessToken ? `recipes/user/${userId}/public` : "recipes/public"
 
     fetch(API_URL(slugToUse), options)
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         if (data.success) {
           setRecipes(data.response)
         } else {
@@ -48,6 +48,7 @@ const Recipes = ({ hero }) => {
         }
         dispatch(loading.actions.setLoading(false))
       })
+      .catch(error => console.error("Error:", error))
   }, [])
 
   const onRecipeSearch = (e) => {
@@ -95,7 +96,7 @@ const Recipes = ({ hero }) => {
             />
           </Grid>
           :
-          filteredRecipes.map((recipe) => (
+          filteredRecipes.map(recipe => (
             <RecipeCard key={uniqid()} recipe={recipe} />
           ))
         }

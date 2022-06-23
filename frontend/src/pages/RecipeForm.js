@@ -63,8 +63,8 @@ const RecipeForm = () => {
     useEffect(() => {
       dispatch(loading.actions.setLoading(true))
       fetch(API_URL(`recipes/recipe/${recipeId}`))
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (!accessToken || data.response.addedBy !== userId) {
             navigate("/accessdenied")
           }
@@ -82,6 +82,7 @@ const RecipeForm = () => {
           setChecked(data.response.isPublic)
           dispatch(loading.actions.setLoading(false))
         })
+        .catch(error => console.error("Error:", error))
     }, [])
   }
 
@@ -146,6 +147,7 @@ const RecipeForm = () => {
         }
         dispatch(loading.actions.setLoading(false))
       })
+      .catch(error => console.error("Error:", error))
   }
 
   const handleIngredientChange = (e, index) => {
@@ -268,7 +270,7 @@ const RecipeForm = () => {
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                   >
-                    {categories.map((option) => (
+                    {categories.map(option => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -297,7 +299,7 @@ const RecipeForm = () => {
                     value={bakingTime}
                     onChange={(e) => setBakingTime(e.target.value)}
                   >
-                    {bakingTimes.map((option) => (
+                    {bakingTimes.map(option => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>

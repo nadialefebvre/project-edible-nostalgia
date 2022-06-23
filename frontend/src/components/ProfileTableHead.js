@@ -19,7 +19,7 @@ const ProfileTableHead = (props) => {
   return (
     <TableHead sx={{ border: 0 }}>
       <TableRow>
-        {headCells.map((headCell) => (
+        {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
             align={headCell.id === "title" ? "left" : "right"}

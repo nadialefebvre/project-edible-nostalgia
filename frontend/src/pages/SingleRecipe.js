@@ -51,8 +51,8 @@ const SingleRecipe = () => {
       }
 
       fetch(API_URL(`users/user/${userId}`), options)
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (data.success) {
             setUserRatings(data.response.ratings)
           } else {
@@ -62,20 +62,20 @@ const SingleRecipe = () => {
           }
           dispatch(loading.actions.setLoading(false))
         })
-        .catch(error => console.error('Error:', error))
+        .catch(error => console.error("Error:", error))
     }
   }, [])
 
   useEffect(() => {
     dispatch(loading.actions.setLoading(true))
     fetch(API_URL(`recipes/recipe/${recipeId}`))
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         setRecipe(data.response)
         dispatch(loading.actions.setLoading(false))
       })
-      .catch(error => console.error('Error:', error))
-    }, [])
+      .catch(error => console.error("Error:", error))
+  }, [])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -91,8 +91,8 @@ const SingleRecipe = () => {
     }
 
     fetch(API_URL(`recipes/recipe/${recipeId}`), options)
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         if (data.success) {
           navigate("/recipes")
         } else {
@@ -101,8 +101,8 @@ const SingleRecipe = () => {
           setSnackbarSeverity("warning")
         }
       })
-      .catch(error => console.error('Error:', error))
-    }
+      .catch(error => console.error("Error:", error))
+  }
 
   const addRatingToRecipe = () => {
     const options = {
@@ -115,8 +115,8 @@ const SingleRecipe = () => {
     }
 
     fetch(API_URL(`recipes/recipe/${recipeId}/rating`), options)
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         setIsSnackbarOpen(true)
         setSnackbarMessage(data.response.message)
         if (data.success) {
@@ -125,8 +125,8 @@ const SingleRecipe = () => {
           setSnackbarSeverity("warning")
         }
       })
-      .catch(error => console.error('Error:', error))
-    }
+      .catch(error => console.error("Error:", error))
+  }
 
   const addRatingToUser = () => {
     const options = {
@@ -139,9 +139,9 @@ const SingleRecipe = () => {
     }
 
     fetch(API_URL(`users/user/${userId}/edit/rating`), options)
-      .then((res) => res.json())
-      .catch(error => console.error('Error:', error))
-    }
+      .then(res => res.json())
+      .catch(error => console.error("Error:", error))
+  }
 
   const handleRateRecipe = () => {
     addRatingToRecipe()

@@ -44,7 +44,7 @@ const Ingredient = (props) => {
           value={ingredient.unit}
           onChange={(e) => onIngredientChange(e, index)}
         >
-          {units.map((option) => (
+          {units.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
