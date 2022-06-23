@@ -91,7 +91,7 @@ const RecipeForm = () => {
   const handleSubmitRecipe = (event) => {
     event.preventDefault()
     dispatch(loading.actions.setLoading(true))
-    
+
     const options = {
       method: `${recipeId ? "PATCH" : "POST"}`,
       headers: {
@@ -217,7 +217,7 @@ const RecipeForm = () => {
             {recipeId ? <ModeEditOutlinedIcon /> : <AddOutlinedIcon />}
           </Avatar>
           <Typography component="h1" variant="h5">
-            {recipeId ? "EDIT recipe" : "ADD recipe"}
+            {recipeId ? "Edit the recipe" : "Add a recipe"}
           </Typography>
           {isLoading ?
             <Skeleton
@@ -349,11 +349,11 @@ const RecipeForm = () => {
               <FormControlLabel
                 control={<Checkbox
                   value="public"
-                  color="primary"
+                  color="secondary"
                   checked={checked}
                   onChange={handleChangePublic}
                 />}
-                label="I want this recipe to be public!"
+                label={<Typography color="text.secondary">I want this recipe to be public!</Typography>}
               />
 
               <Button
@@ -362,7 +362,7 @@ const RecipeForm = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                {recipeId ? "Edit this recipe" : "Add a recipe"}
+                {recipeId ? "Edit" : "Add"}
               </Button>
 
               <Grid container>
