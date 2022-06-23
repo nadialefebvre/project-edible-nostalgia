@@ -26,8 +26,15 @@ const RecipeCard = (props) => {
         href={`/recipes/${recipe._id}`}
         onClick={() => navigate(`/recipes/${recipe._id}`)}
       >
-        <Card sx={{ display: "flex" }}>
+        <Card sx={{ display: "flex", height: 240 }}>
           <CardContent sx={{ flex: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{ textTransform: "uppercase" }}
+              color="text.secondary"
+            >
+              {recipe.category}
+            </Typography>
             <Typography component="h2" variant="h5">
               {recipe.title}
             </Typography>
