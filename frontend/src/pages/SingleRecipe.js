@@ -62,9 +62,7 @@ const SingleRecipe = () => {
           }
           dispatch(loading.actions.setLoading(false))
         })
-        .catch((error) => {
-          console.error('Error:', error)
-        })
+        .catch(error => console.error('Error:', error))
     }
   }, [])
 
@@ -76,10 +74,8 @@ const SingleRecipe = () => {
         setRecipe(data.response)
         dispatch(loading.actions.setLoading(false))
       })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
-  }, [])
+      .catch(error => console.error('Error:', error))
+    }, [])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -105,10 +101,8 @@ const SingleRecipe = () => {
           setSnackbarSeverity("warning")
         }
       })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
-  }
+      .catch(error => console.error('Error:', error))
+    }
 
   const addRatingToRecipe = () => {
     const options = {
@@ -131,10 +125,8 @@ const SingleRecipe = () => {
           setSnackbarSeverity("warning")
         }
       })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
-  }
+      .catch(error => console.error('Error:', error))
+    }
 
   const addRatingToUser = () => {
     const options = {
@@ -148,10 +140,8 @@ const SingleRecipe = () => {
 
     fetch(API_URL(`users/user/${userId}/edit/rating`), options)
       .then((res) => res.json())
-      .catch((error) => {
-        console.error('Error:', error)
-      })
-  }
+      .catch(error => console.error('Error:', error))
+    }
 
   const handleRateRecipe = () => {
     addRatingToRecipe()

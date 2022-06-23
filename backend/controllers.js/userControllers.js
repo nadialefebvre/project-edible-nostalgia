@@ -68,7 +68,7 @@ export const registerUser = async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: "Could not create user.",
+        message: error,
         errors: error.errors
       }
     })

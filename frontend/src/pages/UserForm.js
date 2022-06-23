@@ -71,7 +71,8 @@ const UserForm = () => {
           } else {
             batch(() => {
               setIsSnackbarOpen(true)
-              setSnackbarMessage(data.response.message)
+              console.log(data.response)
+              setSnackbarMessage(data.response)
               dispatch(user.actions.setError(data.response))
               dispatch(user.actions.setFirstName(null))
               dispatch(user.actions.setEmail(null))
@@ -80,6 +81,7 @@ const UserForm = () => {
             })
           }
         })
+        .catch(error => console.error('Error:', error))
     }
   }
 
