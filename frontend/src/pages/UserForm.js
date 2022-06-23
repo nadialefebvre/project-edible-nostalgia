@@ -140,23 +140,17 @@ const UserForm = () => {
   const onFormSubmit = (event) => {
     event.preventDefault()
     dispatch(loading.actions.setLoading(true))
-    const noChange =
-      password === "" && firstName === userFirstName && email === userEmail
-    const onlyPasswordChanged =
-      password !== "" && firstName === userFirstName && email === userEmail
-    const onlyOtherFieldsChanged =
-      password === "" && (firstName !== userFirstName || email !== userEmail)
-    const passwordAndOtherFieldsChanged =
-      password !== "" && (firstName !== userFirstName || email !== userEmail)
+    const passwordChanged = password !== ""
+    const otherFieldsChanged = firstName !== userFirstName || email !== userEmail
     if (accessToken) {
-      if (noChange) {
+      if (!passwordChanged && !otherFieldsChanged) {
         setIsSnackbarOpen(true)
-        setSnackbarMessage("No change to submit")
-      } else if (onlyPasswordChanged) {
+        setSnackbarMessage("No change to submit.")
+      } else if (passwordChanged) {
         editPassword()
-      } else if (onlyOtherFieldsChanged) {
+      } else if (otherFieldsChanged) {
         editOtherFields()
-      } else if (passwordAndOtherFieldsChanged) {
+      } else if (passwordChanged && otherFieldsChanged) {
         editPassword()
         editOtherFields()
       }
