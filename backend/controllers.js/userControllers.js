@@ -153,7 +153,7 @@ export const editProfilePassword = async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: "Bad request, could not find and update this user (password).",
+        message: error,
         error: err.errors
       }
     })
@@ -188,7 +188,7 @@ export const editProfileOtherFields = async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: "Bad request, could not find and update this user (name/email).",
+        message: error,
         error: err.errors
       }
     })
