@@ -35,6 +35,7 @@ const UserForm = () => {
   const [password, setPassword] = useState("")
   const [mode, setMode] = useState("login")
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
 
   useEffect(() => {
     if (!accessToken) {
@@ -68,7 +69,8 @@ const UserForm = () => {
             })
           } else {
             batch(() => {
-              alert(data.response.message)
+              setIsSnackbarOpen(true)
+              setSnackbarMessage(data.response.message)
               dispatch(user.actions.setError(data.response))
               dispatch(user.actions.setFirstName(null))
               dispatch(user.actions.setEmail(null))
@@ -128,7 +130,8 @@ const UserForm = () => {
           navigate("/profile")
           dispatch(user.actions.setError(null))
         } else {
-          alert(data.response.message)
+          setIsSnackbarOpen(true)
+          setSnackbarMessage(data.response.message)
           dispatch(user.actions.setError(data.response))
         }
       })
@@ -137,14 +140,25 @@ const UserForm = () => {
   const onFormSubmit = (event) => {
     event.preventDefault()
     dispatch(loading.actions.setLoading(true))
+    const noChange =
+      password === "" && firstName === userFirstName && email === userEmail
+    const onlyPasswordChanged =
+      password !== "" && firstName === userFirstName && email === userEmail
+    const onlyOtherFieldsChanged =
+      password === "" && (firstName !== userFirstName || email !== userEmail)
+    const passwordAndOtherFieldsChanged =
+      password !== "" && (firstName !== userFirstName || email !== userEmail)
     if (accessToken) {
-      if (firstName !== userFirstName || email !== userEmail) {
-        editOtherFields()
-      } else {
+      if (noChange) {
         setIsSnackbarOpen(true)
-      }
-      if (password !== "") {
+        setSnackbarMessage("No change to submit")
+      } else if (onlyPasswordChanged) {
         editPassword()
+      } else if (onlyOtherFieldsChanged) {
+        editOtherFields()
+      } else if (passwordAndOtherFieldsChanged) {
+        editPassword()
+        editOtherFields()
       }
     } else {
       loginOrRegister()
@@ -160,7 +174,7 @@ const UserForm = () => {
         onClose={() => setIsSnackbarOpen(false)}
       >
         <Alert onClose={() => setIsSnackbarOpen(false)} severity="warning">
-          {accessToken ? "No change to submit" : "Email and password are required"}
+          {snackbarMessage}
         </Alert>
       </Snackbar>
 

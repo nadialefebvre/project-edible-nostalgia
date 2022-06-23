@@ -33,6 +33,8 @@ const SingleRecipe = () => {
   const [rating, setRating] = useState(0)
   const [isRated, setIsRated] = useState(false)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
 
   const recipeRating = userRatings.find(item => item.recipeId === recipeId)
 
@@ -54,9 +56,14 @@ const SingleRecipe = () => {
           if (data.success) {
             setUserRatings(data.response.ratings)
           } else {
-            alert(data.response.message)
+            setIsSnackbarOpen(true)
+            setSnackbarMessage(data.response.message)
+            setSnackbarSeverity("warning")
           }
           dispatch(loading.actions.setLoading(false))
+        })
+        .catch((error) => {
+          console.error('Error:', error)
         })
     }
   }, [])
@@ -68,6 +75,9 @@ const SingleRecipe = () => {
       .then((data) => {
         setRecipe(data.response)
         dispatch(loading.actions.setLoading(false))
+      })
+      .catch((error) => {
+        console.error('Error:', error)
       })
   }, [])
 
@@ -90,8 +100,13 @@ const SingleRecipe = () => {
         if (data.success) {
           navigate("/recipes")
         } else {
-          alert(data.response.message)
+          setIsSnackbarOpen(true)
+          setSnackbarMessage(data.response.message)
+          setSnackbarSeverity("warning")
         }
+      })
+      .catch((error) => {
+        console.error('Error:', error)
       })
   }
 
@@ -108,11 +123,16 @@ const SingleRecipe = () => {
     fetch(API_URL(`recipes/recipe/${recipeId}/rating`), options)
       .then((res) => res.json())
       .then((data) => {
+        setIsSnackbarOpen(true)
+        setSnackbarMessage(data.response.message)
         if (data.success) {
-          setIsSnackbarOpen(true)
+          setSnackbarSeverity("success")
         } else {
-          alert(data.response.message)
+          setSnackbarSeverity("warning")
         }
+      })
+      .catch((error) => {
+        console.error('Error:', error)
       })
   }
 
@@ -128,12 +148,8 @@ const SingleRecipe = () => {
 
     fetch(API_URL(`users/user/${userId}/edit/rating`), options)
       .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setIsSnackbarOpen(true)
-        } else {
-          alert(data.response.message)
-        }
+      .catch((error) => {
+        console.error('Error:', error)
       })
   }
 
@@ -150,8 +166,8 @@ const SingleRecipe = () => {
         open={isSnackbarOpen}
         onClose={() => setIsSnackbarOpen(false)}
       >
-        <Alert onClose={() => setIsSnackbarOpen(false)}>
-          Recipe has been rated
+        <Alert onClose={() => setIsSnackbarOpen(false)} severity={snackbarSeverity}>
+          {snackbarMessage}
         </Alert>
       </Snackbar>
 

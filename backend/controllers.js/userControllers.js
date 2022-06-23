@@ -123,18 +123,29 @@ export const editProfilePassword = async (req, res) => {
 
   try {
     const salt = bcrypt.genSaltSync()
+    const passwordNotAccepted = password.length < 8
 
-    await User.findByIdAndUpdate(
-      userId, { password: bcrypt.hashSync(password, salt) }
-    )
+    if (passwordNotAccepted) {
+      res.status(400).json({
+        success: false,
+        status_code: 400,
+        response: {
+          message: "Password must be at least 8 characters long."
+        }
+      })
+    } else {
+      await User.findByIdAndUpdate(
+        userId, { password: bcrypt.hashSync(password, salt) }
+      )
 
-    res.status(200).json({
-      success: true,
-      status_code: 200,
-      response: {
-        message: "User has been updated."
-      }
-    })
+      res.status(200).json({
+        success: true,
+        status_code: 200,
+        response: {
+          message: "User has been updated."
+        }
+      })
+    }
   } catch (err) {
     res.status(400).json({
       success: false,
@@ -208,7 +219,7 @@ export const addRatingToUser = async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: "Bad request, could not find and update this user.",
+        message: "Bad request, could not find and add rating to this user.",
         error: err.errors
       }
     })
