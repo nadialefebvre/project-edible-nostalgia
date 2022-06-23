@@ -15,7 +15,7 @@ const EditDelete = (props) => {
     openAction,
     open,
     setOpen,
-    handleDelete,
+    onDelete,
     itemId,
     title,
     text
@@ -52,7 +52,7 @@ const EditDelete = (props) => {
       <Confirm
         open={open}
         setOpen={setOpen}
-        handleDelete={handleDelete}
+        onDelete={onDelete}
         itemId={itemId}
         title={title}
         text={text}

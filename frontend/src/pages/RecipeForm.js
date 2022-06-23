@@ -86,11 +86,11 @@ const RecipeForm = () => {
     }, [])
   }
 
-  const handleChangePublic = (event) => {
+  const onChangePublic = (event) => {
     setChecked(event.target.checked)
   }
 
-  const handleSubmitRecipe = (event) => {
+  const onSubmitRecipe = (event) => {
     event.preventDefault()
     dispatch(loading.actions.setLoading(true))
 
@@ -227,7 +227,7 @@ const RecipeForm = () => {
             :
             <Box
               component="form"
-              onSubmit={handleSubmitRecipe}
+              onSubmit={onSubmitRecipe}
               noValidate
               sx={{ mt: 1 }}
             >
@@ -349,7 +349,7 @@ const RecipeForm = () => {
                   value="public"
                   color="secondary"
                   checked={checked}
-                  onChange={handleChangePublic}
+                  onChange={onChangePublic}
                 />}
                 label={<Typography color="text.secondary">I want this recipe to be public!</Typography>}
               />

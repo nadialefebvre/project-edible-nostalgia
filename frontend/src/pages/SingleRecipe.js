@@ -143,7 +143,7 @@ const SingleRecipe = () => {
       .catch(error => console.error("Error:", error))
   }
 
-  const handleRateRecipe = () => {
+  const onRateRecipe = () => {
     addRatingToRecipe()
     addRatingToUser()
     setIsRated(true)
@@ -167,8 +167,9 @@ const SingleRecipe = () => {
         <EditDelete
           editPath={`/recipes/${recipe._id}/edit`}
           openAction={handleClickOpen}
-          open={open} setOpen={setOpen}
-          handleDelete={handleDeleteRecipe}
+          open={open}
+          setOpen={setOpen}
+          onDelete={handleDeleteRecipe}
           itemId={recipe._id}
           title="Delete this recipe?"
           text="Click to confirm that you want to delete this recipe."
@@ -184,7 +185,7 @@ const SingleRecipe = () => {
             value={recipeRating !== undefined ? recipeRating.rating : rating}
             disabled={recipeRating !== undefined || isRated}
             onChangeActive={(event, newValue) => setRating(newValue)}
-            onChange={handleRateRecipe}
+            onChange={onRateRecipe}
           />
         </Box>
       }

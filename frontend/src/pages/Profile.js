@@ -98,7 +98,7 @@ const Profile = ({ hero }) => {
     setOrderBy(property)
   }
 
-  const handleChangeHasPublicRecipes = (event) => {
+  const onChangeHasPublicRecipes = (event) => {
     setHasPublicRecipes(event.target.checked)
   }
 
@@ -132,7 +132,7 @@ const Profile = ({ hero }) => {
         openAction={handleClickOpen}
         open={open}
         setOpen={setOpen}
-        handleDelete={handleDeleteProfile}
+        onDelete={handleDeleteProfile}
         itemId={userId}
         title="Delete your profile?"
         text="Click to confirm that you want to delete your profile."
@@ -214,7 +214,7 @@ const Profile = ({ hero }) => {
           </Paper>
           <FormControlLabel
             control={
-              <Switch checked={hasPublicRecipes} onChange={handleChangeHasPublicRecipes} />
+              <Switch checked={hasPublicRecipes} onChange={onChangeHasPublicRecipes} />
             }
             label="Include public recipes"
           />
