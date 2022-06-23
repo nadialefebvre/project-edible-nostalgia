@@ -1,3 +1,5 @@
+/*
+
 import User from "../models/user"
 import bcrypt from "bcrypt"
 
@@ -264,11 +266,15 @@ export const deleteProfile = async (req, res) => {
     })
   }
 }
+*/
 
 
 
 
-/*
+
+
+
+// /*
 import User from "../models/user"
 import bcrypt from "bcrypt"
 
@@ -551,4 +557,4 @@ export const deleteProfile = async (req, res) => {
   }
 }
 
-*/
+// */
