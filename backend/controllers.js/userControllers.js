@@ -1,13 +1,33 @@
 import User from "../models/user"
 import bcrypt from "bcrypt"
 
+
+const emailValidation = (email) => {
+  const emailPattern = /^\S+@\S+\.\S{2,}$/g
+
+  if (!emailPattern.test(email)) {
+    throw "Email must follow the pattern user@email.com"
+  }
+}
+
+const passwordValidation = (password) => {
+  const passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+
+  if (!passwordPattern.test(password)) {
+    throw "Password must include at least: 8 characters, 1 uppercase, 1 lowercase, 1 special (#?!@$%^&*-)."
+  }
+}
+
 //--------------------------- USER REGISTRATION CONTROLLER ---------------------------//
 export const registerUser = async (req, res) => {
   const { firstName, email, password } = req.body
   try {
     const salt = bcrypt.genSaltSync()
     const userExists = await User.findOne({ email })
-    const passwordNotAccepted = password.length < 8
+    // const passwordNotAccepted = password.length < 8
+
+    emailValidation(email)
+    passwordValidation(password)
 
     if (userExists) {
       res.status(400).json({
@@ -17,14 +37,14 @@ export const registerUser = async (req, res) => {
           message: "Email already used."
         }
       })
-    } else if (passwordNotAccepted) {
-      res.status(400).json({
-        success: false,
-        status_code: 400,
-        response: {
-          message: "Password must be at least 8 characters long."
-        }
-      })
+      // } else if (passwordNotAccepted) {
+      //   res.status(400).json({
+      //     success: false,
+      //     status_code: 400,
+      //     response: {
+      //       message: "Password must be at least 8 characters long."
+      //     }
+      //   })
     } else {
       const newUser = await new User({
         firstName: firstName,
@@ -77,9 +97,9 @@ export const getUsers = async (req, res) => {
   }
 }
 
-//--------------------------- USER LOGIN ENDPOINT ---------------------------//
+//--------------------------- USER LOGIN CONTROLLER ---------------------------//
 export const loginUser = async (req, res) => {
-  const { firstName, email, password } = req.body
+  const { email, password } = req.body
 
   try {
     const user = await User.findOne({ email })
@@ -123,29 +143,32 @@ export const editProfilePassword = async (req, res) => {
 
   try {
     const salt = bcrypt.genSaltSync()
-    const passwordNotAccepted = password.length < 8
+    // const passwordNotAccepted = password.length < 8
 
-    if (passwordNotAccepted) {
-      res.status(400).json({
-        success: false,
-        status_code: 400,
-        response: {
-          message: "Password must be at least 8 characters long."
-        }
-      })
-    } else {
-      await User.findByIdAndUpdate(
-        userId, { password: bcrypt.hashSync(password, salt) }
-      )
+    emailValidation(email)
+    passwordValidation(password)
 
-      res.status(200).json({
-        success: true,
-        status_code: 200,
-        response: {
-          message: "User has been updated."
-        }
-      })
-    }
+    // if (passwordNotAccepted) {
+    //   res.status(400).json({
+    //     success: false,
+    //     status_code: 400,
+    //     response: {
+    //       message: "Password must be at least 8 characters long."
+    //     }
+    //   })
+    // } else {
+    await User.findByIdAndUpdate(
+      userId, { password: bcrypt.hashSync(password, salt) }
+    )
+
+    res.status(200).json({
+      success: true,
+      status_code: 200,
+      response: {
+        message: "User has been updated."
+      }
+    })
+    // }
   } catch (err) {
     res.status(400).json({
       success: false,
