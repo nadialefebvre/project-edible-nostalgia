@@ -35,7 +35,8 @@ const Recipes = ({ hero }) => {
       },
     }
 
-    const slugToUse = accessToken ? `recipes/user/${userId}/public` : "recipes/public"
+    const slugToUse =
+      accessToken ? `recipes/user/${userId}/public` : "recipes/public"
 
     fetch(API_URL(slugToUse), options)
       .then((res) => res.json())

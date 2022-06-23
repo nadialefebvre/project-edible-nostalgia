@@ -59,7 +59,8 @@ const Profile = ({ hero }) => {
         },
       }
 
-      const slugToUse = hasPublicRecipes ? `recipes/user/${userId}/public` : `recipes/user/${userId}`
+      const slugToUse =
+        hasPublicRecipes ? `recipes/user/${userId}/public` : `recipes/user/${userId}`
 
       fetch(API_URL(slugToUse), options)
         .then((res) => res.json())
@@ -83,7 +84,7 @@ const Profile = ({ hero }) => {
     }
     return 0
   }
-  
+
   const getComparator = (order, orderBy) => {
     return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)

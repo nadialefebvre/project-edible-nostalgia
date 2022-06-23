@@ -50,7 +50,8 @@ const RecipeForm = () => {
   const [steps, setSteps] = useState([""])
   const [checked, setChecked] = useState(false)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
-  const [isWarningSnackbarOpen, setIsWarningSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
 
   useEffect(() => {
     if (!accessToken) {
@@ -121,6 +122,8 @@ const RecipeForm = () => {
             navigate(`/recipes/${recipeId}`)
           } else {
             setIsSnackbarOpen(true)
+            setSnackbarMessage("Recipe has been added.")
+            setSnackbarSeverity("success")
             setTitle("")
             setDescription("")
             setCategory("")
@@ -137,7 +140,9 @@ const RecipeForm = () => {
             setChecked(false)
           }
         } else {
-          setIsWarningSnackbarOpen(true)
+          setIsSnackbarOpen(true)
+          setSnackbarMessage("All fields required (numbers for servings/quantity)")
+          setSnackbarSeverity("warning")
         }
         dispatch(loading.actions.setLoading(false))
       })
@@ -190,17 +195,8 @@ const RecipeForm = () => {
         open={isSnackbarOpen}
         onClose={() => setIsSnackbarOpen(false)}
       >
-        <Alert onClose={() => setIsSnackbarOpen(false)}>
-          Recipe has been added
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        autoHideDuration={3000}
-        open={isWarningSnackbarOpen}
-        onClose={() => setIsWarningSnackbarOpen(false)}
-      >
-        <Alert onClose={() => setIsWarningSnackbarOpen(false)} severity="warning">
-          All fields required (numbers for servings/quantity)
+        <Alert onClose={() => setIsSnackbarOpen(false)} severity={snackbarSeverity}>
+          {snackbarMessage}
         </Alert>
       </Snackbar>
 
