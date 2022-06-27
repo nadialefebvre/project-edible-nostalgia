@@ -12,7 +12,7 @@ import {
   addRatingToUser,
   getProfile,
   deleteProfile
-} from "./controllers.js/userControllers"
+} from "./controllers/userControllers"
 import {
   addRecipe,
   getRecipes,
@@ -23,7 +23,7 @@ import {
   editRecipe,
   addRatingToRecipe,
   deleteRecipe
-} from "./controllers.js/recipeControllers"
+} from "./controllers/recipeControllers"
 import User from "./models/user"
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final-project"
