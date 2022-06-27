@@ -187,7 +187,7 @@ export const editProfileOtherFields = async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: error,
+        message: err,
         errors: err.errors
       }
     })
