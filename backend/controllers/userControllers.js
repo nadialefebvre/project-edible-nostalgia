@@ -1,5 +1,6 @@
-import User from "../models/user"
 import bcrypt from "bcrypt"
+
+import User from "../models/user"
 
 const emailValidation = (email) => {
   const emailPattern = /^\S+@\S+\.\S{2,}$/g
