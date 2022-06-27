@@ -1,7 +1,6 @@
 import User from "../models/user"
 import bcrypt from "bcrypt"
 
-
 const emailValidation = (email) => {
   const emailPattern = /^\S+@\S+\.\S{2,}$/g
 
@@ -279,5 +278,3 @@ export const deleteProfile = async (req, res) => {
     })
   }
 }
-
-// */
