@@ -35,13 +35,13 @@ export const addRecipe = async (req, res) => {
       response: newRecipe
     })
 
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -57,13 +57,13 @@ export const getRecipes = async (req, res) => {
       status_code: 200,
       response: allRecipes
     })
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -79,13 +79,13 @@ export const getPublicRecipes = async (req, res) => {
       status_code: 200,
       response: publicRecipes
     })
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -103,13 +103,13 @@ export const getRecipesByUserId = async (req, res) => {
       status_code: 200,
       response: allRecipesByUserId
     })
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -129,13 +129,13 @@ export const getRecipesByUserIdAndPublic = async (req, res) => {
       status_code: 200,
       response: recipesByUserIdAndPublic
     })
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -159,18 +159,17 @@ export const getSingleRecipe = async (req, res) => {
         success: false,
         status_code: 400,
         response: {
-          message: "Recipe not found.",
-          errors: error
+          message: "Recipe not found."
         }
       })
     }
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -203,7 +202,7 @@ export const editRecipe = async (req, res) => {
       status_code: 400,
       response: {
         message: "Bad request, could not find and update this recipe.",
-        error: err.errors
+        errors: err.errors
       }
     })
   }
@@ -232,7 +231,7 @@ export const addRatingToRecipe = async (req, res) => {
       status_code: 400,
       response: {
         message: "Bad request, could not find and rate this recipe.",
-        error: err.errors
+        errors: err.errors
       }
     })
   }
@@ -259,7 +258,7 @@ export const deleteRecipe = async (req, res) => {
       status_code: 400,
       response: {
         message: "Bad request, could not find and delete this recipe.",
-        error: err.errors
+        errors: err.errors
       }
     })
   }

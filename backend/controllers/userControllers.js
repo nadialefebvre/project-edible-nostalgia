@@ -54,13 +54,13 @@ export const registerUser = async (req, res) => {
         }
       })
     }
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
-        message: error,
-        errors: error.errors
+        message: err,
+        errors: err.errors
       }
     })
   }
@@ -76,13 +76,13 @@ export const getUsers = async (req, res) => {
       status_code: 200,
       response: allUsers
     })
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -115,13 +115,13 @@ export const loginUser = async (req, res) => {
         },
       })
     }
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -153,8 +153,8 @@ export const editProfilePassword = async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: error,
-        error: err.errors
+        message: err,
+        errors: err.errors
       }
     })
   }
@@ -189,7 +189,7 @@ export const editProfileOtherFields = async (req, res) => {
       status_code: 400,
       response: {
         message: error,
-        error: err.errors
+        errors: err.errors
       }
     })
   }
@@ -224,7 +224,7 @@ export const addRatingToUser = async (req, res) => {
       status_code: 400,
       response: {
         message: "Bad request, could not find and add rating to this user.",
-        error: err.errors
+        errors: err.errors
       }
     })
   }
@@ -242,13 +242,13 @@ export const getProfile = async (req, res) => {
       status_code: 200,
       response: userProfile
     })
-  } catch (error) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
         message: "Bad request.",
-        errors: error
+        errors: err.errors
       }
     })
   }
@@ -274,7 +274,7 @@ export const deleteProfile = async (req, res) => {
       status_code: 400,
       response: {
         message: "Bad request, could not find and delete this user.",
-        error: err.errors
+        errors: err.errors
       }
     })
   }
