@@ -1,3 +1,10 @@
+# Final project for Technigo's bootcamp, weeks 21-24
+Task: build a fullstack website
+
+Tech: HTML, CSS, JavaScript, React, MateriaUI, Node.js, Express, MongoDB, Redux, React Router
+
+----
+
 # Final Project
 
 ## Overall idea
