@@ -1,4 +1,4 @@
-# Final Project
+# Final project for Technigo's bootcamp, weeks 21-24: build a fullstack website
 
 ## Overall idea
 
