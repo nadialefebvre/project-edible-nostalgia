@@ -30,4 +30,4 @@ There is a list of links to recipes in the profile page where the user can decid
 
 Project deployed here: 
 - [Edible nostalgia - frontend](https://edible-nostalgia.netlify.app/)
-- [Edible nostalgia - backend](https://nadia-final-project.herokuapp.com/)
+- [Edible nostalgia - backend](https://edible-nostalgia-kijk33idxa-lz.a.run.app)
