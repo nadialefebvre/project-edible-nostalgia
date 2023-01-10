@@ -1,4 +1,4 @@
-const BASE_URL = "https://nadia-final-project.herokuapp.com"
+const BASE_URL = "https://edible-nostalgia-kijk33idxa-lz.a.run.app"
 
 export const API_URL = (slug) => `${BASE_URL}/${slug}`
 
