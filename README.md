@@ -1,6 +1,20 @@
 # Project Edible nostalgia
 
-Final project for Technigo's bootcamp, weeks 21-24: build a fullstack website
+Final project for Technigo's bootcamp, weeks 21-24: build a fullstack website (June 2022)
+
+## Tech stack
+
+- JavaScript
+- React
+- Redux
+- React Router
+- Node.js
+- Express
+- MongoDB
+- HTML
+- CSS
+- Material UI
+- API
 
 ## Overall idea
 
@@ -13,18 +27,6 @@ Registered users can edit/delete their profile, add a recipe and make it public 
 Recipe cards can be filtered by title/category on the "all" page.
 
 There is a list of links to recipes in the profile page where the user can decide if they want to see only their recipes or all recipes, and sort them by many properties.
-
-
-## Tech stack
-
-- React
-- Redux
-- React Router
-- Material UI
-- Node.js
-- Express
-- MongoDB
-
 
 ## View it live
 
